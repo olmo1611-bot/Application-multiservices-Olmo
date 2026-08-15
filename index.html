@@ -4,18 +4,199 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OLMO - Application multiservices</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f8fa;
+            color: #1d2433;
+        }
+
+        header {
+            background: #ffffff;
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #5b4bdb;
+        }
+
+        .menu {
+            font-size: 26px;
+            cursor: pointer;
+        }
+
+        .hero {
+            padding: 45px 20px 30px;
+            background: linear-gradient(135deg, #5b4bdb, #8b5cf6);
+            color: white;
+            border-radius: 0 0 30px 30px;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            line-height: 1.5;
+            opacity: 0.95;
+        }
+
+        .search {
+            margin-top: 25px;
+            background: white;
+            border-radius: 14px;
+            padding: 14px 16px;
+            color: #777;
+            font-size: 15px;
+        }
+
+        .section {
+            padding: 28px 20px;
+        }
+
+        .section h2 {
+            font-size: 22px;
+            margin-bottom: 18px;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .service {
+            background: white;
+            padding: 20px 14px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .service h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .service p {
+            font-size: 12px;
+            color: #777;
+        }
+
+        .welcome {
+            background: white;
+            margin: 0 20px 30px;
+            padding: 22px;
+            border-radius: 18px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+        }
+
+        .welcome h2 {
+            margin-bottom: 10px;
+        }
+
+        .welcome p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 20px;
+            color: #888;
+            font-size: 13px;
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>Bienvenue sur OLMO</h1>
+    <header>
+        <div class="logo">OLMO</div>
+        <div class="menu">☰</div>
+    </header>
 
-    <p>
-        L'application multiservices qui rapproche
-        les clients, les commerçants et les prestataires.
-    </p>
+    <section class="hero">
+        <h1>Bienvenue sur OLMO 👋</h1>
 
-    <button>Découvrir OLMO</button>
+        <p>
+            Une seule application pour découvrir des commerces,
+            trouver des services et saisir de nouvelles opportunités.
+        </p>
+
+        <div class="search">
+            🔎 Rechercher un service, un commerce...
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Nos services</h2>
+
+        <div class="services">
+
+            <div class="service">
+                <div class="icon">🛍️</div>
+                <h3>Commerce</h3>
+                <p>Achetez et vendez facilement</p>
+            </div>
+
+            <div class="service">
+                <div class="icon">🛠️</div>
+                <h3>Services</h3>
+                <p>Trouvez les professionnels</p>
+            </div>
+
+            <div class="service">
+                <div class="icon">💼</div>
+                <h3>Emploi</h3>
+                <p>Découvrez des opportunités</p>
+            </div>
+
+            <div class="service">
+                <div class="icon">📍</div>
+                <h3>À proximité</h3>
+                <p>Trouvez ce qui est proche</p>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="welcome">
+        <h2>Pourquoi OLMO ?</h2>
+
+        <p>
+            OLMO rassemble plusieurs services au même endroit
+            afin de faciliter la vie des clients, des commerçants
+            et des professionnels.
+        </p>
+    </div>
+
+    <footer>
+        © 2026 OLMO — Tous droits réservés
+    </footer>
 
 </body>
-  </html>
+    </html>
