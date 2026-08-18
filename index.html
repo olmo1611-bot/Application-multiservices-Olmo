@@ -157,7 +157,7 @@
 
         <div class="services">
 
-            <div class="service">
+            <div class="service" onclick="ouvrirCommerce()" style="cursor:pointer;">
                 <div class="icon">🛍️</div>
                 <h3>Commerce</h3>
                 <p>Achetez et vendez facilement</p>
@@ -198,5 +198,78 @@
         © 2026 OLMO — Tous droits réservés
     </footer>
 
-</body>
+<script>
+function ouvrirCommerce() {
+    const commerce = document.createElement("div");
+
+    commerce.id = "commerce-page";
+
+    commerce.style.cssText = `
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: #f5f6fa;
+        overflow-y: auto;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+    `;
+
+    commerce.innerHTML = `
+        <div style="max-width:700px;margin:auto;">
+            <button onclick="document.getElementById('commerce-page').remove()"
+                style="border:0;background:#222;color:white;padding:12px 18px;border-radius:10px;font-size:16px;">
+                ← Retour
+            </button>
+
+            <h1 style="color:#5638d8;margin-top:25px;">
+                🛍️ Commerce
+            </h1>
+
+            <p style="color:#666;font-size:17px;">
+                Découvrez des produits et trouvez facilement des vendeurs.
+            </p>
+
+            <input
+                type="text"
+                placeholder="🔎 Rechercher un produit..."
+                style="width:100%;box-sizing:border-box;padding:16px;border:0;border-radius:14px;font-size:16px;margin:15px 0 25px;"
+            >
+
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:15px;">
+
+                <div style="background:white;padding:18px;border-radius:16px;">
+                    <div style="font-size:45px;">📱</div>
+                    <h3>Smartphones</h3>
+                    <p style="color:#777;">Téléphones et accessoires</p>
+                    <strong>Voir les produits</strong>
+                </div>
+
+                <div style="background:white;padding:18px;border-radius:16px;">
+                    <div style="font-size:45px;">👕</div>
+                    <h3>Mode</h3>
+                    <p style="color:#777;">Vêtements et chaussures</p>
+                    <strong>Voir les produits</strong>
+                </div>
+
+                <div style="background:white;padding:18px;border-radius:16px;">
+                    <div style="font-size:45px;">💻</div>
+                    <h3>Électronique</h3>
+                    <p style="color:#777;">Ordinateurs et appareils</p>
+                    <strong>Voir les produits</strong>
+                </div>
+
+                <div style="background:white;padding:18px;border-radius:16px;">
+                    <div style="font-size:45px;">🛒</div>
+                    <h3>Autres produits</h3>
+                    <p style="color:#777;">Découvrez les offres disponibles</p>
+                    <strong>Voir les produits</strong>
+                </div>
+
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(commerce);
+}
+    </script></body>
     </html>
