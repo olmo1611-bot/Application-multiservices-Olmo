@@ -271,5 +271,153 @@
 
     document.body.appendChild(commerce);
     }
-</script></body>
+function ouvrirCommerce() {
+    const commerce = document.createElement("div");
+
+    commerce.id = "commerce-page";
+
+    commerce.style.cssText = `
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: #f5f6fa;
+        overflow-y: auto;
+        font-family: Arial, sans-serif;
+    `;
+
+    commerce.innerHTML = `
+        <div style="max-width:760px;margin:auto;padding:18px;">
+
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+                <button onclick="document.getElementById('commerce-page').remove()"
+                    style="border:0;background:white;padding:11px 15px;border-radius:12px;font-size:20px;">
+                    ←
+                </button>
+
+                <h2 style="margin:0;color:#222;">🛍️ Commerce</h2>
+
+                <button style="border:0;background:white;padding:11px 15px;border-radius:12px;font-size:20px;">
+                    🛒
+                </button>
+            </div>
+
+            <div style="background:white;border-radius:16px;padding:14px;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,.05);">
+                <input
+                    type="text"
+                    placeholder="🔎 Rechercher un produit..."
+                    style="width:100%;box-sizing:border-box;border:0;outline:0;font-size:16px;padding:6px;background:transparent;">
+            </div>
+
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <h3>Catégories</h3>
+                <span style="color:#6c45d9;">Voir tout</span>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px;">
+
+                <div style="background:white;border-radius:15px;padding:12px;text-align:center;">
+                    <div style="font-size:30px;">📱</div>
+                    <small>Phones</small>
+                </div>
+
+                <div style="background:white;border-radius:15px;padding:12px;text-align:center;">
+                    <div style="font-size:30px;">👕</div>
+                    <small>Mode</small>
+                </div>
+
+                <div style="background:white;border-radius:15px;padding:12px;text-align:center;">
+                    <div style="font-size:30px;">💻</div>
+                    <small>Tech</small>
+                </div>
+
+                <div style="background:white;border-radius:15px;padding:12px;text-align:center;">
+                    <div style="font-size:30px;">🏠</div>
+                    <small>Maison</small>
+                </div>
+
+            </div>
+
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <h3>Produits populaires</h3>
+                <span style="color:#6c45d9;">Voir tout</span>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">
+
+                <div style="background:white;border-radius:18px;overflow:hidden;">
+                    <div style="height:135px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:60px;">
+                        📱
+                    </div>
+                    <div style="padding:14px;">
+                        <h3 style="margin:0 0 6px;">Smartphone</h3>
+                        <p style="margin:0 0 8px;color:#777;font-size:14px;">Téléphone Android</p>
+                        <strong>120 000 FCFA</strong>
+                        <div style="margin-top:8px;color:#f5a623;">★★★★★</div>
+                        <button style="width:100%;margin-top:10px;border:0;background:#6c45d9;color:white;padding:11px;border-radius:10px;font-weight:bold;">
+                            Ajouter au panier
+                        </button>
+                    </div>
+                </div>
+
+                <div style="background:white;border-radius:18px;overflow:hidden;">
+                    <div style="height:135px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:60px;">
+                        👟
+                    </div>
+                    <div style="padding:14px;">
+                        <h3 style="margin:0 0 6px;">Chaussures</h3>
+                        <p style="margin:0 0 8px;color:#777;font-size:14px;">Chaussures tendance</p>
+                        <strong>35 000 FCFA</strong>
+                        <div style="margin-top:8px;color:#f5a623;">★★★★☆</div>
+                        <button style="width:100%;margin-top:10px;border:0;background:#6c45d9;color:white;padding:11px;border-radius:10px;font-weight:bold;">
+                            Ajouter au panier
+                        </button>
+                    </div>
+                </div>
+
+                <div style="background:white;border-radius:18px;overflow:hidden;">
+                    <div style="height:135px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:60px;">
+                        🎧
+                    </div>
+                    <div style="padding:14px;">
+                        <h3 style="margin:0 0 6px;">Écouteurs</h3>
+                        <p style="margin:0 0 8px;color:#777;font-size:14px;">Écouteurs sans fil</p>
+                        <strong>15 000 FCFA</strong>
+                        <div style="margin-top:8px;color:#f5a623;">★★★★★</div>
+                        <button style="width:100%;margin-top:10px;border:0;background:#6c45d9;color:white;padding:11px;border-radius:10px;font-weight:bold;">
+                            Ajouter au panier
+                        </button>
+                    </div>
+                </div>
+
+                <div style="background:white;border-radius:18px;overflow:hidden;">
+                    <div style="height:135px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:60px;">
+                        👕
+                    </div>
+                    <div style="padding:14px;">
+                        <h3 style="margin:0 0 6px;">Vêtement</h3>
+                        <p style="margin:0 0 8px;color:#777;font-size:14px;">Mode homme et femme</p>
+                        <strong>20 000 FCFA</strong>
+                        <div style="margin-top:8px;color:#f5a623;">★★★★☆</div>
+                        <button style="width:100%;margin-top:10px;border:0;background:#6c45d9;color:white;padding:11px;border-radius:10px;font-weight:bold;">
+                            Ajouter au panier
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="margin-top:25px;background:#6c45d9;color:white;border-radius:18px;padding:20px;text-align:center;">
+                <h3 style="margin:0 0 8px;">Vous êtes vendeur ?</h3>
+                <p style="margin:0 0 15px;">Vendez vos produits sur OLMO.</p>
+                <button style="border:0;background:white;color:#6c45d9;padding:12px 20px;border-radius:10px;font-weight:bold;">
+                    Devenir vendeur
+                </button>
+            </div>
+
+            <div style="height:30px;"></div>
+        </div>
+    `;
+
+    document.body.appendChild(commerce);
+    }</script></body>
     </html>
