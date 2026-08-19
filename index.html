@@ -271,153 +271,724 @@
 
     document.body.appendChild(commerce);
     }
+let panier = [];
+
+const produitsOLMO = [
+    {
+        nom: "Smartphone",
+        prix: 120000,
+        icone: "📱",
+        description: "Téléphone Android"
+    },
+    {
+        nom: "Chaussures",
+        prix: 35000,
+        icone: "👟",
+        description: "Chaussures tendance"
+    },
+    {
+        nom: "Écouteurs",
+        prix: 15000,
+        icone: "🎧",
+        description: "Écouteurs sans fil"
+    },
+    {
+        nom: "Vêtement",
+        prix: 20000,
+        icone: "👕",
+        description: "Mode homme et femme"
+    }
+];
+
+function ajouterAuPanier(index) {
+
+    const produit = produitsOLMO[index];
+
+    const produitExistant = panier.find(
+        article => article.nom === produit.nom
+    );
+
+    if (produitExistant) {
+        produitExistant.quantite++;
+    } else {
+        panier.push({
+            nom: produit.nom,
+            prix: produit.prix,
+            icone: produit.icone,
+            quantite: 1
+        });
+    }
+
+    mettreAJourCompteurPanier();
+
+    alert(produit.nom + " a été ajouté au panier !");
+}
+
+function augmenterQuantite(index) {
+
+    panier[index].quantite++;
+
+    afficherPanier();
+    mettreAJourCompteurPanier();
+}
+
+function diminuerQuantite(index) {
+
+    if (panier[index].quantite > 1) {
+        panier[index].quantite--;
+    } else {
+        panier.splice(index, 1);
+    }
+
+    afficherPanier();
+    mettreAJourCompteurPanier();
+}
+
+function supprimerDuPanier(index) {
+
+    panier.splice(index, 1);
+
+    afficherPanier();
+    mettreAJourCompteurPanier();
+}
+
+function mettreAJourCompteurPanier() {
+
+    const compteur = document.getElementById("compteur-panier");
+
+    if (!compteur) return;
+
+    let nombreArticles = 0;
+
+    panier.forEach(article => {
+        nombreArticles += article.quantite;
+    });
+
+    compteur.textContent = nombreArticles;
+
+    if (nombreArticles === 0) {
+        compteur.style.display = "none";
+    } else {
+        compteur.style.display = "flex";
+    }
+}
+
+function ouvrirPanier() {
+
+    afficherPanier();
+}
+
+function afficherPanier() {
+
+    const ancienPanier = document.getElementById("panier-page");
+
+    if (ancienPanier) {
+        ancienPanier.remove();
+    }
+
+    const page = document.createElement("div");
+
+    page.id = "panier-page";
+
+    page.style.cssText = `
+        position:fixed;
+        inset:0;
+        z-index:10001;
+        background:#f5f6fa;
+        overflow-y:auto;
+        font-family:Arial,sans-serif;
+    `;
+
+    let total = 0;
+    let nombreArticles = 0;
+
+    panier.forEach(article => {
+
+        total += article.prix * article.quantite;
+        nombreArticles += article.quantite;
+
+    });
+
+    let contenuProduits = "";
+
+    if (panier.length === 0) {
+
+        contenuProduits = `
+            <div style="
+                background:white;
+                border-radius:20px;
+                padding:45px 20px;
+                text-align:center;
+                margin-top:25px;
+            ">
+
+                <div style="font-size:65px;">🛒</div>
+
+                <h2>Votre panier est vide</h2>
+
+                <p style="color:#777;">
+                    Ajoutez des produits depuis Commerce.
+                </p>
+
+                <button
+                    onclick="document.getElementById('panier-page').remove()"
+                    style="
+                        margin-top:15px;
+                        border:0;
+                        background:#6c45d9;
+                        color:white;
+                        padding:13px 22px;
+                        border-radius:11px;
+                        font-weight:bold;
+                    "
+                >
+                    Continuer mes achats
+                </button>
+
+            </div>
+        `;
+
+    } else {
+
+        panier.forEach((article, index) => {
+
+            const sousTotal = article.prix * article.quantite;
+
+            contenuProduits += `
+                <div style="
+                    background:white;
+                    border-radius:18px;
+                    padding:15px;
+                    margin-bottom:13px;
+                ">
+
+                    <div style="
+                        display:flex;
+                        align-items:center;
+                        gap:14px;
+                    ">
+
+                        <div style="
+                            width:70px;
+                            height:70px;
+                            background:#f0f0f0;
+                            border-radius:14px;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            font-size:38px;
+                        ">
+                            ${article.icone}
+                        </div>
+
+                        <div style="flex:1;">
+
+                            <strong style="font-size:17px;">
+                                ${article.nom}
+                            </strong>
+
+                            <p style="
+                                margin:6px 0;
+                                color:#777;
+                            ">
+                                ${article.prix.toLocaleString()} FCFA
+                            </p>
+
+                        </div>
+
+                        <button
+                            onclick="supprimerDuPanier(${index})"
+                            style="
+                                border:0;
+                                background:#ffe8e8;
+                                color:#d33;
+                                padding:8px;
+                                border-radius:9px;
+                            "
+                        >
+                            🗑️
+                        </button>
+
+                    </div>
+
+                    <div style="
+                        display:flex;
+                        align-items:center;
+                        justify-content:space-between;
+                        margin-top:15px;
+                    ">
+
+                        <div style="
+                            display:flex;
+                            align-items:center;
+                            gap:12px;
+                        ">
+
+                            <button
+                                onclick="diminuerQuantite(${index})"
+                                style="
+                                    width:36px;
+                                    height:36px;
+                                    border:0;
+                                    background:#eeeeee;
+                                    border-radius:9px;
+                                    font-size:20px;
+                                "
+                            >
+                                −
+                            </button>
+
+                            <strong>
+                                ${article.quantite}
+                            </strong>
+
+                            <button
+                                onclick="augmenterQuantite(${index})"
+                                style="
+                                    width:36px;
+                                    height:36px;
+                                    border:0;
+                                    background:#eeeeee;
+                                    border-radius:9px;
+                                    font-size:20px;
+                                "
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                        <strong style="color:#6c45d9;">
+                            ${sousTotal.toLocaleString()} FCFA
+                        </strong>
+
+                    </div>
+
+                </div>
+            `;
+
+        });
+
+    }
+
+    page.innerHTML = `
+
+        <div style="
+            max-width:700px;
+            margin:auto;
+            padding:18px;
+        ">
+
+            <div style="
+                display:flex;
+                align-items:center;
+                gap:15px;
+                margin-bottom:20px;
+            ">
+
+                <button
+                    onclick="document.getElementById('panier-page').remove()"
+                    style="
+                        border:0;
+                        background:white;
+                        padding:11px 15px;
+                        border-radius:12px;
+                        font-size:20px;
+                    "
+                >
+                    ←
+                </button>
+
+                <div>
+
+                    <h1 style="
+                        margin:0;
+                        font-size:25px;
+                    ">
+                        🛒 Mon panier
+                    </h1>
+
+                    <p style="
+                        margin:5px 0;
+                        color:#777;
+                    ">
+                        ${nombreArticles} article(s)
+                    </p>
+
+                </div>
+
+            </div>
+
+            ${contenuProduits}
+
+            ${
+                panier.length > 0
+                ? `
+                    <div style="
+                        background:white;
+                        border-radius:20px;
+                        padding:20px;
+                        margin-top:20px;
+                    ">
+
+                        <div style="
+                            display:flex;
+                            justify-content:space-between;
+                            margin-bottom:12px;
+                        ">
+
+                            <span>Sous-total</span>
+
+                            <strong>
+                                ${total.toLocaleString()} FCFA
+                            </strong>
+
+                        </div>
+
+                        <div style="
+                            display:flex;
+                            justify-content:space-between;
+                            margin-bottom:18px;
+                        ">
+
+                            <span>Livraison</span>
+
+                            <span style="color:#777;">
+                                À calculer
+                            </span>
+
+                        </div>
+
+                        <hr>
+
+                        <div style="
+                            display:flex;
+                            justify-content:space-between;
+                            margin-top:18px;
+                            font-size:20px;
+                        ">
+
+                            <strong>Total</strong>
+
+                            <strong style="color:#6c45d9;">
+                                ${total.toLocaleString()} FCFA
+                            </strong>
+
+                        </div>
+
+                        <button
+                            onclick="alert('La commande sera disponible dans la prochaine version d’OLMO.')"
+                            style="
+                                width:100%;
+                                margin-top:20px;
+                                border:0;
+                                background:#6c45d9;
+                                color:white;
+                                padding:15px;
+                                border-radius:12px;
+                                font-size:16px;
+                                font-weight:bold;
+                            "
+                        >
+                            Passer la commande
+                        </button>
+
+                    </div>
+                `
+                : ""
+            }
+
+            <div style="height:30px;"></div>
+
+        </div>
+    `;
+
+    document.body.appendChild(page);
+}
+
 function ouvrirCommerce() {
+
     const commerce = document.createElement("div");
 
     commerce.id = "commerce-page";
 
     commerce.style.cssText = `
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        background: #f5f6fa;
-        overflow-y: auto;
-        font-family: Arial, sans-serif;
+        position:fixed;
+        inset:0;
+        z-index:9999;
+        background:#f5f6fa;
+        overflow-y:auto;
+        font-family:Arial,sans-serif;
     `;
 
     commerce.innerHTML = `
-        <div style="max-width:760px;margin:auto;padding:18px;">
 
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
-                <button onclick="document.getElementById('commerce-page').remove()"
-                    style="border:0;background:white;padding:11px 15px;border-radius:12px;font-size:20px;">
+        <div style="
+            max-width:760px;
+            margin:auto;
+            padding:18px;
+        ">
+
+            <div style="
+                display:flex;
+                align-items:center;
+                justify-content:space-between;
+                margin-bottom:20px;
+            ">
+
+                <button
+                    onclick="document.getElementById('commerce-page').remove()"
+                    style="
+                        border:0;
+                        background:white;
+                        padding:11px 15px;
+                        border-radius:12px;
+                        font-size:20px;
+                    "
+                >
                     ←
                 </button>
 
-                <h2 style="margin:0;color:#222;">🛍️ Commerce</h2>
+                <h2 style="
+                    margin:0;
+                    color:#222;
+                ">
+                    🛍️ Commerce
+                </h2>
 
-                <button style="border:0;background:white;padding:11px 15px;border-radius:12px;font-size:20px;">
-                    🛒
-                </button>
+                <div style="position:relative;">
+
+                    <button
+                        onclick="ouvrirPanier()"
+                        style="
+                            border:0;
+                            background:white;
+                            padding:11px 15px;
+                            border-radius:12px;
+                            font-size:20px;
+                        "
+                    >
+                        🛒
+                    </button>
+
+                    <span
+                        id="compteur-panier"
+                        style="
+                            position:absolute;
+                            top:-7px;
+                            right:-7px;
+                            min-width:20px;
+                            height:20px;
+                            padding:0 4px;
+                            background:#e53935;
+                            color:white;
+                            border-radius:50px;
+                            display:none;
+                            align-items:center;
+                            justify-content:center;
+                            font-size:11px;
+                            font-weight:bold;
+                        "
+                    >
+                        0
+                    </span>
+
+                </div>
+
             </div>
 
-            <div style="background:white;border-radius:16px;padding:14px;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,.05);">
+            <div style="
+                background:white;
+                border-radius:16px;
+                padding:14px;
+                margin-bottom:24px;
+            ">
+
                 <input
                     type="text"
                     placeholder="🔎 Rechercher un produit..."
-                    style="width:100%;box-sizing:border-box;border:0;outline:0;font-size:16px;padding:6px;background:transparent;">
+                    style="
+                        width:100%;
+                        box-sizing:border-box;
+                        border:0;
+                        outline:0;
+                        font-size:16px;
+                        padding:6px;
+                        background:transparent;
+                    "
+                >
+
             </div>
 
-            <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+            ">
+
                 <h3>Catégories</h3>
-                <span style="color:#6c45d9;">Voir tout</span>
+
+                <span style="color:#6c45d9;">
+                    Voir tout
+                </span>
+
             </div>
 
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px;">
+            <div style="
+                display:grid;
+                grid-template-columns:repeat(4,1fr);
+                gap:10px;
+                margin-bottom:28px;
+            ">
 
-                <div style="background:white;border-radius:15px;padding:12px;text-align:center;">
+                <div style="
+                    background:white;
+                    border-radius:15px;
+                    padding:12px;
+                    text-align:center;
+                ">
                     <div style="font-size:30px;">📱</div>
                     <small>Phones</small>
                 </div>
 
-                <div style="background:white;border-radius:15px;padding:12px;text-align:center;">
+                <div style="
+                    background:white;
+                    border-radius:15px;
+                    padding:12px;
+                    text-align:center;
+                ">
                     <div style="font-size:30px;">👕</div>
                     <small>Mode</small>
                 </div>
 
-                <div style="background:white;border-radius:15px;padding:12px;text-align:center;">
+                <div style="
+                    background:white;
+                    border-radius:15px;
+                    padding:12px;
+                    text-align:center;
+                ">
                     <div style="font-size:30px;">💻</div>
                     <small>Tech</small>
                 </div>
 
-                <div style="background:white;border-radius:15px;padding:12px;text-align:center;">
+                <div style="
+                    background:white;
+                    border-radius:15px;
+                    padding:12px;
+                    text-align:center;
+                ">
                     <div style="font-size:30px;">🏠</div>
                     <small>Maison</small>
                 </div>
 
             </div>
 
-            <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+            ">
+
                 <h3>Produits populaires</h3>
-                <span style="color:#6c45d9;">Voir tout</span>
-            </div>
 
-            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">
-
-                <div style="background:white;border-radius:18px;overflow:hidden;">
-                    <div style="height:135px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:60px;">
-                        📱
-                    </div>
-                    <div style="padding:14px;">
-                        <h3 style="margin:0 0 6px;">Smartphone</h3>
-                        <p style="margin:0 0 8px;color:#777;font-size:14px;">Téléphone Android</p>
-                        <strong>120 000 FCFA</strong>
-                        <div style="margin-top:8px;color:#f5a623;">★★★★★</div>
-                        <button style="width:100%;margin-top:10px;border:0;background:#6c45d9;color:white;padding:11px;border-radius:10px;font-weight:bold;">
-                            Ajouter au panier
-                        </button>
-                    </div>
-                </div>
-
-                <div style="background:white;border-radius:18px;overflow:hidden;">
-                    <div style="height:135px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:60px;">
-                        👟
-                    </div>
-                    <div style="padding:14px;">
-                        <h3 style="margin:0 0 6px;">Chaussures</h3>
-                        <p style="margin:0 0 8px;color:#777;font-size:14px;">Chaussures tendance</p>
-                        <strong>35 000 FCFA</strong>
-                        <div style="margin-top:8px;color:#f5a623;">★★★★☆</div>
-                        <button style="width:100%;margin-top:10px;border:0;background:#6c45d9;color:white;padding:11px;border-radius:10px;font-weight:bold;">
-                            Ajouter au panier
-                        </button>
-                    </div>
-                </div>
-
-                <div style="background:white;border-radius:18px;overflow:hidden;">
-                    <div style="height:135px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:60px;">
-                        🎧
-                    </div>
-                    <div style="padding:14px;">
-                        <h3 style="margin:0 0 6px;">Écouteurs</h3>
-                        <p style="margin:0 0 8px;color:#777;font-size:14px;">Écouteurs sans fil</p>
-                        <strong>15 000 FCFA</strong>
-                        <div style="margin-top:8px;color:#f5a623;">★★★★★</div>
-                        <button style="width:100%;margin-top:10px;border:0;background:#6c45d9;color:white;padding:11px;border-radius:10px;font-weight:bold;">
-                            Ajouter au panier
-                        </button>
-                    </div>
-                </div>
-
-                <div style="background:white;border-radius:18px;overflow:hidden;">
-                    <div style="height:135px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:60px;">
-                        👕
-                    </div>
-                    <div style="padding:14px;">
-                        <h3 style="margin:0 0 6px;">Vêtement</h3>
-                        <p style="margin:0 0 8px;color:#777;font-size:14px;">Mode homme et femme</p>
-                        <strong>20 000 FCFA</strong>
-                        <div style="margin-top:8px;color:#f5a623;">★★★★☆</div>
-                        <button style="width:100%;margin-top:10px;border:0;background:#6c45d9;color:white;padding:11px;border-radius:10px;font-weight:bold;">
-                            Ajouter au panier
-                        </button>
-                    </div>
-                </div>
+                <span style="color:#6c45d9;">
+                    Voir tout
+                </span>
 
             </div>
 
-            <div style="margin-top:25px;background:#6c45d9;color:white;border-radius:18px;padding:20px;text-align:center;">
-                <h3 style="margin:0 0 8px;">Vous êtes vendeur ?</h3>
-                <p style="margin:0 0 15px;">Vendez vos produits sur OLMO.</p>
-                <button style="border:0;background:white;color:#6c45d9;padding:12px 20px;border-radius:10px;font-weight:bold;">
-                    Devenir vendeur
-                </button>
+            <div style="
+                display:grid;
+                grid-template-columns:repeat(2,1fr);
+                gap:14px;
+            ">
+
+                ${produitsOLMO.map((produit,index) => `
+
+                    <div style="
+                        background:white;
+                        border-radius:18px;
+                        overflow:hidden;
+                    ">
+
+                        <div style="
+                            height:135px;
+                            background:#eee;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            font-size:60px;
+                        ">
+                            ${produit.icone}
+                        </div>
+
+                        <div style="padding:14px;">
+
+                            <h3 style="
+                                margin:0 0 6px;
+                            ">
+                                ${produit.nom}
+                            </h3>
+
+                            <p style="
+                                margin:0 0 8px;
+                                color:#777;
+                                font-size:14px;
+                            ">
+                                ${produit.description}
+                            </p>
+
+                            <strong>
+                                ${produit.prix.toLocaleString()} FCFA
+                            </strong>
+
+                            <div style="
+                                margin-top:8px;
+                                color:#f5a623;
+                            ">
+                                ★★★★★
+                            </div>
+
+                            <button
+                                onclick="ajouterAuPanier(${index})"
+                                style="
+                                    width:100%;
+                                    margin-top:10px;
+                                    border:0;
+                                    background:#6c45d9;
+                                    color:white;
+                                    padding:11px;
+                                    border-radius:10px;
+                                    font-weight:bold;
+                                "
+                            >
+                                🛒 Ajouter au panier
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                `).join("")}
+
             </div>
 
-            <div style="height:30px;"></div>
-        </div>
-    `;
+            <div style="
+                margin-top:25px;
+                background:#6c45d9;
+                color:white;
+                border-radius:18px;
+                padding:20px;
+                text-align:center;
+            ">
 
-    document.body.appendChild(commerce);
-    }</script></body>
+                <h3 style="margin:0 0 8px;">
+                    Vous êtes vendeur ?
+                </h3>
+
+                <p style="margin:0 0 15px;">
+                    Vendez vos produits sur OLMO.
+                </p>
+
+   </script></body>
     </html>
