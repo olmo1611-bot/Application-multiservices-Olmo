@@ -2039,7 +2039,35 @@ function closeProduct(){
 
   }
 
-  }</script>
+  }// Rendre les produits cliquables
+document.addEventListener("click", function(event){
+
+  const card = event.target.closest(".product-card");
+
+  if(!card) return;
+
+  if(
+    event.target.closest(".add-btn") ||
+    event.target.closest(".favorite")
+  ){
+    return;
+  }
+
+  const cards = Array.from(
+    document.querySelectorAll(".product-card")
+  );
+
+  const index = cards.indexOf(card);
+
+  if(index === -1) return;
+
+  const product = currentProducts[index];
+
+  if(product){
+    openProduct(product.id);
+  }
+
+});</script>
 
 </body>
   </html>
