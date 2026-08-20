@@ -2111,7 +2111,102 @@ function applyProductImages(){
 
   });
 
-  }</script>
+  }// ===== IMAGES OLMO - PARTIE 2 =====
+
+function refreshProductImages(){
+
+  applyProductImages();
+
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+
+  setTimeout(refreshProductImages, 300);
+
+});
+
+
+const productsGridObserver = new MutationObserver(function(){
+
+  setTimeout(refreshProductImages, 100);
+
+});
+
+
+const productsGridElement =
+  document.getElementById("productsGrid");
+
+if(productsGridElement){
+
+  productsGridObserver.observe(productsGridElement, {
+    childList:true,
+    subtree:true
+  });
+
+}
+
+
+document.addEventListener("click", function(event){
+
+  const card = event.target.closest(".product-card");
+
+  if(!card) return;
+
+  if(
+    event.target.closest(".add-btn") ||
+    event.target.closest(".favorite")
+  ){
+    return;
+  }
+
+  const cards = Array.from(
+    document.querySelectorAll(".product-card")
+  );
+
+  const index = cards.indexOf(card);
+
+  if(index === -1) return;
+
+  const product = currentProducts[index];
+
+  if(!product) return;
+
+  setTimeout(function(){
+
+    const modal =
+      document.getElementById("productModal");
+
+    if(!modal) return;
+
+    const image =
+      productImages[product.id];
+
+    if(!image) return;
+
+    const imageBox =
+      modal.querySelector(".modal-content > div:nth-child(2)");
+
+    if(imageBox){
+
+      imageBox.style.backgroundImage =
+        `url("${image}")`;
+
+      imageBox.style.backgroundSize =
+        "cover";
+
+      imageBox.style.backgroundPosition =
+        "center";
+
+      imageBox.style.height =
+        "280px";
+
+      imageBox.innerHTML = "";
+
+    }
+
+  }, 100);
+
+});</script>
 
 </body>
   </html>
