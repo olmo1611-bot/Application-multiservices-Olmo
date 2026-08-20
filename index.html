@@ -3590,6 +3590,48 @@ document.addEventListener("click", function(event){
 
   }
 
+});// ===== CORRECTION DU PARCOURS COMMANDE OLMO =====
+
+function checkout(){
+
+  if(cart.length === 0){
+
+    showToast("Votre panier est vide");
+
+    return;
+
+  }
+
+  closeCart();
+
+  setTimeout(function(){
+
+    createOrderSummary();
+
+  },200);
+
+}
+
+
+// Sécurité : relier directement le bouton
+// "Passer la commande" au nouveau parcours.
+
+document.addEventListener("click", function(event){
+
+  const button = event.target.closest(".checkout");
+
+  if(!button) return;
+
+  if(
+    button.textContent.includes("Passer la commande")
+  ){
+
+    event.preventDefault();
+
+    checkout();
+
+  }
+
 });</script>
 
 </body>
