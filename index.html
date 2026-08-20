@@ -1933,7 +1933,113 @@ document.addEventListener("DOMContentLoaded",() => {
 });
 
 
-</script>
+function openProduct(id){
+
+  const product = products.find(p => p.id === id);
+
+  if(!product) return;
+
+  const modal = document.createElement("div");
+
+  modal.className = "modal";
+
+  modal.id = "productModal";
+
+  modal.innerHTML = `
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h2>${product.name}</h2>
+
+        <button
+          class="close-btn"
+          onclick="closeProduct()"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <div style="
+        text-align:center;
+        background:#f5f2ff;
+        border-radius:20px;
+        padding:30px;
+        margin-bottom:20px;
+      ">
+
+        <div style="font-size:100px;">
+          ${product.emoji}
+        </div>
+
+      </div>
+
+      <div class="product-category">
+        ${product.category}
+      </div>
+
+      <h2 style="margin:5px 0 10px;">
+        ${product.name}
+      </h2>
+
+      <div style="
+        font-size:24px;
+        font-weight:900;
+        margin-bottom:12px;
+      ">
+        ${formatPrice(product.price)}
+      </div>
+
+      <p style="
+        color:#6b7280;
+        margin-bottom:18px;
+      ">
+        ${product.description}
+      </p>
+
+      <div style="
+        display:flex;
+        gap:10px;
+      ">
+
+        <button
+          class="checkout"
+          onclick="addToCart(${product.id}); closeProduct();"
+        >
+          🛒 Ajouter au panier
+        </button>
+
+        <button
+          class="primary-btn"
+          onclick="addToCart(${product.id}); closeProduct(); openCart();"
+        >
+          Acheter
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(modal);
+
+}
+
+
+function closeProduct(){
+
+  const modal = document.getElementById("productModal");
+
+  if(modal){
+
+    modal.remove();
+
+  }
+
+  }</script>
 
 </body>
   </html>
