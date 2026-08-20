@@ -2206,7 +2206,119 @@ document.addEventListener("click", function(event){
 
   }, 100);
 
-});</script>
+});// ===== INFORMATIONS MARKETPLACE OLMO - PARTIE 1 =====
+
+const productDetails = {
+
+  1: {
+    rating: 4.8,
+    reviews: 126,
+    stock: 12,
+    seller: "OLMO Mobile",
+    delivery: "Livraison disponible"
+  },
+
+  2: {
+    rating: 4.7,
+    reviews: 94,
+    stock: 8,
+    seller: "Smart Store",
+    delivery: "Livraison disponible"
+  },
+
+  3: {
+    rating: 4.9,
+    reviews: 78,
+    stock: 15,
+    seller: "Marley Shoes",
+    delivery: "Livraison disponible"
+  },
+
+  4: {
+    rating: 4.6,
+    reviews: 63,
+    stock: 10,
+    seller: "Sport Shop",
+    delivery: "Livraison disponible"
+  },
+
+  5: {
+    rating: 4.8,
+    reviews: 112,
+    stock: 20,
+    seller: "Audio Gabon",
+    delivery: "Livraison disponible"
+  },
+
+  6: {
+    rating: 4.7,
+    reviews: 85,
+    stock: 7,
+    seller: "Tech Store",
+    delivery: "Livraison disponible"
+  },
+
+  7: {
+    rating: 4.9,
+    reviews: 143,
+    stock: 25,
+    seller: "Urban Fashion",
+    delivery: "Livraison disponible"
+  },
+
+  8: {
+    rating: 4.8,
+    reviews: 91,
+    stock: 14,
+    seller: "Street Mode",
+    delivery: "Livraison disponible"
+  }
+
+};
+
+
+function getProductDetails(id){
+
+  return productDetails[id] || {
+
+    rating: 4.5,
+    reviews: 0,
+    stock: 0,
+    seller: "Vendeur OLMO",
+    delivery: "Livraison disponible"
+
+  };
+
+}
+
+
+function getStars(rating){
+
+  const fullStars = Math.round(rating);
+
+  return "★".repeat(fullStars) +
+         "☆".repeat(5 - fullStars);
+
+}
+
+
+function getStockText(stock){
+
+  if(stock <= 0){
+
+    return "Rupture de stock";
+
+  }
+
+  if(stock <= 5){
+
+    return "Plus que " + stock + " en stock";
+
+  }
+
+  return stock + " disponibles";
+
+  }</script>
 
 </body>
   </html>
