@@ -3580,7 +3580,17 @@ function selectPayment(method){
     "Mode choisi : " + method
   );
 
-  }</script>
+  }// ===== LIAISON COMMANDE OLMO =====
+
+document.addEventListener("click", function(event){
+
+  if(event.target.id === "olmoConfirmOrder"){
+
+    continueOrder();
+
+  }
+
+});</script>
 
 </body>
   </html>
