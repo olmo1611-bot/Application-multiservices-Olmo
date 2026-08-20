@@ -2488,7 +2488,117 @@ openProduct = function(id){
 
   },150);
 
-};</script>
+};// ===== PANIER OLMO AMÉLIORÉ - PARTIE 1 =====
+
+function getCartSubtotal(){
+
+  return cart.reduce(function(total, item){
+
+    return total + (item.price * item.quantity);
+
+  }, 0);
+
+}
+
+
+function getCartItemCount(){
+
+  return cart.reduce(function(total, item){
+
+    return total + item.quantity;
+
+  }, 0);
+
+}
+
+
+function refreshCartSummary(){
+
+  const count = getCartItemCount();
+
+  const subtotal = getCartSubtotal();
+
+  const badge =
+    document.getElementById("cartBadge");
+
+  const total =
+    document.getElementById("cartTotal");
+
+  if(badge){
+
+    badge.textContent = count;
+
+  }
+
+  if(total){
+
+    total.textContent = formatPrice(subtotal);
+
+  }
+
+}
+
+
+function saveCart(){
+
+  try{
+
+    localStorage.setItem(
+      "olmo_cart",
+      JSON.stringify(cart)
+    );
+
+  }catch(error){
+
+    console.log("Panier non sauvegardé");
+
+  }
+
+}
+
+
+function loadCart(){
+
+  try{
+
+    const saved =
+      localStorage.getItem("olmo_cart");
+
+    if(saved){
+
+      const savedCart =
+        JSON.parse(saved);
+
+      if(Array.isArray(savedCart)){
+
+        cart = savedCart;
+
+      }
+
+    }
+
+  }catch(error){
+
+    cart = [];
+
+  }
+
+}
+
+
+function clearCart(){
+
+  cart = [];
+
+  saveCart();
+
+  updateCart();
+
+  refreshCartSummary();
+
+  showToast("Panier vidé");
+
+  }</script>
 
 </body>
   </html>
