@@ -2980,7 +2980,284 @@ olmoFavoriteObserver.observe(
     childList:true,
     subtree:true
   }
-);</script>
+);// ===== COMMANDE OLMO - PARTIE 1 =====
+
+let olmoDeliveryMethod = "standard";
+
+function getDeliveryFee(){
+
+  if(cart.length === 0){
+    return 0;
+  }
+
+  if(olmoDeliveryMethod === "express"){
+    return 2000;
+  }
+
+  return 1000;
+}
+
+
+function getOrderTotal(){
+
+  return getCartSubtotal() + getDeliveryFee();
+
+}
+
+
+function setDeliveryMethod(method){
+
+  olmoDeliveryMethod = method;
+
+  updateOrderSummary();
+
+}
+
+
+function updateOrderSummary(){
+
+  const subtotal =
+    document.getElementById("orderSubtotal");
+
+  const delivery =
+    document.getElementById("orderDelivery");
+
+  const total =
+    document.getElementById("orderTotal");
+
+  if(subtotal){
+
+    subtotal.textContent =
+      formatPrice(getCartSubtotal());
+
+  }
+
+  if(delivery){
+
+    delivery.textContent =
+      formatPrice(getDeliveryFee());
+
+  }
+
+  if(total){
+
+    total.textContent =
+      formatPrice(getOrderTotal());
+
+  }
+
+}
+
+
+function createOrderSummary(){
+
+  if(cart.length === 0){
+
+    showToast("Votre panier est vide");
+
+    return;
+
+  }
+
+  const old =
+    document.getElementById("olmoOrderBox");
+
+  if(old){
+    old.remove();
+  }
+
+  const box =
+    document.createElement("div");
+
+  box.id = "olmoOrderBox";
+
+  box.style.cssText = `
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:99999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+  `;
+
+  box.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      max-height:90vh;
+      overflow:auto;
+      background:white;
+      border-radius:20px;
+      padding:20px;
+    ">
+
+      <h2 style="margin-top:0;">
+        🧾 Récapitulatif
+      </h2>
+
+      <div style="
+        margin-bottom:18px;
+      ">
+
+        ${cart.map(function(item){
+
+          return `
+            <div style="
+              display:flex;
+              justify-content:space-between;
+              gap:10px;
+              padding:10px 0;
+              border-bottom:1px solid #eee;
+            ">
+
+              <span>
+                ${item.name}
+                × ${item.quantity}
+              </span>
+
+              <strong>
+                ${formatPrice(
+                  item.price * item.quantity
+                )}
+              </strong>
+
+            </div>
+          `;
+
+        }).join("")}
+
+      </div>
+
+      <h3>🚚 Livraison</h3>
+
+      <label style="
+        display:block;
+        padding:12px;
+        border:1px solid #ddd;
+        border-radius:12px;
+        margin-bottom:8px;
+      ">
+
+        <input
+          type="radio"
+          name="olmoDelivery"
+          value="standard"
+          checked
+          onchange="setDeliveryMethod('standard')"
+        >
+
+        Livraison standard — 1 000 FCFA
+
+      </label>
+
+      <label style="
+        display:block;
+        padding:12px;
+        border:1px solid #ddd;
+        border-radius:12px;
+      ">
+
+        <input
+          type="radio"
+          name="olmoDelivery"
+          value="express"
+          onchange="setDeliveryMethod('express')"
+        >
+
+        Livraison express — 2 000 FCFA
+
+      </label>
+
+      <div style="
+        margin-top:20px;
+        padding-top:15px;
+        border-top:1px solid #ddd;
+      ">
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+        ">
+
+          <span>Sous-total</span>
+
+          <strong id="orderSubtotal">
+            ${formatPrice(getCartSubtotal())}
+          </strong>
+
+        </div>
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          margin-top:8px;
+        ">
+
+          <span>Livraison</span>
+
+          <strong id="orderDelivery">
+            ${formatPrice(getDeliveryFee())}
+          </strong>
+
+        </div>
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          margin-top:15px;
+          font-size:19px;
+        ">
+
+          <strong>Total</strong>
+
+          <strong id="orderTotal">
+            ${formatPrice(getOrderTotal())}
+          </strong>
+
+        </div>
+
+      </div>
+
+      <button
+        id="olmoConfirmOrder"
+        style="
+          width:100%;
+          margin-top:20px;
+          padding:14px;
+          border:none;
+          border-radius:12px;
+          background:#111827;
+          color:white;
+          font-size:16px;
+          font-weight:bold;
+        "
+      >
+        Continuer
+      </button>
+
+      <button
+        onclick="document.getElementById('olmoOrderBox').remove()"
+        style="
+          width:100%;
+          margin-top:8px;
+          padding:12px;
+          border:none;
+          background:#f3f4f6;
+          border-radius:12px;
+        "
+      >
+        Annuler
+      </button>
+
+    </div>
+  `;
+
+  document.body.appendChild(box);
+
+  }</script>
 
 </body>
   </html>
