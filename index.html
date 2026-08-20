@@ -1173,4 +1173,767 @@ footer li{
 
 </section>
 
-  </main>
+  </main><footer>
+
+  <div class="footer-content">
+
+    <div>
+
+      <div class="footer-logo">OLMO</div>
+
+      <p>
+        OLMO rassemble commerce, services et opportunités
+        dans une seule plateforme simple et accessible.
+      </p>
+
+    </div>
+
+    <div>
+
+      <h3>OLMO</h3>
+
+      <ul>
+
+        <li>Accueil</li>
+        <li>Commerce</li>
+        <li>Services</li>
+        <li>Emploi</li>
+
+      </ul>
+
+    </div>
+
+    <div>
+
+      <h3>Commerce</h3>
+
+      <ul>
+
+        <li>Smartphones</li>
+        <li>Chaussures</li>
+        <li>Écouteurs</li>
+        <li>Vêtements</li>
+
+      </ul>
+
+    </div>
+
+    <div>
+
+      <h3>Besoin d'aide ?</h3>
+
+      <ul>
+
+        <li>Centre d'aide</li>
+        <li>Contact</li>
+        <li>Conditions</li>
+        <li>Confidentialité</li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+
+    © 2026 OLMO — Tous droits réservés.
+
+  </div>
+
+</footer>
+
+
+<!-- PANIER -->
+
+<div id="cartOverlay" class="overlay hidden" onclick="closeCart()"></div>
+
+<aside id="cartPanel" class="cart-panel hidden">
+
+  <div class="cart-header">
+
+    <h2>Mon panier</h2>
+
+    <button class="close-btn" onclick="closeCart()">×</button>
+
+  </div>
+
+  <div id="cartItems" class="cart-items">
+
+    <div class="empty-cart">
+
+      🛒
+
+      <h3>Votre panier est vide</h3>
+
+      <p>Ajoutez des produits pour les retrouver ici.</p>
+
+    </div>
+
+  </div>
+
+  <div class="cart-footer">
+
+    <div class="total-line">
+
+      <span>Total</span>
+
+      <span id="cartTotal">0 FCFA</span>
+
+    </div>
+
+    <button class="checkout" onclick="checkout()">
+
+      Passer la commande
+
+    </button>
+
+  </div>
+
+</aside>
+
+
+<!-- MODAL VENDEUR -->
+
+<div id="sellerModal" class="modal hidden">
+
+  <div class="modal-content">
+
+    <div class="modal-header">
+
+      <h2>Devenir vendeur</h2>
+
+      <button class="close-btn" onclick="closeSellerModal()">×</button>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Nom de votre boutique</label>
+
+      <input id="sellerName" type="text" placeholder="Ex : Marley Store">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Numéro de téléphone</label>
+
+      <input id="sellerPhone" type="tel" placeholder="Ex : 07 XX XX XX">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Catégorie</label>
+
+      <input id="sellerCategory" type="text" placeholder="Ex : vêtements">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Présentation</label>
+
+      <textarea id="sellerDescription" rows="4" placeholder="Présentez votre activité..."></textarea>
+
+    </div>
+
+    <button class="checkout" onclick="submitSeller()">
+
+      Envoyer ma demande
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- NOTIFICATION -->
+
+<div id="toast" class="toast"></div>
+
+
+<script>
+
+const products = [
+
+  {
+    id:1,
+    name:"Smartphone Android",
+    category:"Smartphones",
+    price:125000,
+    emoji:"📱",
+    description:"Smartphone moderne avec écran haute définition."
+  },
+
+  {
+    id:2,
+    name:"iPhone",
+    category:"Smartphones",
+    price:350000,
+    emoji:"📱",
+    description:"Smartphone performant pour le quotidien."
+  },
+
+  {
+    id:3,
+    name:"Sneakers modernes",
+    category:"Chaussures",
+    price:45000,
+    emoji:"👟",
+    description:"Chaussures tendance et confortables."
+  },
+
+  {
+    id:4,
+    name:"Baskets sport",
+    category:"Chaussures",
+    price:55000,
+    emoji:"👟",
+    description:"Baskets adaptées au sport et aux sorties."
+  },
+
+  {
+    id:5,
+    name:"Écouteurs Bluetooth",
+    category:"Écouteurs",
+    price:25000,
+    emoji:"🎧",
+    description:"Écouteurs sans fil avec son de qualité."
+  },
+
+  {
+    id:6,
+    name:"Casque Bluetooth",
+    category:"Écouteurs",
+    price:40000,
+    emoji:"🎧",
+    description:"Casque confortable avec connexion Bluetooth."
+  },
+
+  {
+    id:7,
+    name:"T-shirt tendance",
+    category:"Vêtements",
+    price:15000,
+    emoji:"👕",
+    description:"T-shirt moderne disponible en plusieurs tailles."
+  },
+
+  {
+    id:8,
+    name:"Ensemble streetwear",
+    category:"Vêtements",
+    price:35000,
+    emoji:"👕",
+    description:"Ensemble tendance pour un style urbain."
+  }
+
+];
+
+
+let cart = [];
+
+let currentProducts = [...products];
+
+
+function formatPrice(price){
+
+  return price.toLocaleString("fr-FR") + " FCFA";
+
+}
+
+
+function renderProducts(list = currentProducts){
+
+  const grid = document.getElementById("productsGrid");
+
+  if(!grid) return;
+
+  if(list.length === 0){
+
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:40px;color:#6b7280;">
+        <div style="font-size:45px;">🔎</div>
+        <h3>Aucun produit trouvé</h3>
+        <p>Essayez une autre recherche.</p>
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML = list.map(product => `
+
+    <article class="product-card">
+
+      <div class="product-image">
+
+        <div class="product-emoji">${product.emoji}</div>
+
+        <button
+          class="favorite"
+          onclick="favoriteProduct(${product.id})"
+        >
+          ♡
+        </button>
+
+      </div>
+
+      <div class="product-info">
+
+        <div class="product-category">
+          ${product.category}
+        </div>
+
+        <h3 class="product-name">
+          ${product.name}
+        </h3>
+
+        <p class="product-description">
+          ${product.description}
+        </p>
+
+        <div class="product-bottom">
+
+          <span class="price">
+            ${formatPrice(product.price)}
+          </span>
+
+          <button
+            class="add-btn"
+            onclick="addToCart(${product.id})"
+          >
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  `).join("");
+
+}
+
+
+function addToCart(id){
+
+  const product = products.find(p => p.id === id);
+
+  if(!product) return;
+
+  const existing = cart.find(item => item.id === id);
+
+  if(existing){
+
+    existing.quantity++;
+
+  }else{
+
+    cart.push({
+      ...product,
+      quantity:1
+    });
+
+  }
+
+  updateCart();
+
+  showToast(product.name + " ajouté au panier");
+
+}
+
+
+function updateCart(){
+
+  const badge = document.getElementById("cartBadge");
+
+  const itemsContainer = document.getElementById("cartItems");
+
+  const totalElement = document.getElementById("cartTotal");
+
+  const count = cart.reduce(
+    (total,item) => total + item.quantity,
+    0
+  );
+
+  badge.textContent = count;
+
+
+  if(cart.length === 0){
+
+    itemsContainer.innerHTML = `
+
+      <div class="empty-cart">
+
+        <div style="font-size:55px;">🛒</div>
+
+        <h3>Votre panier est vide</h3>
+
+        <p>Ajoutez des produits pour les retrouver ici.</p>
+
+      </div>
+
+    `;
+
+    totalElement.textContent = "0 FCFA";
+
+    return;
+
+  }
+
+
+  itemsContainer.innerHTML = cart.map(item => `
+
+    <div class="cart-item">
+
+      <div class="cart-item-image">
+        ${item.emoji}
+      </div>
+
+      <div class="cart-item-info">
+
+        <h4>${item.name}</h4>
+
+        <div class="cart-item-price">
+          ${formatPrice(item.price * item.quantity)}
+        </div>
+
+        <div class="quantity">
+
+          <button onclick="changeQuantity(${item.id},-1)">
+            −
+          </button>
+
+          <strong>${item.quantity}</strong>
+
+          <button onclick="changeQuantity(${item.id},1)">
+            +
+          </button>
+
+        </div>
+
+        <button
+          class="remove-item"
+          onclick="removeFromCart(${item.id})"
+        >
+          Supprimer
+        </button>
+
+      </div>
+
+    </div>
+
+  `).join("");
+
+
+  const total = cart.reduce(
+    (sum,item) => sum + item.price * item.quantity,
+    0
+  );
+
+  totalElement.textContent = formatPrice(total);
+
+}
+
+
+function changeQuantity(id,change){
+
+  const item = cart.find(product => product.id === id);
+
+  if(!item) return;
+
+  item.quantity += change;
+
+  if(item.quantity <= 0){
+
+    cart = cart.filter(product => product.id !== id);
+
+  }
+
+  updateCart();
+
+}
+
+
+function removeFromCart(id){
+
+  cart = cart.filter(product => product.id !== id);
+
+  updateCart();
+
+  showToast("Produit retiré du panier");
+
+}
+
+
+function openCart(){
+
+  document.getElementById("cartPanel").classList.remove("hidden");
+
+  document.getElementById("cartOverlay").classList.remove("hidden");
+
+}
+
+
+function closeCart(){
+
+  document.getElementById("cartPanel").classList.add("hidden");
+
+  document.getElementById("cartOverlay").classList.add("hidden");
+
+}
+
+
+function checkout(){
+
+  if(cart.length === 0){
+
+    showToast("Votre panier est vide");
+
+    return;
+
+  }
+
+  showToast("Le système de commande sera bientôt disponible");
+
+}
+
+
+function favoriteProduct(id){
+
+  const product = products.find(p => p.id === id);
+
+  if(product){
+
+    showToast(product.name + " ajouté aux favoris");
+
+  }
+
+}
+
+
+function searchProducts(){
+
+  const input = document.getElementById("searchInput");
+
+  const query = input.value.toLowerCase().trim();
+
+  if(!query){
+
+    currentProducts = [...products];
+
+  }else{
+
+    currentProducts = products.filter(product =>
+
+      product.name.toLowerCase().includes(query) ||
+
+      product.category.toLowerCase().includes(query) ||
+
+      product.description.toLowerCase().includes(query)
+
+    );
+
+  }
+
+  renderProducts(currentProducts);
+
+}
+
+
+function filterCategory(category){
+
+  currentProducts = products.filter(
+    product => product.category === category
+  );
+
+  renderProducts(currentProducts);
+
+  document.getElementById("commerceSection")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+  showToast(category);
+
+}
+
+
+function focusSearch(){
+
+  const search = document.getElementById("searchInput");
+
+  if(search){
+
+    search.focus();
+
+    search.scrollIntoView({
+      behavior:"smooth",
+      block:"center"
+    });
+
+  }
+
+}
+
+
+function goHome(){
+
+  currentProducts = [...products];
+
+  renderProducts();
+
+  document.getElementById("homePage")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+}
+
+
+function showCommerce(){
+
+  currentProducts = [...products];
+
+  renderProducts();
+
+  document.getElementById("commerceSection")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+  closeMobileMenu();
+
+}
+
+
+function showServices(){
+
+  showToast("Les services OLMO arrivent bientôt");
+
+  closeMobileMenu();
+
+}
+
+
+function showJobs(){
+
+  showToast("La section emploi arrive bientôt");
+
+  closeMobileMenu();
+
+}
+
+
+function showNearby(){
+
+  showToast("Les services à proximité arrivent bientôt");
+
+  closeMobileMenu();
+
+}
+
+
+function toggleMobileMenu(){
+
+  document
+    .getElementById("mobileMenu")
+    .classList.toggle("hidden");
+
+}
+
+
+function closeMobileMenu(){
+
+  document
+    .getElementById("mobileMenu")
+    .classList.add("hidden");
+
+}
+
+
+function openSellerModal(){
+
+  document
+    .getElementById("sellerModal")
+    .classList.remove("hidden");
+
+}
+
+
+function closeSellerModal(){
+
+  document
+    .getElementById("sellerModal")
+    .classList.add("hidden");
+
+}
+
+
+function submitSeller(){
+
+  const name =
+    document.getElementById("sellerName").value.trim();
+
+  const phone =
+    document.getElementById("sellerPhone").value.trim();
+
+  const category =
+    document.getElementById("sellerCategory").value.trim();
+
+
+  if(!name || !phone || !category){
+
+    showToast("Veuillez remplir les champs obligatoires");
+
+    return;
+
+  }
+
+
+  closeSellerModal();
+
+  showToast("Votre demande vendeur a été enregistrée");
+
+}
+
+
+function showToast(message){
+
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  setTimeout(() => {
+
+    toast.classList.remove("show");
+
+  },3000);
+
+}
+
+
+/* INITIALISATION */
+
+document.addEventListener("DOMContentLoaded",() => {
+
+  renderProducts();
+
+  updateCart();
+
+});
+
+
+</script>
+
+</body>
+  </html>
