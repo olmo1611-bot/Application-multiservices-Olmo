@@ -1,1 +1,1176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#6c3df5">
+<title>OLMO — Commerce, Services & Opportunités</title>
 
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --primary:#6c3df5;
+  --primary-dark:#4f27c7;
+  --secondary:#ff3d72;
+  --dark:#111827;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --light:#f5f7fb;
+  --white:#ffffff;
+  --border:#e5e7eb;
+  --shadow:0 8px 30px rgba(17,24,39,.08);
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--light);
+  color:var(--text);
+  line-height:1.5;
+}
+
+button,input{
+  font-family:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* HEADER */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+
+.navbar{
+  max-width:1200px;
+  margin:auto;
+  height:72px;
+  padding:0 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:27px;
+  font-weight:900;
+  color:var(--dark);
+  letter-spacing:2px;
+}
+
+.logo-mark{
+  width:42px;
+  height:42px;
+  border-radius:14px 14px 14px 5px;
+  background:linear-gradient(135deg,#652cff,#ff315f,#ff8a00);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:25px;
+  font-weight:900;
+  box-shadow:0 5px 18px rgba(108,61,245,.25);
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.nav-links button{
+  border:0;
+  background:transparent;
+  padding:10px 13px;
+  border-radius:10px;
+  font-weight:600;
+  color:var(--text);
+}
+
+.nav-links button:hover{
+  background:#f1edff;
+  color:var(--primary);
+}
+
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.icon-btn{
+  position:relative;
+  border:1px solid var(--border);
+  background:white;
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  font-size:20px;
+}
+
+.cart-badge{
+  position:absolute;
+  top:-5px;
+  right:-5px;
+  min-width:20px;
+  height:20px;
+  padding:0 5px;
+  background:var(--secondary);
+  color:white;
+  border-radius:20px;
+  font-size:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.menu-btn{
+  display:none;
+}
+
+/* HERO */
+
+.hero{
+  max-width:1200px;
+  margin:22px auto;
+  padding:0 20px;
+}
+
+.hero-box{
+  min-height:410px;
+  border-radius:30px;
+  padding:55px;
+  color:white;
+  background:
+    radial-gradient(circle at 90% 15%,rgba(255,255,255,.2),transparent 25%),
+    radial-gradient(circle at 10% 90%,rgba(255,120,30,.18),transparent 25%),
+    linear-gradient(135deg,#5126d8,#7444f5 55%,#9639d7);
+  display:flex;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-content{
+  max-width:690px;
+  position:relative;
+  z-index:2;
+}
+
+.hero-tag{
+  display:inline-flex;
+  padding:8px 14px;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:30px;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:18px;
+}
+
+.hero h1{
+  font-size:48px;
+  line-height:1.08;
+  margin-bottom:18px;
+}
+
+.hero p{
+  font-size:18px;
+  opacity:.92;
+  max-width:620px;
+  margin-bottom:28px;
+}
+
+.search-box{
+  background:white;
+  border-radius:17px;
+  padding:7px;
+  display:flex;
+  max-width:650px;
+  box-shadow:0 15px 35px rgba(0,0,0,.16);
+}
+
+.search-box input{
+  flex:1;
+  border:0;
+  outline:0;
+  padding:14px;
+  font-size:16px;
+  min-width:0;
+}
+
+.search-box button{
+  border:0;
+  background:var(--dark);
+  color:white;
+  border-radius:12px;
+  padding:0 22px;
+  font-weight:bold;
+}
+
+.hero-decoration{
+  position:absolute;
+  right:-60px;
+  bottom:-100px;
+  width:380px;
+  height:380px;
+  border-radius:50%;
+  border:60px solid rgba(255,255,255,.08);
+}
+
+/* SECTIONS */
+
+.section{
+  max-width:1200px;
+  margin:45px auto;
+  padding:0 20px;
+}
+
+.section-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.section-title{
+  font-size:28px;
+  color:var(--dark);
+}
+
+.section-subtitle{
+  color:var(--muted);
+  margin-top:4px;
+}
+
+.see-all{
+  border:0;
+  background:transparent;
+  color:var(--primary);
+  font-weight:bold;
+}
+
+/* CATEGORIES */
+
+.categories{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:14px;
+}
+
+.category{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:20px 10px;
+  text-align:center;
+  transition:.2s;
+  box-shadow:0 4px 16px rgba(0,0,0,.03);
+}
+
+.category:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow);
+  border-color:#d9ceff;
+}
+
+.category-icon{
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+.category strong{
+  display:block;
+  font-size:14px;
+}
+
+/* PRODUCTS */
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.product-card{
+  background:white;
+  border-radius:20px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  box-shadow:0 4px 18px rgba(0,0,0,.04);
+  transition:.2s;
+}
+
+.product-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow);
+}
+
+.product-image{
+  height:210px;
+  background:linear-gradient(145deg,#f2efff,#fafafa);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+
+.product-emoji{
+  font-size:82px;
+}
+
+.favorite{
+  position:absolute;
+  right:12px;
+  top:12px;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:0;
+  background:white;
+  box-shadow:0 3px 12px rgba(0,0,0,.1);
+}
+
+.product-info{
+  padding:16px;
+}
+
+.product-category{
+  color:var(--primary);
+  font-size:12px;
+  font-weight:bold;
+  text-transform:uppercase;
+}
+
+.product-name{
+  font-size:17px;
+  margin:5px 0;
+}
+
+.product-description{
+  font-size:13px;
+  color:var(--muted);
+  min-height:39px;
+}
+
+.product-bottom{
+  margin-top:13px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+
+.price{
+  font-size:18px;
+  font-weight:900;
+  color:var(--dark);
+}
+
+.add-btn{
+  border:0;
+  background:var(--primary);
+  color:white;
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  font-size:21px;
+}
+
+/* SERVICES */
+
+.services{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.service-card{
+  background:white;
+  padding:25px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  display:flex;
+  gap:17px;
+  align-items:flex-start;
+}
+
+.service-icon{
+  min-width:55px;
+  height:55px;
+  border-radius:15px;
+  background:#f0ecff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+}
+
+.service-card h3{
+  margin-bottom:5px;
+}
+
+.service-card p{
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* PROMO */
+
+.promo{
+  border-radius:25px;
+  padding:32px;
+  background:var(--dark);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.promo h2{
+  font-size:27px;
+  margin-bottom:7px;
+}
+
+.promo p{
+  color:#cbd5e1;
+}
+
+.primary-btn{
+  border:0;
+  background:white;
+  color:var(--dark);
+  padding:13px 20px;
+  border-radius:12px;
+  font-weight:bold;
+}
+
+/* PANIER */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.45);
+  z-index:1999;
+}
+
+.cart-panel{
+  position:fixed;
+  z-index:2000;
+  right:0;
+  top:0;
+  height:100vh;
+  width:min(430px,100%);
+  background:white;
+  box-shadow:-10px 0 40px rgba(0,0,0,.15);
+  display:flex;
+  flex-direction:column;
+}
+
+.cart-header{
+  padding:20px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.close-btn{
+  width:38px;
+  height:38px;
+  border:0;
+  background:#f3f4f6;
+  border-radius:10px;
+  font-size:20px;
+}
+
+.cart-items{
+  flex:1;
+  overflow:auto;
+  padding:15px;
+}
+
+.empty-cart{
+  text-align:center;
+  color:var(--muted);
+  padding:70px 20px;
+}
+
+.cart-item{
+  display:flex;
+  gap:12px;
+  padding:13px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.cart-item-image{
+  width:65px;
+  height:65px;
+  border-radius:13px;
+  background:#f3f0ff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:32px;
+}
+
+.cart-item-info{
+  flex:1;
+}
+
+.cart-item-info h4{
+  font-size:14px;
+}
+
+.cart-item-price{
+  font-weight:bold;
+  margin-top:4px;
+}
+
+.quantity{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:7px;
+}
+
+.quantity button{
+  width:27px;
+  height:27px;
+  border:1px solid var(--border);
+  background:white;
+  border-radius:7px;
+}
+
+.remove-item{
+  border:0;
+  background:transparent;
+  color:#ef4444;
+  font-size:12px;
+  margin-top:5px;
+}
+
+.cart-footer{
+  border-top:1px solid var(--border);
+  padding:20px;
+}
+
+.total-line{
+  display:flex;
+  justify-content:space-between;
+  font-size:20px;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+
+.checkout{
+  width:100%;
+  border:0;
+  padding:15px;
+  background:var(--primary);
+  color:white;
+  border-radius:13px;
+  font-size:16px;
+  font-weight:bold;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:3000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.5);
+}
+
+.modal-content{
+  background:white;
+  width:min(600px,100%);
+  max-height:90vh;
+  overflow:auto;
+  border-radius:25px;
+  padding:25px;
+}
+
+.modal-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+
+.form-group{
+  margin-bottom:15px;
+}
+
+.form-group label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.form-group input,
+.form-group textarea{
+  width:100%;
+  padding:13px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  outline:none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus{
+  border-color:var(--primary);
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translateX(-50%) translateY(100px);
+  background:var(--dark);
+  color:white;
+  padding:13px 20px;
+  border-radius:12px;
+  z-index:5000;
+  opacity:0;
+  transition:.3s;
+  box-shadow:var(--shadow);
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* FOOTER */
+
+footer{
+  margin-top:60px;
+  background:var(--dark);
+  color:white;
+  padding:45px 20px 25px;
+}
+
+.footer-content{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:30px;
+}
+
+.footer-logo{
+  font-size:25px;
+  font-weight:900;
+  margin-bottom:12px;
+}
+
+footer p,
+footer li{
+  color:#9ca3af;
+  font-size:14px;
+}
+
+footer ul{
+  list-style:none;
+}
+
+footer li{
+  margin:8px 0;
+}
+
+.footer-bottom{
+  max-width:1200px;
+  margin:30px auto 0;
+  padding-top:20px;
+  border-top:1px solid #374151;
+  text-align:center;
+  color:#9ca3af;
+  font-size:13px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+  .nav-links{
+    display:none;
+  }
+
+  .menu-btn{
+    display:block;
+  }
+
+  .categories{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .products{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .services{
+    grid-template-columns:1fr;
+  }
+
+  .footer-content{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .hero h1{
+    font-size:38px;
+  }
+
+}
+
+@media(max-width:600px){
+
+  .navbar{
+    height:64px;
+    padding:0 14px;
+  }
+
+  .logo{
+    font-size:22px;
+  }
+
+  .logo-mark{
+    width:37px;
+    height:37px;
+  }
+
+  .header-actions{
+    gap:5px;
+  }
+
+  .icon-btn{
+    width:39px;
+    height:39px;
+  }
+
+  .hero{
+    margin:12px auto;
+    padding:0 12px;
+  }
+
+  .hero-box{
+    min-height:450px;
+    padding:30px 22px;
+    border-radius:25px;
+  }
+
+  .hero h1{
+    font-size:35px;
+  }
+
+  .hero p{
+    font-size:16px;
+  }
+
+  .search-box{
+    display:flex;
+  }
+
+  .search-box button{
+    padding:0 14px;
+  }
+
+  .section{
+    margin:35px auto;
+    padding:0 12px;
+  }
+
+  .section-title{
+    font-size:24px;
+  }
+
+  .categories{
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+  }
+
+  .category{
+    padding:15px 5px;
+  }
+
+  .category-icon{
+    font-size:28px;
+  }
+
+  .products{
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+
+  .product-image{
+    height:150px;
+  }
+
+  .product-emoji{
+    font-size:58px;
+  }
+
+  .product-info{
+    padding:12px;
+  }
+
+  .product-name{
+    font-size:15px;
+  }
+
+  .product-description{
+    font-size:12px;
+  }
+
+  .price{
+    font-size:15px;
+  }
+
+  .promo{
+    padding:25px 20px;
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .footer-content{
+    grid-template-columns:1fr;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="navbar">
+
+    <div class="logo">
+      <div class="logo-mark">O</div>
+      <span>OLMO</span>
+    </div>
+
+    <nav class="nav-links">
+
+      <button onclick="goHome()">Accueil</button>
+      <button onclick="showCommerce()">Commerce</button>
+      <button onclick="showServices()">Services</button>
+      <button onclick="showJobs()">Emploi</button>
+      <button onclick="showNearby()">À proximité</button>
+
+    </nav>
+
+    <div class="header-actions">
+
+      <button class="icon-btn" onclick="focusSearch()">🔎</button>
+
+      <button class="icon-btn" onclick="openCart()">
+        🛒
+        <span id="cartBadge" class="cart-badge">0</span>
+      </button>
+
+      <button class="icon-btn menu-btn" onclick="toggleMobileMenu()">☰</button>
+
+    </div>
+
+  </div>
+
+  <div id="mobileMenu" class="hidden" style="padding:10px 15px 15px;background:white;border-top:1px solid #eee;">
+
+    <button onclick="goHome()" style="display:block;width:100%;padding:12px;border:0;background:white;text-align:left;">
+      🏠 Accueil
+    </button>
+
+    <button onclick="showCommerce()" style="display:block;width:100%;padding:12px;border:0;background:white;text-align:left;">
+      🛍️ Commerce
+    </button>
+
+    <button onclick="showServices()" style="display:block;width:100%;padding:12px;border:0;background:white;text-align:left;">
+      🛠️ Services
+    </button>
+
+    <button onclick="showJobs()" style="display:block;width:100%;padding:12px;border:0;background:white;text-align:left;">
+      💼 Emploi
+    </button>
+
+    <button onclick="showNearby()" style="display:block;width:100%;padding:12px;border:0;background:white;text-align:left;">
+      📍 À proximité
+    </button>
+
+  </div>
+
+</header>
+
+<main id="homePage">
+
+<section class="hero">
+
+  <div class="hero-box">
+
+    <div class="hero-content">
+
+      <span class="hero-tag">✨ L'écosystème multiservices</span>
+
+      <h1>
+        Tout ce dont vous avez besoin, au même endroit.
+      </h1>
+
+      <p>
+        Découvrez des produits, trouvez des professionnels,
+        recherchez des opportunités et profitez des services
+        disponibles autour de vous.
+      </p>
+
+      <div class="search-box">
+
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="Rechercher un produit, service..."
+          oninput="searchProducts()"
+        >
+
+        <button onclick="searchProducts()">
+          Rechercher
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="hero-decoration"></div>
+
+  </div>
+
+</section>
+
+<section class="section">
+
+  <div class="section-header">
+
+    <div>
+
+      <h2 class="section-title">
+        Explorer OLMO
+      </h2>
+
+      <p class="section-subtitle">
+        Découvrez nos principales catégories
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="categories">
+
+    <button class="category" onclick="filterCategory('Smartphones')">
+
+      <div class="category-icon">📱</div>
+
+      <strong>Smartphones</strong>
+
+    </button>
+
+    <button class="category" onclick="filterCategory('Chaussures')">
+
+      <div class="category-icon">👟</div>
+
+      <strong>Chaussures</strong>
+
+    </button>
+
+    <button class="category" onclick="filterCategory('Écouteurs')">
+
+      <div class="category-icon">🎧</div>
+
+      <strong>Écouteurs</strong>
+
+    </button>
+
+    <button class="category" onclick="filterCategory('Vêtements')">
+
+      <div class="category-icon">👕</div>
+
+      <strong>Vêtements</strong>
+
+    </button>
+
+    <button class="category" onclick="showServices()">
+
+      <div class="category-icon">🛠️</div>
+
+      <strong>Services</strong>
+
+    </button>
+
+    <button class="category" onclick="showJobs()">
+
+      <div class="category-icon">💼</div>
+
+      <strong>Emploi</strong>
+
+    </button>
+
+  </div>
+
+</section>
+
+<section class="section" id="commerceSection">
+
+  <div class="section-header">
+
+    <div>
+
+      <h2 class="section-title">
+        Produits populaires
+      </h2>
+
+      <p class="section-subtitle">
+        Découvrez les articles disponibles sur OLMO
+      </p>
+
+    </div>
+
+    <button class="see-all" onclick="showCommerce()">
+      Voir tout →
+    </button>
+
+  </div>
+
+  <div id="productsGrid" class="products"></div>
+
+</section>
+
+<section class="section">
+
+  <div class="section-header">
+
+    <div>
+
+      <h2 class="section-title">
+        Services
+      </h2>
+
+      <p class="section-subtitle">
+        Trouvez les professionnels dont vous avez besoin
+      </p>
+
+    </div>
+
+    <button class="see-all" onclick="showServices()">
+      Voir tout →
+    </button>
+
+  </div>
+
+  <div class="services">
+
+    <div class="service-card">
+
+      <div class="service-icon">🔧</div>
+
+      <div>
+
+        <h3>Réparation</h3>
+
+        <p>
+          Trouvez des professionnels pour vos réparations.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="service-card">
+
+      <div class="service-icon">💇</div>
+
+      <div>
+
+        <h3>Beauté</h3>
+
+        <p>
+          Coiffeurs, barbiers et professionnels de la beauté.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="service-card">
+
+      <div class="service-icon">🚚</div>
+
+      <div>
+
+        <h3>Livraison</h3>
+
+        <p>
+          Découvrez des solutions de livraison à proximité.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section">
+
+  <div class="promo">
+
+    <div>
+
+      <h2>
+        Vous êtes vendeur ?
+      </h2>
+
+      <p>
+        Rejoignez OLMO et présentez vos produits à vos futurs clients.
+      </p>
+
+    </div>
+
+    <button class="primary-btn" onclick="openSellerModal()">
+      Devenir vendeur
+    </button>
+
+  </div>
+
+</section>
+
+  </main>
