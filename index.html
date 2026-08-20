@@ -2067,7 +2067,51 @@ document.addEventListener("click", function(event){
     openProduct(product.id);
   }
 
-});</script>
+});// ===== IMAGES OLMO - PARTIE 1 =====
+
+const productImages = {
+  1: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80",
+  2: "https://images.unsplash.com/photo-1592286927505-2fd0a4b3f5a2?auto=format&fit=crop&w=800&q=80",
+  3: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
+  4: "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80",
+  5: "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?auto=format&fit=crop&w=800&q=80",
+  6: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80",
+  7: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80",
+  8: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=800&q=80"
+};
+
+function applyProductImages(){
+
+  const cards = document.querySelectorAll(".product-card");
+
+  cards.forEach((card,index) => {
+
+    const product = currentProducts[index];
+
+    if(!product) return;
+
+    const image = productImages[product.id];
+
+    if(!image) return;
+
+    const imageBox = card.querySelector(".product-image");
+    const emoji = card.querySelector(".product-emoji");
+
+    if(imageBox){
+
+      imageBox.style.backgroundImage = `url("${image}")`;
+      imageBox.style.backgroundSize = "cover";
+      imageBox.style.backgroundPosition = "center";
+
+    }
+
+    if(emoji){
+      emoji.style.display = "none";
+    }
+
+  });
+
+  }</script>
 
 </body>
   </html>
