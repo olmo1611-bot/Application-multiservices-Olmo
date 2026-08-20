@@ -2758,7 +2758,94 @@ setTimeout(function(){
 
   refreshCartSummary();
 
-},100);</script>
+},100);// ===== FAVORIS OLMO - PARTIE 1 =====
+
+let olmoFavorites = [];
+
+function loadOlmoFavorites(){
+
+  try{
+
+    const saved =
+      localStorage.getItem("olmo_favorites");
+
+    if(saved){
+
+      const data = JSON.parse(saved);
+
+      if(Array.isArray(data)){
+        olmoFavorites = data;
+      }
+
+    }
+
+  }catch(error){
+
+    olmoFavorites = [];
+
+  }
+
+}
+
+function saveOlmoFavorites(){
+
+  localStorage.setItem(
+    "olmo_favorites",
+    JSON.stringify(olmoFavorites)
+  );
+
+}
+
+function isOlmoFavorite(id){
+
+  return olmoFavorites.includes(id);
+
+}
+
+function toggleOlmoFavorite(id){
+
+  if(isOlmoFavorite(id)){
+
+    olmoFavorites =
+      olmoFavorites.filter(function(item){
+
+        return item !== id;
+
+      });
+
+    showToast("Retiré des favoris");
+
+  }else{
+
+    olmoFavorites.push(id);
+
+    showToast("Ajouté aux favoris ❤️");
+
+  }
+
+  saveOlmoFavorites();
+
+  updateOlmoFavoriteButtons();
+
+}
+
+function updateOlmoFavoriteButtons(){
+
+  document
+    .querySelectorAll(".olmo-favorite-btn")
+    .forEach(function(button){
+
+      const id =
+        Number(button.dataset.productId);
+
+      button.textContent =
+        isOlmoFavorite(id) ? "❤️" : "♡";
+
+    });
+
+}
+
+loadOlmoFavorites();</script>
 
 </body>
   </html>
