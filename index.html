@@ -26,14 +26,14 @@
   --shadow:0 8px 30px rgba(17,24,39,.08);
 }
 
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--light);
-  color:var(--text);
-  line-height:1.5;
+corps {
+  police de caractères : Arial , Helvetica , sans-serif ;
+  arrière-plan : var ( --light ) ;
+  couleur : var ( --text ) ;
+  hauteur de ligne : 1,5 ;
 }
 
-button,input{
+bouton , entrée {
   font-family:inherit;
 }
 
@@ -3256,6 +3256,329 @@ function createOrderSummary(){
   `;
 
   document.body.appendChild(box);
+
+  }// ===== COMMANDE OLMO - PARTIE 2 =====
+
+function continueOrder(){
+
+  const box =
+    document.getElementById("olmoOrderBox");
+
+  if(!box) return;
+
+  box.remove();
+
+  showToast("Récapitulatif validé");
+
+  setTimeout(function(){
+
+    showCustomerForm();
+
+  },400);
+
+}
+
+
+function showCustomerForm(){
+
+  const form =
+    document.createElement("div");
+
+  form.id = "olmoCustomerForm";
+
+  form.style.cssText = `
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:100000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+  `;
+
+  form.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      background:white;
+      border-radius:20px;
+      padding:20px;
+    ">
+
+      <h2 style="margin-top:0;">
+        📦 Informations de livraison
+      </h2>
+
+      <p style="
+        color:#6b7280;
+        font-size:14px;
+      ">
+        Entrez vos informations pour préparer
+        votre commande.
+      </p>
+
+      <input
+        id="olmoCustomerName"
+        type="text"
+        placeholder="Nom complet"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:13px;
+          margin-top:12px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <input
+        id="olmoCustomerPhone"
+        type="tel"
+        placeholder="Numéro de téléphone"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:13px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <input
+        id="olmoCustomerAddress"
+        type="text"
+        placeholder="Adresse de livraison"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:13px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <button
+        onclick="validateCustomerOrder()"
+        style="
+          width:100%;
+          margin-top:18px;
+          padding:14px;
+          border:none;
+          border-radius:12px;
+          background:#111827;
+          color:white;
+          font-size:16px;
+          font-weight:bold;
+        "
+      >
+        Continuer vers le paiement
+      </button>
+
+      <button
+        onclick="document.getElementById('olmoCustomerForm').remove()"
+        style="
+          width:100%;
+          margin-top:8px;
+          padding:12px;
+          border:none;
+          background:#f3f4f6;
+          border-radius:12px;
+        "
+      >
+        Annuler
+      </button>
+
+    </div>
+  `;
+
+  document.body.appendChild(form);
+
+}
+
+
+function validateCustomerOrder(){
+
+  const name =
+    document.getElementById(
+      "olmoCustomerName"
+    ).value.trim();
+
+  const phone =
+    document.getElementById(
+      "olmoCustomerPhone"
+    ).value.trim();
+
+  const address =
+    document.getElementById(
+      "olmoCustomerAddress"
+    ).value.trim();
+
+  if(!name || !phone || !address){
+
+    showToast(
+      "Veuillez remplir tous les champs"
+    );
+
+    return;
+
+  }
+
+  const form =
+    document.getElementById(
+      "olmoCustomerForm"
+    );
+
+  if(form){
+    form.remove();
+  }
+
+  showToast(
+    "Informations enregistrées"
+  );
+
+  setTimeout(function(){
+
+    showPaymentOptions(
+      name,
+      phone,
+      address
+    );
+
+  },500);
+
+}
+
+
+function showPaymentOptions(
+  name,
+  phone,
+  address
+){
+
+  const payment =
+    document.createElement("div");
+
+  payment.id = "olmoPayment";
+
+  payment.style.cssText = `
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:100001;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+  `;
+
+  payment.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      background:white;
+      border-radius:20px;
+      padding:20px;
+    ">
+
+      <h2 style="margin-top:0;">
+        💳 Mode de paiement
+      </h2>
+
+      <p style="color:#6b7280;">
+        Total à payer :
+      </p>
+
+      <div style="
+        font-size:25px;
+        font-weight:bold;
+        margin-bottom:20px;
+      ">
+        ${formatPrice(getOrderTotal())}
+      </div>
+
+      <button
+        onclick="selectPayment('Airtel Money')"
+        style="
+          width:100%;
+          padding:14px;
+          margin-bottom:10px;
+          border:1px solid #ddd;
+          border-radius:12px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        📱 Airtel Money
+      </button>
+
+      <button
+        onclick="selectPayment('Moov Money')"
+        style="
+          width:100%;
+          padding:14px;
+          margin-bottom:10px;
+          border:1px solid #ddd;
+          border-radius:12px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        📱 Moov Money
+      </button>
+
+      <button
+        onclick="selectPayment('Paiement à la livraison')"
+        style="
+          width:100%;
+          padding:14px;
+          margin-bottom:10px;
+          border:1px solid #ddd;
+          border-radius:12px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        🚚 Paiement à la livraison
+      </button>
+
+      <button
+        onclick="document.getElementById('olmoPayment').remove()"
+        style="
+          width:100%;
+          padding:12px;
+          border:none;
+          background:#f3f4f6;
+          border-radius:12px;
+        "
+      >
+        Annuler
+      </button>
+
+    </div>
+  `;
+
+  document.body.appendChild(payment);
+
+}
+
+
+function selectPayment(method){
+
+  const payment =
+    document.getElementById("olmoPayment");
+
+  if(payment){
+    payment.remove();
+  }
+
+  showToast(
+    "Mode choisi : " + method
+  );
 
   }</script>
 
