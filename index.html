@@ -2845,7 +2845,142 @@ function updateOlmoFavoriteButtons(){
 
 }
 
-loadOlmoFavorites();</script>
+loadOlmoFavorites();// ===== FAVORIS OLMO - PARTIE 2 =====
+
+function addOlmoFavoriteButtons(){
+
+  const cards =
+    document.querySelectorAll(".product-card");
+
+  cards.forEach(function(card, index){
+
+    if(card.querySelector(".olmo-favorite-btn")){
+      return;
+    }
+
+    const product =
+      currentProducts[index];
+
+    if(!product){
+      return;
+    }
+
+    const button =
+      document.createElement("button");
+
+    button.className =
+      "olmo-favorite-btn";
+
+    button.dataset.productId =
+      product.id;
+
+    button.textContent =
+      isOlmoFavorite(product.id) ? "❤️" : "♡";
+
+    button.setAttribute(
+      "aria-label",
+      "Ajouter aux favoris"
+    );
+
+    button.style.cssText = `
+      position:absolute;
+      top:10px;
+      right:10px;
+      width:40px;
+      height:40px;
+      border:none;
+      border-radius:50%;
+      background:white;
+      box-shadow:0 3px 10px rgba(0,0,0,.15);
+      font-size:22px;
+      cursor:pointer;
+      z-index:5;
+    `;
+
+    if(getComputedStyle(card).position === "static"){
+      card.style.position = "relative";
+    }
+
+    button.addEventListener(
+      "click",
+      function(event){
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        toggleOlmoFavorite(product.id);
+
+      }
+    );
+
+    card.appendChild(button);
+
+  });
+
+  updateOlmoFavoriteButtons();
+
+}
+
+
+function showOlmoFavorites(){
+
+  const favoriteProducts =
+    currentProducts.filter(function(product){
+
+      return isOlmoFavorite(product.id);
+
+    });
+
+  if(favoriteProducts.length === 0){
+
+    showToast("Aucun produit dans vos favoris ❤️");
+
+    return;
+
+  }
+
+  const names =
+    favoriteProducts
+      .map(function(product){
+
+        return product.name;
+
+      })
+      .join(", ");
+
+  showToast(
+    "Favoris : " + names
+  );
+
+}
+
+
+setTimeout(function(){
+
+  addOlmoFavoriteButtons();
+
+},500);
+
+
+const olmoFavoriteObserver =
+  new MutationObserver(function(){
+
+    setTimeout(function(){
+
+      addOlmoFavoriteButtons();
+
+    },100);
+
+  });
+
+
+olmoFavoriteObserver.observe(
+  document.body,
+  {
+    childList:true,
+    subtree:true
+  }
+);</script>
 
 </body>
   </html>
