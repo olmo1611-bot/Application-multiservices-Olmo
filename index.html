@@ -2318,7 +2318,177 @@ function getStockText(stock){
 
   return stock + " disponibles";
 
-  }</script>
+  }// ===== INFORMATIONS MARKETPLACE OLMO - PARTIE 2 =====
+
+function showMarketplaceInfo(product){
+
+  const details = getProductDetails(product.id);
+
+  const modal =
+    document.getElementById("productModal");
+
+  if(!modal) return;
+
+  const content =
+    modal.querySelector(".modal-content");
+
+  if(!content) return;
+
+  const oldInfo =
+    content.querySelector(".marketplace-info");
+
+  if(oldInfo){
+
+    oldInfo.remove();
+
+  }
+
+  const info =
+    document.createElement("div");
+
+  info.className = "marketplace-info";
+
+  info.style.marginTop = "18px";
+
+  info.innerHTML = `
+
+    <div style="
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:15px;
+    ">
+
+      <div style="
+        font-size:18px;
+        color:#f59e0b;
+        font-weight:bold;
+      ">
+
+        ${getStars(details.rating)}
+
+        <span style="
+          color:#374151;
+          font-size:14px;
+          margin-left:5px;
+        ">
+          ${details.rating}/5
+          (${details.reviews} avis)
+        </span>
+
+      </div>
+
+      <div style="
+        padding:7px 11px;
+        border-radius:20px;
+        background:${
+          details.stock <= 5
+          ? "#fff7ed"
+          : "#ecfdf5"
+        };
+        color:${
+          details.stock <= 5
+          ? "#c2410c"
+          : "#047857"
+        };
+        font-size:13px;
+        font-weight:bold;
+      ">
+
+        📦 ${getStockText(details.stock)}
+
+      </div>
+
+    </div>
+
+
+    <div style="
+      background:#f9fafb;
+      border:1px solid #e5e7eb;
+      border-radius:15px;
+      padding:15px;
+    ">
+
+      <div style="
+        display:flex;
+        align-items:center;
+        gap:10px;
+        margin-bottom:10px;
+      ">
+
+        <span style="font-size:25px;">🏪</span>
+
+        <div>
+
+          <div style="
+            font-size:12px;
+            color:#6b7280;
+          ">
+            Vendu par
+          </div>
+
+          <strong>
+            ${details.seller}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div style="
+        font-size:14px;
+        color:#374151;
+      ">
+
+        🚚 ${details.delivery}
+
+      </div>
+
+    </div>
+
+  `;
+
+  const buttons =
+    content.querySelector(
+      ".checkout"
+    )?.parentElement;
+
+  if(buttons){
+
+    buttons.before(info);
+
+  }else{
+
+    content.appendChild(info);
+
+  }
+
+}
+
+
+const previousOpenProduct = openProduct;
+
+openProduct = function(id){
+
+  previousOpenProduct(id);
+
+  setTimeout(function(){
+
+    const product =
+      products.find(p => p.id === id);
+
+    if(product){
+
+      showMarketplaceInfo(product);
+
+    }
+
+  },150);
+
+};</script>
 
 </body>
   </html>
