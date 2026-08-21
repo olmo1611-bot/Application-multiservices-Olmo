@@ -5938,7 +5938,396 @@ setTimeout(function(){
 
   addOlmoSellerButton();
 
-},900);</script>
+},900);// ===== PRODUITS VENDEUR OLMO - PARTIE 1 =====
+
+let olmoSellerProducts = [];
+
+function loadOlmoSellerProducts(){
+
+  try{
+
+    const saved =
+      localStorage.getItem(
+        "olmo_seller_products"
+      );
+
+    if(saved){
+
+      const data =
+        JSON.parse(saved);
+
+      if(Array.isArray(data)){
+
+        olmoSellerProducts = data;
+
+      }
+
+    }
+
+  }catch(error){
+
+    olmoSellerProducts = [];
+
+  }
+
+}
+
+
+function saveOlmoSellerProducts(){
+
+  localStorage.setItem(
+    "olmo_seller_products",
+    JSON.stringify(
+      olmoSellerProducts
+    )
+  );
+
+}
+
+
+function addOlmoProduct(){
+
+  const old =
+    document.getElementById(
+      "olmoProductForm"
+    );
+
+  if(old){
+    old.remove();
+  }
+
+  const form =
+    document.createElement("div");
+
+  form.id =
+    "olmoProductForm";
+
+  form.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:100007;
+    background:rgba(0,0,0,.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    box-sizing:border-box;
+  `;
+
+  form.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      max-height:90vh;
+      overflow:auto;
+      background:white;
+      border-radius:20px;
+      padding:22px;
+      box-sizing:border-box;
+    ">
+
+      <h2 style="margin-top:0;">
+        ➕ Ajouter un produit
+      </h2>
+
+      <input
+        id="olmoProductName"
+        type="text"
+        placeholder="Nom du produit"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <input
+        id="olmoProductPrice"
+        type="number"
+        placeholder="Prix en FCFA"
+        min="0"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <select
+        id="olmoProductCategory"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+          background:white;
+        "
+      >
+
+        <option value="">
+          Choisir une catégorie
+        </option>
+
+        <option value="Smartphones">
+          📱 Smartphones
+        </option>
+
+        <option value="Chaussures">
+          👟 Chaussures
+        </option>
+
+        <option value="Écouteurs">
+          🎧 Écouteurs
+        </option>
+
+        <option value="Vêtements">
+          👕 Vêtements
+        </option>
+
+        <option value="Autres">
+          📦 Autres
+        </option>
+
+      </select>
+
+      <input
+        id="olmoProductStock"
+        type="number"
+        placeholder="Stock disponible"
+        min="0"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <label style="
+        display:block;
+        margin-top:14px;
+        font-weight:bold;
+      ">
+        📸 Image du produit
+      </label>
+
+      <input
+        id="olmoProductImage"
+        type="file"
+        accept="image/*"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          margin-top:8px;
+        "
+      >
+
+      <button
+        onclick="saveOlmoSellerProduct()"
+        style="
+          width:100%;
+          margin-top:18px;
+          padding:14px;
+          border:0;
+          border-radius:12px;
+          background:#111827;
+          color:white;
+          font-size:16px;
+          font-weight:bold;
+        "
+      >
+        Ajouter le produit
+      </button>
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoProductForm'
+            )
+            .remove()
+        "
+        style="
+          width:100%;
+          margin-top:8px;
+          padding:12px;
+          border:0;
+          border-radius:12px;
+          background:#f3f4f6;
+        "
+      >
+        Annuler
+      </button>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(form);
+
+}
+
+
+function saveOlmoSellerProduct(){
+
+  const name =
+    document
+      .getElementById(
+        "olmoProductName"
+      )
+      .value
+      .trim();
+
+  const price =
+    Number(
+      document
+        .getElementById(
+          "olmoProductPrice"
+        )
+        .value
+    );
+
+  const category =
+    document
+      .getElementById(
+        "olmoProductCategory"
+      )
+      .value;
+
+  const stock =
+    Number(
+      document
+        .getElementById(
+          "olmoProductStock"
+        )
+        .value
+    );
+
+  const imageInput =
+    document.getElementById(
+      "olmoProductImage"
+    );
+
+  if(
+    !name ||
+    !price ||
+    !category ||
+    stock < 0
+  ){
+
+    showToast(
+      "Veuillez remplir correctement les champs"
+    );
+
+    return;
+
+  }
+
+  const product = {
+
+    id:
+      "SELLER-" +
+      Date.now(),
+
+    name: name,
+
+    price: price,
+
+    category: category,
+
+    stock: stock,
+
+    image: "",
+
+    seller:
+      olmoSeller
+        ? olmoSeller.shop
+        : "Vendeur OLMO",
+
+    createdAt:
+      new Date().toLocaleString(
+        "fr-FR"
+      )
+
+  };
+
+
+  const file =
+    imageInput.files[0];
+
+  if(file){
+
+    const reader =
+      new FileReader();
+
+    reader.onload = function(event){
+
+      product.image =
+        event.target.result;
+
+      olmoSellerProducts.push(
+        product
+      );
+
+      saveOlmoSellerProducts();
+
+      closeOlmoProductForm();
+
+      showToast(
+        "Produit ajouté avec succès 🛍️"
+      );
+
+    };
+
+    reader.readAsDataURL(file);
+
+  }else{
+
+    olmoSellerProducts.push(
+      product
+    );
+
+    saveOlmoSellerProducts();
+
+    closeOlmoProductForm();
+
+    showToast(
+      "Produit ajouté avec succès 🛍️"
+    );
+
+  }
+
+}
+
+
+function closeOlmoProductForm(){
+
+  const form =
+    document.getElementById(
+      "olmoProductForm"
+    );
+
+  if(form){
+
+    form.remove();
+
+  }
+
+}
+
+
+loadOlmoSellerProducts();</script>
 
 </body>
   </html>
