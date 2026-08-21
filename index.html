@@ -7064,7 +7064,132 @@ showOlmoSellerProducts = function(){
 
   },100);
 
-};</script>
+};// ===== PUBLICATION PRODUITS OLMO - PARTIE 1 =====
+
+function getOlmoPublishedProducts(){
+
+  try{
+
+    const saved =
+      localStorage.getItem(
+        "olmo_published_products"
+      );
+
+    if(saved){
+
+      const data =
+        JSON.parse(saved);
+
+      if(Array.isArray(data)){
+
+        return data;
+
+      }
+
+    }
+
+  }catch(error){
+
+    console.log(
+      "Erreur chargement produits publiés"
+    );
+
+  }
+
+  return [];
+
+}
+
+
+function saveOlmoPublishedProducts(products){
+
+  localStorage.setItem(
+    "olmo_published_products",
+    JSON.stringify(products)
+  );
+
+}
+
+
+function publishOlmoSellerProduct(productId){
+
+  const product =
+    olmoSellerProducts.find(
+      function(item){
+
+        return item.id === productId;
+
+      }
+    );
+
+  if(!product){
+
+    showToast(
+      "Produit introuvable"
+    );
+
+    return;
+
+  }
+
+  const published =
+    getOlmoPublishedProducts();
+
+  const alreadyPublished =
+    published.some(
+      function(item){
+
+        return item.id === product.id;
+
+      }
+    );
+
+  if(alreadyPublished){
+
+    showToast(
+      "Ce produit est déjà publié"
+    );
+
+    return;
+
+  }
+
+  const publicProduct = {
+
+    id: product.id,
+
+    name: product.name,
+
+    price: product.price,
+
+    category: product.category,
+
+    stock: product.stock,
+
+    image: product.image,
+
+    seller: product.seller,
+
+    publishedAt:
+      new Date().toLocaleString(
+        "fr-FR"
+      )
+
+  };
+
+  published.push(
+    publicProduct
+  );
+
+  saveOlmoPublishedProducts(
+    published
+  );
+
+  showToast(
+    "Produit publié dans OLMO 🛍️"
+  );
+
+  }</script>
 
 </body>
   </html>
