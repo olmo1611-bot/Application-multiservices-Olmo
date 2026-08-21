@@ -4504,7 +4504,252 @@ function getOlmoOrderStatusLabel(status){
 }
 
 
-loadOlmoOrders();</script>
+loadOlmoOrders();// ===== SYSTÈME DE COMMANDES OLMO - PARTIE 2 =====
+
+function confirmOlmoOrder(
+  customer,
+  paymentMethod
+){
+
+  const order =
+    createOlmoOrder(
+      customer,
+      paymentMethod
+    );
+
+  if(!order){
+
+    return;
+
+  }
+
+  cart = [];
+
+  saveCart();
+
+  updateCart();
+
+  refreshCartSummary();
+
+  const payment =
+    document.getElementById(
+      "olmoPayment"
+    );
+
+  if(payment){
+
+    payment.remove();
+
+  }
+
+  showOlmoOrderConfirmation(order);
+
+}
+
+
+function showOlmoOrderConfirmation(order){
+
+  const old =
+    document.getElementById(
+      "olmoOrderConfirmation"
+    );
+
+  if(old){
+
+    old.remove();
+
+  }
+
+  const confirmation =
+    document.createElement("div");
+
+  confirmation.id =
+    "olmoOrderConfirmation";
+
+  confirmation.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:100002;
+    background:rgba(0,0,0,.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    box-sizing:border-box;
+  `;
+
+  confirmation.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      max-height:90vh;
+      overflow:auto;
+      background:white;
+      border-radius:20px;
+      padding:24px;
+      box-sizing:border-box;
+      text-align:center;
+    ">
+
+      <div style="
+        width:70px;
+        height:70px;
+        margin:0 auto 15px;
+        border-radius:50%;
+        background:#ecfdf5;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:38px;
+      ">
+        ✓
+      </div>
+
+      <h2 style="
+        margin:0 0 8px;
+      ">
+        Commande confirmée !
+      </h2>
+
+      <p style="
+        color:#6b7280;
+        margin-bottom:20px;
+      ">
+        Merci pour votre commande sur OLMO.
+      </p>
+
+      <div style="
+        background:#f9fafb;
+        border-radius:14px;
+        padding:15px;
+        text-align:left;
+      ">
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          margin-bottom:10px;
+        ">
+
+          <span>Commande</span>
+
+          <strong>
+            ${order.id}
+          </strong>
+
+        </div>
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          margin-bottom:10px;
+        ">
+
+          <span>Total</span>
+
+          <strong>
+            ${formatPrice(order.total)}
+          </strong>
+
+        </div>
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+        ">
+
+          <span>Statut</span>
+
+          <strong>
+            ${getOlmoOrderStatusLabel(
+              order.status
+            )}
+          </strong>
+
+        </div>
+
+      </div>
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoOrderConfirmation'
+            )
+            .remove()
+        "
+        style="
+          width:100%;
+          margin-top:20px;
+          padding:14px;
+          border:0;
+          border-radius:12px;
+          background:#111827;
+          color:white;
+          font-size:16px;
+          font-weight:bold;
+        "
+      >
+        Continuer sur OLMO
+      </button>
+
+    </div>
+  `;
+
+  document.body.appendChild(
+    confirmation
+  );
+
+}
+
+
+function selectPayment(method){
+
+  const payment =
+    document.getElementById(
+      "olmoPayment"
+    );
+
+  if(payment){
+
+    payment.remove();
+
+  }
+
+  const customer = {
+
+    name:
+      window.olmoCustomerName || "",
+
+    phone:
+      window.olmoCustomerPhone || "",
+
+    address:
+      window.olmoCustomerAddress || ""
+
+  };
+
+  if(
+    !customer.name ||
+    !customer.phone ||
+    !customer.address
+  ){
+
+    showToast(
+      "Informations client manquantes"
+    );
+
+    return;
+
+  }
+
+  confirmOlmoOrder(
+    customer,
+    method
+  );
+
+  }</script>
 
 </body>
   </html>
