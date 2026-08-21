@@ -4240,7 +4240,38 @@ function selectPayment(method){
     "Mode de paiement choisi : " + method
   );
 
-  }</script>
+  }// ===== CORRECTION BOUTON CONTINUER =====
+
+const olmoButtonFix = document.createElement("style");
+
+olmoButtonFix.textContent = `
+
+  #olmoConfirmOrder {
+
+    position: sticky !important;
+    bottom: 10px !important;
+
+    width: 100% !important;
+
+    min-height: 52px !important;
+
+    margin-top: 18px !important;
+
+    z-index: 20 !important;
+
+    cursor: pointer !important;
+
+  }
+
+  #olmoOrderBox > div {
+
+    padding-bottom: 25px !important;
+
+  }
+
+`;
+
+document.head.appendChild(olmoButtonFix);</script>
 
 </body>
   </html>
