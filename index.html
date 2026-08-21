@@ -5064,7 +5064,298 @@ setTimeout(function(){
 
   addOlmoOrdersButton();
 
-},700);</script>
+},700);// ===== SUIVI COMMANDES OLMO - PARTIE 1 =====
+
+function showOlmoOrderDetails(orderId){
+
+  const order =
+    olmoOrders.find(function(item){
+
+      return item.id === orderId;
+
+    });
+
+  if(!order){
+
+    showToast("Commande introuvable");
+
+    return;
+
+  }
+
+  const old =
+    document.getElementById(
+      "olmoOrderDetails"
+    );
+
+  if(old){
+
+    old.remove();
+
+  }
+
+  const details =
+    document.createElement("div");
+
+  details.id =
+    "olmoOrderDetails";
+
+  details.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:100004;
+    background:rgba(0,0,0,.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    box-sizing:border-box;
+  `;
+
+  const statuses = [
+    "En attente",
+    "Confirmée",
+    "En préparation",
+    "En livraison",
+    "Livrée"
+  ];
+
+  const currentIndex =
+    statuses.indexOf(order.status);
+
+  details.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      max-height:90vh;
+      overflow:auto;
+      background:white;
+      border-radius:20px;
+      padding:20px;
+      box-sizing:border-box;
+    ">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+      ">
+
+        <h2 style="margin:0;">
+          📦 Commande
+        </h2>
+
+        <button
+          onclick="
+            document
+              .getElementById(
+                'olmoOrderDetails'
+              )
+              .remove()
+          "
+          style="
+            width:35px;
+            height:35px;
+            border:0;
+            border-radius:50%;
+            background:#f3f4f6;
+            font-size:20px;
+          "
+        >
+          ×
+        </button>
+
+      </div>
+
+      <div style="
+        margin-top:15px;
+        padding:14px;
+        background:#f9fafb;
+        border-radius:12px;
+      ">
+
+        <strong>
+          ${order.id}
+        </strong>
+
+        <div style="
+          margin-top:6px;
+          color:#6b7280;
+          font-size:13px;
+        ">
+          ${order.date}
+        </div>
+
+      </div>
+
+      <h3>
+        🚦 Suivi de la commande
+      </h3>
+
+      <div>
+
+        ${statuses.map(function(status, index){
+
+          const active =
+            index <= currentIndex;
+
+          return `
+
+            <div style="
+              display:flex;
+              align-items:center;
+              gap:12px;
+              margin:12px 0;
+            ">
+
+              <div style="
+                width:28px;
+                height:28px;
+                border-radius:50%;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                background:${active ? "#111827" : "#e5e7eb"};
+                color:${active ? "white" : "#6b7280"};
+                font-size:14px;
+                flex-shrink:0;
+              ">
+                ${active ? "✓" : index + 1}
+              </div>
+
+              <strong style="
+                color:${active ? "#111827" : "#9ca3af"};
+              ">
+                ${status}
+              </strong>
+
+            </div>
+
+          `;
+
+        }).join("")}
+
+      </div>
+
+      <h3>
+        🛍️ Articles
+      </h3>
+
+      ${order.products.map(function(product){
+
+        return `
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            gap:10px;
+            padding:10px 0;
+            border-bottom:1px solid #eee;
+          ">
+
+            <div>
+
+              <strong>
+                ${product.name}
+              </strong>
+
+              <div style="
+                color:#6b7280;
+                font-size:13px;
+                margin-top:4px;
+              ">
+                Quantité : ${product.quantity}
+              </div>
+
+            </div>
+
+            <strong>
+              ${formatPrice(product.total)}
+            </strong>
+
+          </div>
+
+        `;
+
+      }).join("")}
+
+      <div style="
+        margin-top:18px;
+        padding-top:15px;
+        border-top:1px solid #ddd;
+      ">
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          margin-bottom:8px;
+        ">
+
+          <span>Sous-total</span>
+
+          <strong>
+            ${formatPrice(order.subtotal)}
+          </strong>
+
+        </div>
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          margin-bottom:8px;
+        ">
+
+          <span>Livraison</span>
+
+          <strong>
+            ${formatPrice(order.delivery)}
+          </strong>
+
+        </div>
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          font-size:20px;
+        ">
+
+          <strong>Total</strong>
+
+          <strong>
+            ${formatPrice(order.total)}
+          </strong>
+
+        </div>
+
+      </div>
+
+      <div style="
+        margin-top:15px;
+        padding:13px;
+        background:#f9fafb;
+        border-radius:12px;
+        font-size:14px;
+      ">
+
+        <div>
+          🚚 Livraison :
+          ${order.deliveryMethod}
+        </div>
+
+        <div style="margin-top:7px;">
+          💳 Paiement :
+          ${order.paymentMethod}
+        </div>
+
+      </div>
+
+    </div>
+  `;
+
+  document.body.appendChild(details);
+
+  }</script>
 
 </body>
   </html>
