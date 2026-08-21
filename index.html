@@ -4335,7 +4335,176 @@ olmoCartFix.textContent = `
 
 `;
 
-document.head.appendChild(olmoCartFix);</script>
+document.head.appendChild(olmoCartFix);// ===== SYSTÈME DE COMMANDES OLMO - PARTIE 1 =====
+
+let olmoOrders = [];
+
+function loadOlmoOrders(){
+
+  try{
+
+    const saved =
+      localStorage.getItem("olmo_orders");
+
+    if(saved){
+
+      const data = JSON.parse(saved);
+
+      if(Array.isArray(data)){
+        olmoOrders = data;
+      }
+
+    }
+
+  }catch(error){
+
+    olmoOrders = [];
+
+  }
+
+}
+
+
+function saveOlmoOrders(){
+
+  localStorage.setItem(
+    "olmo_orders",
+    JSON.stringify(olmoOrders)
+  );
+
+}
+
+
+function generateOrderNumber(){
+
+  const now = new Date();
+
+  const date =
+    now.getFullYear().toString() +
+    (now.getMonth()+1)
+      .toString()
+      .padStart(2,"0") +
+    now.getDate()
+      .toString()
+      .padStart(2,"0");
+
+  const random =
+    Math.floor(
+      1000 + Math.random() * 9000
+    );
+
+  return "OLMO-" + date + "-" + random;
+
+}
+
+
+function createOlmoOrder(
+  customer,
+  paymentMethod
+){
+
+  if(!cart || cart.length === 0){
+
+    showToast("Votre panier est vide");
+
+    return null;
+
+  }
+
+  const order = {
+
+    id: generateOrderNumber(),
+
+    date: new Date().toLocaleString(
+      "fr-FR"
+    ),
+
+    customer: {
+
+      name: customer.name,
+
+      phone: customer.phone,
+
+      address: customer.address
+
+    },
+
+    products: cart.map(function(item){
+
+      return {
+
+        id: item.id,
+
+        name: item.name,
+
+        price: item.price,
+
+        quantity: item.quantity,
+
+        total:
+          item.price * item.quantity
+
+      };
+
+    }),
+
+    subtotal:
+      getCartSubtotal(),
+
+    delivery:
+      getDeliveryFee(),
+
+    total:
+      getOrderTotal(),
+
+    deliveryMethod:
+      olmoDeliveryMethod,
+
+    paymentMethod:
+      paymentMethod,
+
+    status:
+      "En attente"
+
+  };
+
+
+  olmoOrders.unshift(order);
+
+  saveOlmoOrders();
+
+  return order;
+
+}
+
+
+function getOlmoOrderStatusLabel(status){
+
+  const labels = {
+
+    "En attente":
+      "⏳ En attente",
+
+    "Confirmée":
+      "✅ Confirmée",
+
+    "En préparation":
+      "📦 En préparation",
+
+    "En livraison":
+      "🚚 En livraison",
+
+    "Livrée":
+      "🎉 Livrée"
+
+  };
+
+  return labels[status] || status;
+
+}
+
+
+loadOlmoOrders();</script>
 
 </body>
   </html>
