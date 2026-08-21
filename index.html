@@ -4801,7 +4801,214 @@ validateCustomerOrder = function(){
 
   showPaymentOptions();
 
-};</script>
+};// ===== HISTORIQUE COMMANDES OLMO - PARTIE 1 =====
+
+function showOlmoOrders(){
+
+  const old =
+    document.getElementById(
+      "olmoOrdersHistory"
+    );
+
+  if(old){
+    old.remove();
+  }
+
+  const history =
+    document.createElement("div");
+
+  history.id =
+    "olmoOrdersHistory";
+
+  history.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:100003;
+    background:rgba(0,0,0,.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    box-sizing:border-box;
+  `;
+
+  if(olmoOrders.length === 0){
+
+    history.innerHTML = `
+
+      <div style="
+        width:100%;
+        max-width:430px;
+        background:white;
+        border-radius:20px;
+        padding:25px;
+        text-align:center;
+      ">
+
+        <div style="
+          font-size:50px;
+        ">
+          📦
+        </div>
+
+        <h2>
+          Mes commandes
+        </h2>
+
+        <p style="
+          color:#6b7280;
+        ">
+          Vous n'avez encore aucune commande.
+        </p>
+
+        <button
+          onclick="
+            document
+              .getElementById(
+                'olmoOrdersHistory'
+              )
+              .remove()
+          "
+          style="
+            width:100%;
+            padding:14px;
+            border:0;
+            border-radius:12px;
+            background:#111827;
+            color:white;
+            font-weight:bold;
+          "
+        >
+          Fermer
+        </button>
+
+      </div>
+
+    `;
+
+    document.body.appendChild(history);
+
+    return;
+
+  }
+
+  history.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      max-height:90vh;
+      overflow:auto;
+      background:white;
+      border-radius:20px;
+      padding:20px;
+      box-sizing:border-box;
+    ">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:15px;
+      ">
+
+        <h2 style="margin:0;">
+          📦 Mes commandes
+        </h2>
+
+        <button
+          onclick="
+            document
+              .getElementById(
+                'olmoOrdersHistory'
+              )
+              .remove()
+          "
+          style="
+            border:0;
+            background:#f3f4f6;
+            border-radius:50%;
+            width:35px;
+            height:35px;
+            font-size:20px;
+          "
+        >
+          ×
+        </button>
+
+      </div>
+
+      ${olmoOrders.map(function(order){
+
+        return `
+
+          <div style="
+            padding:15px;
+            margin-bottom:12px;
+            border:1px solid #e5e7eb;
+            border-radius:15px;
+            background:#fff;
+          ">
+
+            <div style="
+              display:flex;
+              justify-content:space-between;
+              gap:10px;
+            ">
+
+              <strong>
+                ${order.id}
+              </strong>
+
+              <span style="
+                font-size:13px;
+                font-weight:bold;
+              ">
+                ${getOlmoOrderStatusLabel(
+                  order.status
+                )}
+              </span>
+
+            </div>
+
+            <div style="
+              margin-top:8px;
+              color:#6b7280;
+              font-size:13px;
+            ">
+              ${order.date}
+            </div>
+
+            <div style="
+              margin-top:10px;
+              display:flex;
+              justify-content:space-between;
+            ">
+
+              <span>
+                ${order.products.length}
+                article(s)
+              </span>
+
+              <strong>
+                ${formatPrice(order.total)}
+              </strong>
+
+            </div>
+
+          </div>
+
+        `;
+
+      }).join("")}
+
+    </div>
+
+  `;
+
+  document.body.appendChild(history);
+
+  }</script>
 
 </body>
   </html>
