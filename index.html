@@ -5355,7 +5355,95 @@ function showOlmoOrderDetails(orderId){
 
   document.body.appendChild(details);
 
-  }</script>
+  }// ===== SUIVI COMMANDES OLMO - PARTIE 2 =====
+
+function makeOlmoOrdersClickable(){
+
+  const history =
+    document.getElementById(
+      "olmoOrdersHistory"
+    );
+
+  if(!history) return;
+
+  const cards =
+    history.querySelectorAll(
+      "[data-olmo-order-id]"
+    );
+
+  cards.forEach(function(card){
+
+    card.style.cursor = "pointer";
+
+    card.addEventListener(
+      "click",
+      function(){
+
+        const orderId =
+          card.dataset.olmoOrderId;
+
+        showOlmoOrderDetails(orderId);
+
+      }
+    );
+
+  });
+
+}
+
+
+const oldShowOlmoOrders =
+  showOlmoOrders;
+
+showOlmoOrders = function(){
+
+  oldShowOlmoOrders();
+
+  setTimeout(function(){
+
+    const history =
+      document.getElementById(
+        "olmoOrdersHistory"
+      );
+
+    if(!history) return;
+
+    const cards =
+      history.querySelectorAll(
+        "div"
+      );
+
+    cards.forEach(function(card){
+
+      const strong =
+        card.querySelector("strong");
+
+      if(!strong) return;
+
+      const orderId =
+        strong.textContent.trim();
+
+      const exists =
+        olmoOrders.some(function(order){
+
+          return order.id === orderId;
+
+        });
+
+      if(exists){
+
+        card.dataset.olmoOrderId =
+          orderId;
+
+      }
+
+    });
+
+    makeOlmoOrdersClickable();
+
+  },100);
+
+};</script>
 
 </body>
   </html>
