@@ -5443,7 +5443,275 @@ showOlmoOrders = function(){
 
   },100);
 
-};</script>
+};// ===== ESPACE VENDEUR OLMO - PARTIE 1 =====
+
+let olmoSeller = null;
+
+function loadOlmoSeller(){
+
+  try{
+
+    const saved =
+      localStorage.getItem("olmo_seller");
+
+    if(saved){
+
+      olmoSeller =
+        JSON.parse(saved);
+
+    }
+
+  }catch(error){
+
+    olmoSeller = null;
+
+  }
+
+}
+
+
+function saveOlmoSeller(){
+
+  localStorage.setItem(
+    "olmo_seller",
+    JSON.stringify(olmoSeller)
+  );
+
+}
+
+
+function createOlmoSeller(){
+
+  const old =
+    document.getElementById(
+      "olmoSellerForm"
+    );
+
+  if(old){
+    old.remove();
+  }
+
+  const form =
+    document.createElement("div");
+
+  form.id =
+    "olmoSellerForm";
+
+  form.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:100005;
+    background:rgba(0,0,0,.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    box-sizing:border-box;
+  `;
+
+  form.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      max-height:90vh;
+      overflow:auto;
+      background:white;
+      border-radius:20px;
+      padding:22px;
+      box-sizing:border-box;
+    ">
+
+      <h2 style="margin-top:0;">
+        🏪 Créer ma boutique
+      </h2>
+
+      <p style="
+        color:#6b7280;
+        font-size:14px;
+      ">
+        Présentez votre boutique aux clients OLMO.
+      </p>
+
+      <input
+        id="olmoSellerName"
+        type="text"
+        placeholder="Votre nom complet"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-top:12px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <input
+        id="olmoShopName"
+        type="text"
+        placeholder="Nom de votre boutique"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <input
+        id="olmoSellerPhone"
+        type="tel"
+        placeholder="Téléphone"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <input
+        id="olmoSellerLocation"
+        type="text"
+        placeholder="Ville / localisation"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <button
+        onclick="saveOlmoSellerForm()"
+        style="
+          width:100%;
+          margin-top:18px;
+          padding:14px;
+          border:0;
+          border-radius:12px;
+          background:#111827;
+          color:white;
+          font-size:16px;
+          font-weight:bold;
+        "
+      >
+        Créer ma boutique
+      </button>
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoSellerForm'
+            )
+            .remove()
+        "
+        style="
+          width:100%;
+          margin-top:8px;
+          padding:12px;
+          border:0;
+          border-radius:12px;
+          background:#f3f4f6;
+        "
+      >
+        Annuler
+      </button>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(form);
+
+}
+
+
+function saveOlmoSellerForm(){
+
+  const name =
+    document
+      .getElementById("olmoSellerName")
+      .value
+      .trim();
+
+  const shop =
+    document
+      .getElementById("olmoShopName")
+      .value
+      .trim();
+
+  const phone =
+    document
+      .getElementById("olmoSellerPhone")
+      .value
+      .trim();
+
+  const location =
+    document
+      .getElementById("olmoSellerLocation")
+      .value
+      .trim();
+
+  if(
+    !name ||
+    !shop ||
+    !phone ||
+    !location
+  ){
+
+    showToast(
+      "Veuillez remplir tous les champs"
+    );
+
+    return;
+
+  }
+
+  olmoSeller = {
+
+    name: name,
+
+    shop: shop,
+
+    phone: phone,
+
+    location: location,
+
+    createdAt:
+      new Date().toLocaleString(
+        "fr-FR"
+      )
+
+  };
+
+  saveOlmoSeller();
+
+  const form =
+    document.getElementById(
+      "olmoSellerForm"
+    );
+
+  if(form){
+    form.remove();
+  }
+
+  showToast(
+    "Boutique créée avec succès 🏪"
+  );
+
+}
+
+
+loadOlmoSeller();</script>
 
 </body>
   </html>
