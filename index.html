@@ -3848,6 +3848,398 @@ function validateCustomerOrder(){
     address
   );
 
+  }// ===== CORRECTION COMMANDE OLMO - PARTIE 2 =====
+
+function createOrderSummary(){
+
+  if(!cart || cart.length === 0){
+
+    showToast("Votre panier est vide");
+
+    return;
+
+  }
+
+  const old =
+    document.getElementById("olmoOrderBox");
+
+  if(old){
+    old.remove();
+  }
+
+  const subtotal =
+    getCartSubtotal();
+
+  const delivery =
+    getDeliveryFee();
+
+  const total =
+    subtotal + delivery;
+
+  const box =
+    document.createElement("div");
+
+  box.id = "olmoOrderBox";
+
+  box.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    background:rgba(0,0,0,.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    box-sizing:border-box;
+  `;
+
+  box.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      max-height:90vh;
+      overflow:auto;
+      background:white;
+      border-radius:20px;
+      padding:22px;
+      box-sizing:border-box;
+    ">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+      ">
+
+        <h2 style="margin:0;">
+          🧾 Votre commande
+        </h2>
+
+        <button
+          onclick="
+            document
+              .getElementById('olmoOrderBox')
+              .remove()
+          "
+          style="
+            border:0;
+            background:#f3f4f6;
+            border-radius:50%;
+            width:35px;
+            height:35px;
+            font-size:20px;
+          "
+        >
+          ×
+        </button>
+
+      </div>
+
+      <div style="margin-top:18px;">
+
+        ${cart.map(function(item){
+
+          return `
+
+            <div style="
+              display:flex;
+              justify-content:space-between;
+              gap:10px;
+              padding:12px 0;
+              border-bottom:1px solid #eee;
+            ">
+
+              <div>
+
+                <strong>
+                  ${item.name}
+                </strong>
+
+                <div style="
+                  color:#6b7280;
+                  font-size:13px;
+                  margin-top:4px;
+                ">
+                  Quantité : ${item.quantity}
+                </div>
+
+              </div>
+
+              <strong>
+                ${formatPrice(
+                  item.price * item.quantity
+                )}
+              </strong>
+
+            </div>
+
+          `;
+
+        }).join("")}
+
+      </div>
+
+      <h3 style="margin-bottom:10px;">
+        🚚 Livraison
+      </h3>
+
+      <label style="
+        display:block;
+        padding:13px;
+        border:1px solid #ddd;
+        border-radius:12px;
+        margin-bottom:8px;
+      ">
+
+        <input
+          type="radio"
+          name="olmoDelivery"
+          checked
+          onchange="
+            olmoDeliveryMethod='standard';
+            updateOrderSummary();
+          "
+        >
+
+        Livraison standard — 1 000 FCFA
+
+      </label>
+
+      <label style="
+        display:block;
+        padding:13px;
+        border:1px solid #ddd;
+        border-radius:12px;
+      ">
+
+        <input
+          type="radio"
+          name="olmoDelivery"
+          onchange="
+            olmoDeliveryMethod='express';
+            updateOrderSummary();
+          "
+        >
+
+        Livraison express — 2 000 FCFA
+
+      </label>
+
+      <div style="
+        margin-top:20px;
+        padding-top:15px;
+        border-top:1px solid #ddd;
+      ">
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          margin-bottom:8px;
+        ">
+
+          <span>Sous-total</span>
+
+          <strong id="orderSubtotal">
+            ${formatPrice(subtotal)}
+          </strong>
+
+        </div>
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          margin-bottom:12px;
+        ">
+
+          <span>Livraison</span>
+
+          <strong id="orderDelivery">
+            ${formatPrice(delivery)}
+          </strong>
+
+        </div>
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          font-size:20px;
+        ">
+
+          <strong>Total</strong>
+
+          <strong id="orderTotal">
+            ${formatPrice(total)}
+          </strong>
+
+        </div>
+
+      </div>
+
+      <button
+        id="olmoConfirmOrder"
+        onclick="continueOrder()"
+        style="
+          width:100%;
+          margin-top:20px;
+          padding:15px;
+          border:0;
+          border-radius:12px;
+          background:#111827;
+          color:white;
+          font-size:16px;
+          font-weight:bold;
+        "
+      >
+        Continuer
+      </button>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(box);
+
+}
+
+
+function showPaymentOptions(){
+
+  const old =
+    document.getElementById("olmoPayment");
+
+  if(old){
+    old.remove();
+  }
+
+  const payment =
+    document.createElement("div");
+
+  payment.id = "olmoPayment";
+
+  payment.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:100001;
+    background:rgba(0,0,0,.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    box-sizing:border-box;
+  `;
+
+  payment.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      background:white;
+      border-radius:20px;
+      padding:22px;
+      box-sizing:border-box;
+    ">
+
+      <h2 style="margin-top:0;">
+        💳 Paiement
+      </h2>
+
+      <p style="color:#6b7280;">
+        Choisissez votre mode de paiement.
+      </p>
+
+      <div style="
+        font-size:24px;
+        font-weight:bold;
+        margin:15px 0 20px;
+      ">
+        ${formatPrice(getOrderTotal())}
+      </div>
+
+      <button
+        onclick="selectPayment('Airtel Money')"
+        style="
+          width:100%;
+          padding:14px;
+          margin-bottom:10px;
+          border:1px solid #ddd;
+          border-radius:12px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        📱 Airtel Money
+      </button>
+
+      <button
+        onclick="selectPayment('Moov Money')"
+        style="
+          width:100%;
+          padding:14px;
+          margin-bottom:10px;
+          border:1px solid #ddd;
+          border-radius:12px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        📱 Moov Money
+      </button>
+
+      <button
+        onclick="selectPayment('Paiement à la livraison')"
+        style="
+          width:100%;
+          padding:14px;
+          margin-bottom:10px;
+          border:1px solid #ddd;
+          border-radius:12px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        🚚 Paiement à la livraison
+      </button>
+
+      <button
+        onclick="
+          document
+            .getElementById('olmoPayment')
+            .remove()
+        "
+        style="
+          width:100%;
+          padding:12px;
+          border:0;
+          border-radius:12px;
+          background:#f3f4f6;
+        "
+      >
+        Annuler
+      </button>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(payment);
+
+}
+
+
+function selectPayment(method){
+
+  const payment =
+    document.getElementById("olmoPayment");
+
+  if(payment){
+    payment.remove();
+  }
+
+  showToast(
+    "Mode de paiement choisi : " + method
+  );
+
   }</script>
 
 </body>
