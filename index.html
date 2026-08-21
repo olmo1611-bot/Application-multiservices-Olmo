@@ -6600,6 +6600,298 @@ function showOlmoSellerProducts(){
 
   document.body.appendChild(box);
 
+  }// ===== GESTION PRODUITS OLMO - PARTIE 1 =====
+
+function editOlmoSellerProduct(productId){
+
+  const product =
+    olmoSellerProducts.find(function(item){
+
+      return item.id === productId;
+
+    });
+
+  if(!product){
+
+    showToast("Produit introuvable");
+
+    return;
+
+  }
+
+  const old =
+    document.getElementById(
+      "olmoEditProduct"
+    );
+
+  if(old){
+    old.remove();
+  }
+
+  const box =
+    document.createElement("div");
+
+  box.id =
+    "olmoEditProduct";
+
+  box.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:100009;
+    background:rgba(0,0,0,.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    box-sizing:border-box;
+  `;
+
+  box.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      max-height:90vh;
+      overflow:auto;
+      background:white;
+      border-radius:20px;
+      padding:22px;
+      box-sizing:border-box;
+    ">
+
+      <h2 style="margin-top:0;">
+        ✏️ Modifier le produit
+      </h2>
+
+      <input
+        id="editProductName"
+        type="text"
+        value="${product.name}"
+        placeholder="Nom du produit"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <input
+        id="editProductPrice"
+        type="number"
+        value="${product.price}"
+        min="0"
+        placeholder="Prix"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <select
+        id="editProductCategory"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+          background:white;
+        "
+      >
+
+        <option value="Smartphones">
+          📱 Smartphones
+        </option>
+
+        <option value="Chaussures">
+          👟 Chaussures
+        </option>
+
+        <option value="Écouteurs">
+          🎧 Écouteurs
+        </option>
+
+        <option value="Vêtements">
+          👕 Vêtements
+        </option>
+
+        <option value="Autres">
+          📦 Autres
+        </option>
+
+      </select>
+
+      <input
+        id="editProductStock"
+        type="number"
+        value="${product.stock}"
+        min="0"
+        placeholder="Stock"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <button
+        onclick="
+          saveOlmoProductEdit('${product.id}')
+        "
+        style="
+          width:100%;
+          margin-top:18px;
+          padding:14px;
+          border:0;
+          border-radius:12px;
+          background:#111827;
+          color:white;
+          font-size:16px;
+          font-weight:bold;
+        "
+      >
+        💾 Enregistrer
+      </button>
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoEditProduct'
+            )
+            .remove()
+        "
+        style="
+          width:100%;
+          margin-top:8px;
+          padding:12px;
+          border:0;
+          border-radius:12px;
+          background:#f3f4f6;
+        "
+      >
+        Annuler
+      </button>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(box);
+
+  document
+    .getElementById(
+      "editProductCategory"
+    )
+    .value =
+      product.category;
+
+}
+
+
+function saveOlmoProductEdit(productId){
+
+  const product =
+    olmoSellerProducts.find(function(item){
+
+      return item.id === productId;
+
+    });
+
+  if(!product){
+
+    showToast("Produit introuvable");
+
+    return;
+
+  }
+
+  const name =
+    document
+      .getElementById(
+        "editProductName"
+      )
+      .value
+      .trim();
+
+  const price =
+    Number(
+      document
+        .getElementById(
+          "editProductPrice"
+        )
+        .value
+    );
+
+  const category =
+    document
+      .getElementById(
+        "editProductCategory"
+      )
+      .value;
+
+  const stock =
+    Number(
+      document
+        .getElementById(
+          "editProductStock"
+        )
+        .value
+    );
+
+  if(
+    !name ||
+    !price ||
+    !category ||
+    stock < 0
+  ){
+
+    showToast(
+      "Veuillez remplir correctement les champs"
+    );
+
+    return;
+
+  }
+
+  product.name =
+    name;
+
+  product.price =
+    price;
+
+  product.category =
+    category;
+
+  product.stock =
+    stock;
+
+  saveOlmoSellerProducts();
+
+  const box =
+    document.getElementById(
+      "olmoEditProduct"
+    );
+
+  if(box){
+    box.remove();
+  }
+
+  showToast(
+    "Produit modifié avec succès ✏️"
+  );
+
   }</script>
 
 </body>
