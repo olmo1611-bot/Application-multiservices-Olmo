@@ -4749,7 +4749,59 @@ function selectPayment(method){
     method
   );
 
-  }</script>
+  }// ===== LIAISON CLIENT → COMMANDE OLMO =====
+
+const oldValidateCustomerOrder =
+  validateCustomerOrder;
+
+validateCustomerOrder = function(){
+
+  const name =
+    document
+      .getElementById("olmoCustomerName")
+      .value
+      .trim();
+
+  const phone =
+    document
+      .getElementById("olmoCustomerPhone")
+      .value
+      .trim();
+
+  const address =
+    document
+      .getElementById("olmoCustomerAddress")
+      .value
+      .trim();
+
+  if(!name || !phone || !address){
+
+    showToast(
+      "Veuillez remplir tous les champs"
+    );
+
+    return;
+
+  }
+
+  window.olmoCustomerName = name;
+  window.olmoCustomerPhone = phone;
+  window.olmoCustomerAddress = address;
+
+  const form =
+    document.getElementById(
+      "olmoCustomerForm"
+    );
+
+  if(form){
+
+    form.remove();
+
+  }
+
+  showPaymentOptions();
+
+};</script>
 
 </body>
   </html>
