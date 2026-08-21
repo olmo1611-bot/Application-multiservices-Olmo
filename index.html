@@ -6327,7 +6327,280 @@ function closeOlmoProductForm(){
 }
 
 
-loadOlmoSellerProducts();</script>
+loadOlmoSellerProducts();// ===== PRODUITS VENDEUR OLMO - PARTIE 2 =====
+
+function showOlmoSellerProducts(){
+
+  const old =
+    document.getElementById(
+      "olmoSellerProducts"
+    );
+
+  if(old){
+    old.remove();
+  }
+
+  const box =
+    document.createElement("div");
+
+  box.id =
+    "olmoSellerProducts";
+
+  box.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:100008;
+    background:rgba(0,0,0,.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    box-sizing:border-box;
+  `;
+
+  if(
+    olmoSellerProducts.length === 0
+  ){
+
+    box.innerHTML = `
+
+      <div style="
+        width:100%;
+        max-width:430px;
+        background:white;
+        border-radius:20px;
+        padding:25px;
+        text-align:center;
+      ">
+
+        <div style="
+          font-size:50px;
+        ">
+          📦
+        </div>
+
+        <h2>
+          Mes produits
+        </h2>
+
+        <p style="
+          color:#6b7280;
+        ">
+          Vous n'avez encore ajouté
+          aucun produit.
+        </p>
+
+        <button
+          onclick="addOlmoProduct()"
+          style="
+            width:100%;
+            padding:14px;
+            border:0;
+            border-radius:12px;
+            background:#111827;
+            color:white;
+            font-weight:bold;
+          "
+        >
+          ➕ Ajouter un produit
+        </button>
+
+        <button
+          onclick="
+            document
+              .getElementById(
+                'olmoSellerProducts'
+              )
+              .remove()
+          "
+          style="
+            width:100%;
+            margin-top:8px;
+            padding:12px;
+            border:0;
+            border-radius:12px;
+            background:#f3f4f6;
+          "
+        >
+          Fermer
+        </button>
+
+      </div>
+
+    `;
+
+    document.body.appendChild(box);
+
+    return;
+
+  }
+
+
+  box.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      max-height:90vh;
+      overflow:auto;
+      background:white;
+      border-radius:20px;
+      padding:20px;
+      box-sizing:border-box;
+    ">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        margin-bottom:15px;
+      ">
+
+        <h2 style="margin:0;">
+          📦 Mes produits
+        </h2>
+
+        <button
+          onclick="
+            document
+              .getElementById(
+                'olmoSellerProducts'
+              )
+              .remove()
+          "
+          style="
+            width:35px;
+            height:35px;
+            border:0;
+            border-radius:50%;
+            background:#f3f4f6;
+            font-size:20px;
+          "
+        >
+          ×
+        </button>
+
+      </div>
+
+      ${olmoSellerProducts.map(
+        function(product){
+
+          return `
+
+            <div style="
+              margin-bottom:15px;
+              border:1px solid #e5e7eb;
+              border-radius:15px;
+              overflow:hidden;
+              background:white;
+            ">
+
+              ${
+                product.image
+                ?
+                `
+                  <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                    style="
+                      width:100%;
+                      height:180px;
+                      object-fit:cover;
+                      display:block;
+                    "
+                  >
+                `
+                :
+                `
+                  <div style="
+                    width:100%;
+                    height:150px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    background:#f3f4f6;
+                    font-size:45px;
+                  ">
+                    📦
+                  </div>
+                `
+              }
+
+              <div style="
+                padding:15px;
+              ">
+
+                <h3 style="
+                  margin:0 0 8px;
+                ">
+                  ${product.name}
+                </h3>
+
+                <div style="
+                  font-size:18px;
+                  font-weight:bold;
+                  margin-bottom:8px;
+                ">
+                  ${formatPrice(
+                    product.price
+                  )}
+                </div>
+
+                <div style="
+                  color:#6b7280;
+                  font-size:14px;
+                ">
+                  🗂️ ${product.category}
+                </div>
+
+                <div style="
+                  color:#6b7280;
+                  font-size:14px;
+                  margin-top:5px;
+                ">
+                  📦 Stock :
+                  ${product.stock}
+                </div>
+
+                <div style="
+                  color:#6b7280;
+                  font-size:13px;
+                  margin-top:5px;
+                ">
+                  🏪 ${product.seller}
+                </div>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      ).join("")}
+
+      <button
+        onclick="addOlmoProduct()"
+        style="
+          width:100%;
+          padding:14px;
+          border:0;
+          border-radius:12px;
+          background:#111827;
+          color:white;
+          font-weight:bold;
+        "
+      >
+        ➕ Ajouter un autre produit
+      </button>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(box);
+
+  }</script>
 
 </body>
   </html>
