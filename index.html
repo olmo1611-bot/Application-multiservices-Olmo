@@ -3632,7 +3632,223 @@ document.addEventListener("click", function(event){
 
   }
 
-});</script>
+});// ===== CORRECTION COMMANDE OLMO - PARTIE 1 =====
+
+function checkout(){
+
+  if(!cart || cart.length === 0){
+
+    showToast("Votre panier est vide");
+
+    return;
+
+  }
+
+  closeCart();
+
+  setTimeout(function(){
+
+    createOrderSummary();
+
+  },200);
+
+}
+
+
+function continueOrder(){
+
+  const box =
+    document.getElementById("olmoOrderBox");
+
+  if(box){
+    box.remove();
+  }
+
+  showCustomerForm();
+
+}
+
+
+function showCustomerForm(){
+
+  const old =
+    document.getElementById("olmoCustomerForm");
+
+  if(old){
+    old.remove();
+  }
+
+  const form =
+    document.createElement("div");
+
+  form.id = "olmoCustomerForm";
+
+  form.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:100000;
+    background:rgba(0,0,0,.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    box-sizing:border-box;
+  `;
+
+  form.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      max-height:90vh;
+      overflow:auto;
+      background:white;
+      border-radius:20px;
+      padding:22px;
+      box-sizing:border-box;
+    ">
+
+      <h2 style="margin-top:0;">
+        📦 Informations de livraison
+      </h2>
+
+      <p style="color:#6b7280;">
+        Indiquez vos informations pour recevoir
+        votre commande OLMO.
+      </p>
+
+      <input
+        id="olmoCustomerName"
+        type="text"
+        placeholder="Nom complet"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-top:12px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <input
+        id="olmoCustomerPhone"
+        type="tel"
+        placeholder="Numéro de téléphone"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <input
+        id="olmoCustomerAddress"
+        type="text"
+        placeholder="Adresse de livraison"
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+      >
+
+      <button
+        onclick="validateCustomerOrder()"
+        style="
+          width:100%;
+          margin-top:18px;
+          padding:14px;
+          border:0;
+          border-radius:12px;
+          background:#111827;
+          color:white;
+          font-size:16px;
+          font-weight:bold;
+        "
+      >
+        Continuer vers le paiement
+      </button>
+
+      <button
+        onclick="
+          document
+            .getElementById('olmoCustomerForm')
+            .remove()
+        "
+        style="
+          width:100%;
+          margin-top:8px;
+          padding:12px;
+          border:0;
+          border-radius:12px;
+          background:#f3f4f6;
+        "
+      >
+        Annuler
+      </button>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(form);
+
+}
+
+
+function validateCustomerOrder(){
+
+  const name =
+    document
+      .getElementById("olmoCustomerName")
+      .value
+      .trim();
+
+  const phone =
+    document
+      .getElementById("olmoCustomerPhone")
+      .value
+      .trim();
+
+  const address =
+    document
+      .getElementById("olmoCustomerAddress")
+      .value
+      .trim();
+
+  if(!name || !phone || !address){
+
+    showToast(
+      "Veuillez remplir tous les champs"
+    );
+
+    return;
+
+  }
+
+  const form =
+    document.getElementById(
+      "olmoCustomerForm"
+    );
+
+  if(form){
+    form.remove();
+  }
+
+  showPaymentOptions(
+    name,
+    phone,
+    address
+  );
+
+  }</script>
 
 </body>
   </html>
