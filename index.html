@@ -6892,7 +6892,179 @@ function saveOlmoProductEdit(productId){
     "Produit modifié avec succès ✏️"
   );
 
-  }</script>
+  }// ===== GESTION PRODUITS OLMO - PARTIE 2 =====
+
+function deleteOlmoSellerProduct(productId){
+
+  const product =
+    olmoSellerProducts.find(function(item){
+
+      return item.id === productId;
+
+    });
+
+  if(!product){
+
+    showToast("Produit introuvable");
+
+    return;
+
+  }
+
+  const confirmed =
+    confirm(
+      "Voulez-vous supprimer « " +
+      product.name +
+      " » ?"
+    );
+
+  if(!confirmed){
+
+    return;
+
+  }
+
+  olmoSellerProducts =
+    olmoSellerProducts.filter(
+      function(item){
+
+        return item.id !== productId;
+
+      }
+    );
+
+  saveOlmoSellerProducts();
+
+  showToast(
+    "Produit supprimé 🗑️"
+  );
+
+  showOlmoSellerProducts();
+
+}
+
+
+const oldShowSellerProducts =
+  showOlmoSellerProducts;
+
+showOlmoSellerProducts = function(){
+
+  oldShowSellerProducts();
+
+  setTimeout(function(){
+
+    const box =
+      document.getElementById(
+        "olmoSellerProducts"
+      );
+
+    if(!box){
+
+      return;
+
+    }
+
+    olmoSellerProducts.forEach(
+      function(product){
+
+        const cards =
+          box.querySelectorAll(
+            "div"
+          );
+
+        cards.forEach(
+          function(card){
+
+            if(
+              card.innerHTML.includes(
+                product.name
+              )
+            ){
+
+              if(
+                card.querySelector(
+                  "[data-olmo-actions]"
+                )
+              ){
+
+                return;
+
+              }
+
+              const actions =
+                document.createElement(
+                  "div"
+                );
+
+              actions.dataset.olmoActions =
+                "true";
+
+              actions.style.cssText = `
+                display:flex;
+                gap:8px;
+                margin-top:12px;
+              `;
+
+              actions.innerHTML = `
+
+                <button
+                  onclick="
+                    editOlmoSellerProduct(
+                      '${product.id}'
+                    )
+                  "
+                  style="
+                    flex:1;
+                    padding:11px;
+                    border:0;
+                    border-radius:10px;
+                    background:#f3f4f6;
+                    font-weight:bold;
+                  "
+                >
+                  ✏️ Modifier
+                </button>
+
+                <button
+                  onclick="
+                    deleteOlmoSellerProduct(
+                      '${product.id}'
+                    )
+                  "
+                  style="
+                    flex:1;
+                    padding:11px;
+                    border:0;
+                    border-radius:10px;
+                    background:#fee2e2;
+                    color:#b91c1c;
+                    font-weight:bold;
+                  "
+                >
+                  🗑️ Supprimer
+                </button>
+
+              `;
+
+              card
+                .querySelector(
+                  "div:last-child"
+                )
+                ?.appendChild(
+                  actions
+                );
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+  },100);
+
+};</script>
 
 </body>
   </html>
