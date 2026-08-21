@@ -4271,7 +4271,71 @@ olmoButtonFix.textContent = `
 
 `;
 
-document.head.appendChild(olmoButtonFix);</script>
+document.head.appendChild(olmoButtonFix);// ===== CORRECTION AFFICHAGE PANIER OLMO =====
+
+const olmoCartFix = document.createElement("style");
+
+olmoCartFix.textContent = `
+
+  #cartModal,
+  .cart-modal,
+  .cart-panel {
+
+    max-height: 92vh !important;
+    height: auto !important;
+    overflow: hidden !important;
+
+  }
+
+  #cartItems {
+
+    max-height: 55vh !important;
+    overflow-y: auto !important;
+    padding-bottom: 10px !important;
+
+  }
+
+  #cartItems + div,
+  #cartItems ~ div {
+
+    position: relative !important;
+
+  }
+
+  #cartItems ~ div button,
+  #cartItems ~ button {
+
+    min-height: 52px !important;
+    padding: 14px 18px !important;
+    margin-top: 12px !important;
+    margin-bottom: 8px !important;
+    position: relative !important;
+    z-index: 50 !important;
+
+  }
+
+  #olmoOrderBox > div {
+
+    max-height: 88vh !important;
+    overflow-y: auto !important;
+    padding-bottom: 30px !important;
+
+  }
+
+  #olmoConfirmOrder {
+
+    position: relative !important;
+    bottom: auto !important;
+    margin-top: 20px !important;
+    min-height: 54px !important;
+    display: block !important;
+    pointer-events: auto !important;
+
+  }
+
+`;
+
+document.head.appendChild(olmoCartFix);</script>
 
 </body>
   </html>
