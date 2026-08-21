@@ -5008,7 +5008,63 @@ function showOlmoOrders(){
 
   document.body.appendChild(history);
 
-  }</script>
+  }// ===== HISTORIQUE COMMANDES OLMO - PARTIE 2 =====
+
+function addOlmoOrdersButton(){
+
+  if(
+    document.getElementById(
+      "olmoOrdersButton"
+    )
+  ){
+
+    return;
+
+  }
+
+  const button =
+    document.createElement("button");
+
+  button.id =
+    "olmoOrdersButton";
+
+  button.innerHTML =
+    "📦 Mes commandes";
+
+  button.style.cssText = `
+    position:fixed;
+    right:15px;
+    bottom:75px;
+    z-index:9000;
+    padding:11px 15px;
+    border:0;
+    border-radius:25px;
+    background:#111827;
+    color:white;
+    font-size:14px;
+    font-weight:bold;
+    box-shadow:0 4px 15px rgba(0,0,0,.18);
+  `;
+
+  button.addEventListener(
+    "click",
+    function(){
+
+      showOlmoOrders();
+
+    }
+  );
+
+  document.body.appendChild(button);
+
+}
+
+
+setTimeout(function(){
+
+  addOlmoOrdersButton();
+
+},700);</script>
 
 </body>
   </html>
