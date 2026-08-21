@@ -5711,7 +5711,234 @@ function saveOlmoSellerForm(){
 }
 
 
-loadOlmoSeller();</script>
+loadOlmoSeller();// ===== ESPACE VENDEUR OLMO - PARTIE 2 =====
+
+function showOlmoSeller(){
+
+  if(!olmoSeller){
+
+    createOlmoSeller();
+
+    return;
+
+  }
+
+  const old =
+    document.getElementById(
+      "olmoSellerDashboard"
+    );
+
+  if(old){
+    old.remove();
+  }
+
+  const dashboard =
+    document.createElement("div");
+
+  dashboard.id =
+    "olmoSellerDashboard";
+
+  dashboard.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:100006;
+    background:rgba(0,0,0,.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    box-sizing:border-box;
+  `;
+
+  dashboard.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      max-height:90vh;
+      overflow:auto;
+      background:white;
+      border-radius:20px;
+      padding:22px;
+      box-sizing:border-box;
+    ">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+      ">
+
+        <h2 style="margin:0;">
+          🏪 Ma boutique
+        </h2>
+
+        <button
+          onclick="
+            document
+              .getElementById(
+                'olmoSellerDashboard'
+              )
+              .remove()
+          "
+          style="
+            width:35px;
+            height:35px;
+            border:0;
+            border-radius:50%;
+            background:#f3f4f6;
+            font-size:20px;
+          "
+        >
+          ×
+        </button>
+
+      </div>
+
+      <div style="
+        margin-top:20px;
+        padding:18px;
+        background:#f9fafb;
+        border-radius:15px;
+      ">
+
+        <div style="
+          font-size:30px;
+          margin-bottom:10px;
+        ">
+          🏪
+        </div>
+
+        <h3 style="
+          margin:0 0 8px;
+        ">
+          ${olmoSeller.shop}
+        </h3>
+
+        <p style="
+          margin:6px 0;
+          color:#6b7280;
+        ">
+          👤 ${olmoSeller.name}
+        </p>
+
+        <p style="
+          margin:6px 0;
+          color:#6b7280;
+        ">
+          📞 ${olmoSeller.phone}
+        </p>
+
+        <p style="
+          margin:6px 0;
+          color:#6b7280;
+        ">
+          📍 ${olmoSeller.location}
+        </p>
+
+      </div>
+
+      <button
+        onclick="addOlmoProduct()"
+        style="
+          width:100%;
+          margin-top:18px;
+          padding:14px;
+          border:0;
+          border-radius:12px;
+          background:#111827;
+          color:white;
+          font-size:16px;
+          font-weight:bold;
+        "
+      >
+        ➕ Ajouter un produit
+      </button>
+
+      <button
+        onclick="showOlmoSellerProducts()"
+        style="
+          width:100%;
+          margin-top:10px;
+          padding:14px;
+          border:1px solid #ddd;
+          border-radius:12px;
+          background:white;
+          font-size:15px;
+          font-weight:bold;
+        "
+      >
+        📦 Mes produits
+      </button>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(
+    dashboard
+  );
+
+}
+
+
+function addOlmoSellerButton(){
+
+  if(
+    document.getElementById(
+      "olmoSellerButton"
+    )
+  ){
+
+    return;
+
+  }
+
+  const button =
+    document.createElement("button");
+
+  button.id =
+    "olmoSellerButton";
+
+  button.innerHTML =
+    "🏪 Ma boutique";
+
+  button.style.cssText = `
+    position:fixed;
+    right:15px;
+    bottom:130px;
+    z-index:9000;
+    padding:11px 15px;
+    border:0;
+    border-radius:25px;
+    background:#111827;
+    color:white;
+    font-size:14px;
+    font-weight:bold;
+    box-shadow:0 4px 15px rgba(0,0,0,.18);
+  `;
+
+  button.addEventListener(
+    "click",
+    function(){
+
+      showOlmoSeller();
+
+    }
+  );
+
+  document.body.appendChild(
+    button
+  );
+
+}
+
+
+setTimeout(function(){
+
+  addOlmoSellerButton();
+
+},900);</script>
 
 </body>
   </html>
