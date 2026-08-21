@@ -7189,7 +7189,202 @@ function publishOlmoSellerProduct(productId){
     "Produit publié dans OLMO 🛍️"
   );
 
-  }</script>
+  }// ===== PUBLICATION PRODUITS OLMO - PARTIE 2 =====
+
+function unpublishOlmoSellerProduct(productId){
+
+  let published =
+    getOlmoPublishedProducts();
+
+  const exists =
+    published.some(function(item){
+
+      return item.id === productId;
+
+    });
+
+  if(!exists){
+
+    showToast(
+      "Ce produit n'est pas publié"
+    );
+
+    return;
+
+  }
+
+  published =
+    published.filter(function(item){
+
+      return item.id !== productId;
+
+    });
+
+  saveOlmoPublishedProducts(
+    published
+  );
+
+  showToast(
+    "Produit retiré de la vitrine"
+  );
+
+  showOlmoSellerProducts();
+
+}
+
+
+const previousShowSellerProducts =
+  showOlmoSellerProducts;
+
+showOlmoSellerProducts = function(){
+
+  previousShowSellerProducts();
+
+  setTimeout(function(){
+
+    const box =
+      document.getElementById(
+        "olmoSellerProducts"
+      );
+
+    if(!box){
+
+      return;
+
+    }
+
+    olmoSellerProducts.forEach(
+      function(product){
+
+        const cards =
+          box.querySelectorAll(
+            "div"
+          );
+
+        cards.forEach(
+          function(card){
+
+            if(
+              !card.innerHTML.includes(
+                product.name
+              )
+            ){
+
+              return;
+
+            }
+
+            if(
+              card.querySelector(
+                "[data-olmo-publish-actions]"
+              )
+            ){
+
+              return;
+
+            }
+
+            const published =
+              getOlmoPublishedProducts();
+
+            const isPublished =
+              published.some(
+                function(item){
+
+                  return item.id ===
+                    product.id;
+
+                }
+              );
+
+            const actions =
+              document.createElement(
+                "div"
+              );
+
+            actions.dataset.olmoPublishActions =
+              "true";
+
+            actions.style.cssText = `
+              display:flex;
+              gap:8px;
+              margin-top:10px;
+            `;
+
+            if(isPublished){
+
+              actions.innerHTML = `
+
+                <button
+                  onclick="
+                    unpublishOlmoSellerProduct(
+                      '${product.id}'
+                    )
+                  "
+                  style="
+                    flex:1;
+                    padding:11px;
+                    border:0;
+                    border-radius:10px;
+                    background:#fee2e2;
+                    color:#b91c1c;
+                    font-weight:bold;
+                  "
+                >
+                  🚫 Retirer
+                </button>
+
+              `;
+
+            }else{
+
+              actions.innerHTML = `
+
+                <button
+                  onclick="
+                    publishOlmoSellerProduct(
+                      '${product.id}'
+                    )
+                  "
+                  style="
+                    flex:1;
+                    padding:11px;
+                    border:0;
+                    border-radius:10px;
+                    background:#111827;
+                    color:white;
+                    font-weight:bold;
+                  "
+                >
+                  📢 Publier
+                </button>
+
+              `;
+
+            }
+
+            const content =
+              card.querySelector(
+                "div:last-child"
+              );
+
+            if(content){
+
+              content.appendChild(
+                actions
+              );
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+  },150);
+
+};</script>
 
 </body>
   </html>
