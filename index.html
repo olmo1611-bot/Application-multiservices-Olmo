@@ -10262,6 +10262,518 @@ function continueOlmoCheckout(){
 
   showOlmoPaymentStep();
 
+  }// ===== CHECKOUT OLMO - PARTIE 2 =====
+
+function showOlmoPaymentStep(){
+
+  const checkout =
+    document.getElementById(
+      "olmoCheckout"
+    );
+
+  if(!checkout){
+
+    return;
+
+  }
+
+  const total =
+    cart.reduce(
+      function(sum,item){
+
+        return sum +
+          (
+            Number(item.price) *
+            Number(item.quantity)
+          );
+
+      },
+      0
+    );
+
+
+  checkout.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      max-height:92vh;
+      overflow:auto;
+      background:white;
+      border-radius:22px;
+      padding:20px;
+      box-sizing:border-box;
+    ">
+
+      <div style="
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        margin-bottom:18px;
+      ">
+
+        <h2 style="
+          margin:0;
+        ">
+          💳 Paiement
+        </h2>
+
+        <button
+          onclick="
+            document
+              .getElementById(
+                'olmoCheckout'
+              )
+              .remove()
+          "
+          style="
+            width:35px;
+            height:35px;
+            border:0;
+            border-radius:50%;
+            background:#f3f4f6;
+            font-size:20px;
+          "
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div style="
+        padding:16px;
+        border-radius:15px;
+        background:#f9fafb;
+        margin-bottom:18px;
+      ">
+
+        <div style="
+          color:#6b7280;
+          font-size:13px;
+        ">
+          Montant à payer
+        </div>
+
+        <div style="
+          font-size:25px;
+          font-weight:bold;
+          margin-top:5px;
+        ">
+          ${formatPrice(total)}
+        </div>
+
+      </div>
+
+
+      <h3>
+        Choisissez votre mode de paiement
+      </h3>
+
+
+      <label
+        style="
+          display:block;
+          padding:15px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:13px;
+          cursor:pointer;
+        "
+      >
+
+        <input
+          type="radio"
+          name="olmoPayment"
+          value="Airtel Money"
+        >
+
+        📱 Airtel Money
+
+      </label>
+
+
+      <label
+        style="
+          display:block;
+          padding:15px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:13px;
+          cursor:pointer;
+        "
+      >
+
+        <input
+          type="radio"
+          name="olmoPayment"
+          value="Moov Money"
+        >
+
+        📱 Moov Money
+
+      </label>
+
+
+      <label
+        style="
+          display:block;
+          padding:15px;
+          margin-top:10px;
+          border:1px solid #ddd;
+          border-radius:13px;
+          cursor:pointer;
+        "
+      >
+
+        <input
+          type="radio"
+          name="olmoPayment"
+          value="Paiement à la livraison"
+        >
+
+        🚚 Paiement à la livraison
+
+      </label>
+
+
+      <button
+        onclick="
+          confirmOlmoOrder()
+        "
+        style="
+          width:100%;
+          margin-top:20px;
+          padding:15px;
+          border:0;
+          border-radius:13px;
+          background:#111827;
+          color:white;
+          font-size:16px;
+          font-weight:bold;
+        "
+      >
+        ✅ Confirmer la commande
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+function confirmOlmoOrder(){
+
+  const selected =
+    document.querySelector(
+      'input[name="olmoPayment"]:checked'
+    );
+
+
+  if(!selected){
+
+    showToast(
+      "Choisissez un mode de paiement"
+    );
+
+    return;
+
+  }
+
+
+  if(!cart || cart.length === 0){
+
+    showToast(
+      "Votre panier est vide"
+    );
+
+    return;
+
+  }
+
+
+  const total =
+    cart.reduce(
+      function(sum,item){
+
+        return sum +
+          (
+            Number(item.price) *
+            Number(item.quantity)
+          );
+
+      },
+      0
+    );
+
+
+  const order = {
+
+    id:
+      "OLMO-" +
+      Date.now(),
+
+    date:
+      new Date().toLocaleString(
+        "fr-FR"
+      ),
+
+    customer:
+      olmoUserProfile.name,
+
+    phone:
+      olmoUserProfile.phone,
+
+    city:
+      olmoUserProfile.city,
+
+    address:
+      olmoUserProfile.address,
+
+    payment:
+      selected.value,
+
+    total:
+      total,
+
+    status:
+      "Commande reçue",
+
+    items:
+      cart.map(function(item){
+
+        return {
+
+          id:item.id,
+
+          name:item.name,
+
+          price:Number(item.price),
+
+          quantity:
+            Number(item.quantity),
+
+          seller:
+            item.seller ||
+            "OLMO"
+
+        };
+
+      })
+
+  };
+
+
+  let orders = [];
+
+  try{
+
+    orders =
+      JSON.parse(
+        localStorage.getItem(
+          "olmo_orders"
+        )
+      ) || [];
+
+  }catch(error){
+
+    orders = [];
+
+  }
+
+
+  orders.unshift(order);
+
+
+  localStorage.setItem(
+    "olmo_orders",
+    JSON.stringify(orders)
+  );
+
+
+  // Vide le vrai panier OLMO
+  cart = [];
+
+  saveCart();
+
+  updateCart();
+
+
+  const checkout =
+    document.getElementById(
+      "olmoCheckout"
+    );
+
+
+  if(checkout){
+
+    checkout.remove();
+
+  }
+
+
+  showOlmoOrderConfirmation(
+    order
+  );
+
+}
+
+
+function showOlmoOrderConfirmation(
+  order
+){
+
+  const box =
+    document.createElement(
+      "div"
+    );
+
+
+  box.id =
+    "olmoOrderConfirmation";
+
+
+  box.style.cssText = `
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:100050;
+
+    background:rgba(0,0,0,.6);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:15px;
+
+  `;
+
+
+  box.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      background:white;
+      border-radius:22px;
+      padding:25px;
+      text-align:center;
+      box-sizing:border-box;
+    ">
+
+      <div style="
+        font-size:55px;
+      ">
+        ✅
+      </div>
+
+
+      <h2>
+        Commande confirmée !
+      </h2>
+
+
+      <p style="
+        color:#6b7280;
+      ">
+        Votre commande a bien été
+        enregistrée dans OLMO.
+      </p>
+
+
+      <div style="
+        padding:15px;
+        border-radius:14px;
+        background:#f9fafb;
+        text-align:left;
+        margin-top:15px;
+      ">
+
+        <strong>
+          ${order.id}
+        </strong>
+
+        <br><br>
+
+        💳 ${order.payment}
+
+        <br>
+
+        💰 ${formatPrice(
+          order.total
+        )}
+
+        <br>
+
+        📦 ${order.status}
+
+      </div>
+
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoOrderConfirmation'
+            )
+            .remove();
+
+          if(typeof showOrders === 'function'){
+            showOrders();
+          }
+        "
+        style="
+          width:100%;
+          margin-top:18px;
+          padding:15px;
+          border:0;
+          border-radius:13px;
+          background:#111827;
+          color:white;
+          font-size:16px;
+          font-weight:bold;
+        "
+      >
+        📦 Voir mes commandes
+      </button>
+
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoOrderConfirmation'
+            )
+            .remove()
+        "
+        style="
+          width:100%;
+          margin-top:10px;
+          padding:13px;
+          border:1px solid #ddd;
+          border-radius:13px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        Continuer mes achats
+      </button>
+
+    </div>
+
+  `;
+
+
+  document.body.appendChild(
+    box
+  );
+
   }</script>
 
 </body>
