@@ -7647,6 +7647,129 @@ function showOlmoPublishedProducts(){
 
   document.body.appendChild(box);
 
+  }// ===== VITRINE PRODUITS OLMO - PARTIE 2 =====
+
+function addPublishedOlmoProductToCart(productId){
+
+  const products =
+    getOlmoPublishedProducts();
+
+  const product =
+    products.find(function(item){
+
+      return item.id === productId;
+
+    });
+
+  if(!product){
+
+    showToast("Produit introuvable");
+
+    return;
+
+  }
+
+  if(Number(product.stock) <= 0){
+
+    showToast(
+      "Produit temporairement indisponible"
+    );
+
+    return;
+
+  }
+
+  /*
+   * On utilise le système de panier
+   * déjà présent dans OLMO.
+   */
+
+  if(
+    typeof addToCart === "function"
+  ){
+
+    addToCart(
+      product.id,
+      product.name,
+      product.price,
+      product.image
+    );
+
+  }else{
+
+    /*
+     * Sécurité : si le panier existant
+     * utilise une autre fonction, on
+     * conserve quand même le produit
+     * dans un panier local.
+     */
+
+    let cart = [];
+
+    try{
+
+      cart =
+        JSON.parse(
+          localStorage.getItem(
+            "olmo_cart"
+          )
+        ) || [];
+
+    }catch(error){
+
+      cart = [];
+
+    }
+
+    const existing =
+      cart.find(function(item){
+
+        return item.id === product.id;
+
+      });
+
+    if(existing){
+
+      if(
+        existing.quantity <
+        Number(product.stock)
+      ){
+
+        existing.quantity += 1;
+
+      }
+
+    }else{
+
+      cart.push({
+
+        id: product.id,
+
+        name: product.name,
+
+        price: product.price,
+
+        image: product.image,
+
+        quantity: 1,
+
+        seller: product.seller
+
+      });
+
+    }
+
+    localStorage.setItem(
+      "olmo_cart",
+      JSON.stringify(cart)
+    );
+
+    showToast(
+      "Produit ajouté au panier 🛒"
+    );
+
+  }
+
   }</script>
 
 </body>
