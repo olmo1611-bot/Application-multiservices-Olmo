@@ -9442,7 +9442,119 @@ function saveOlmoProfileForm(){
 }
 
 
-loadOlmoUserProfile();</script>
+loadOlmoUserProfile();// ===== ACCÈS MON PROFIL OLMO - PARTIE 2 =====
+
+function addOlmoProfileButton(){
+
+  if(
+    document.getElementById(
+      "olmoProfileButton"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  const button =
+    document.createElement(
+      "button"
+    );
+
+
+  button.id =
+    "olmoProfileButton";
+
+
+  button.innerHTML = `
+
+    <span style="
+      font-size:22px;
+    ">
+      👤
+    </span>
+
+    <span>
+      Mon profil
+    </span>
+
+  `;
+
+
+  button.style.cssText = `
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    width:calc(100% - 30px);
+
+    max-width:430px;
+
+    margin:15px auto;
+
+    padding:14px;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:14px;
+
+    background:white;
+
+    color:#111827;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+
+  `;
+
+
+  button.addEventListener(
+    "click",
+    function(){
+
+      showOlmoProfile();
+
+    }
+  );
+
+
+  const target =
+    document.querySelector(
+      "header"
+    );
+
+
+  if(target){
+
+    target.appendChild(
+      button
+    );
+
+  }else{
+
+    document.body.prepend(
+      button
+    );
+
+  }
+
+}
+
+
+setTimeout(function(){
+
+  addOlmoProfileButton();
+
+},2200);</script>
 
 </body>
   </html>
