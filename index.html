@@ -7770,7 +7770,86 @@ function addPublishedOlmoProductToCart(productId){
 
   }
 
-  }</script>
+  }// ===== BOUTON VITRINE VENDEURS OLMO =====
+
+function addOlmoPublishedProductsButton(){
+
+  if(
+    document.getElementById(
+      "olmoPublishedProductsButton"
+    )
+  ){
+
+    return;
+
+  }
+
+  const button =
+    document.createElement("button");
+
+  button.id =
+    "olmoPublishedProductsButton";
+
+  button.innerHTML =
+    "🏪 Produits des vendeurs";
+
+  button.style.cssText = `
+    display:block;
+    width:calc(100% - 30px);
+    max-width:430px;
+    margin:15px auto;
+    padding:14px;
+    border:0;
+    border-radius:14px;
+    background:#111827;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+  `;
+
+  button.addEventListener(
+    "click",
+    function(){
+
+      showOlmoPublishedProducts();
+
+    }
+  );
+
+  const productsSection =
+    Array.from(
+      document.querySelectorAll("section")
+    ).find(function(section){
+
+      return section.innerText.includes(
+        "Produits populaires"
+      );
+
+    });
+
+  if(productsSection){
+
+    productsSection.appendChild(
+      button
+    );
+
+  }else{
+
+    document.body.appendChild(
+      button
+    );
+
+  }
+
+}
+
+
+setTimeout(function(){
+
+  addOlmoPublishedProductsButton();
+
+},1200);</script>
 
 </body>
   </html>
