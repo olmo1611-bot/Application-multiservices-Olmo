@@ -9554,7 +9554,299 @@ setTimeout(function(){
 
   addOlmoProfileButton();
 
-},2200);</script>
+},2200);// ===== MON ESPACE OLMO - PARTIE 1 =====
+
+function showOlmoUserSpace(){
+
+  const old =
+    document.getElementById(
+      "olmoUserSpace"
+    );
+
+  if(old){
+    old.remove();
+  }
+
+  const name =
+    olmoUserProfile.name ||
+    "Utilisateur OLMO";
+
+  const box =
+    document.createElement("div");
+
+  box.id =
+    "olmoUserSpace";
+
+  box.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:100030;
+    background:rgba(0,0,0,.6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+    box-sizing:border-box;
+  `;
+
+  box.innerHTML = `
+
+    <div style="
+      width:100%;
+      max-width:430px;
+      max-height:90vh;
+      overflow:auto;
+      background:white;
+      border-radius:22px;
+      padding:20px;
+      box-sizing:border-box;
+    ">
+
+      <div style="
+        display:flex;
+        align-items:center;
+        gap:12px;
+        margin-bottom:20px;
+      ">
+
+        <div style="
+          width:52px;
+          height:52px;
+          border-radius:50%;
+          background:#f3f4f6;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          font-size:28px;
+        ">
+          👤
+        </div>
+
+        <div style="flex:1;">
+
+          <div style="
+            font-size:13px;
+            color:#6b7280;
+          ">
+            Bienvenue
+          </div>
+
+          <strong style="
+            font-size:18px;
+          ">
+            ${name}
+          </strong>
+
+        </div>
+
+        <button
+          onclick="
+            document
+              .getElementById(
+                'olmoUserSpace'
+              )
+              .remove()
+          "
+          style="
+            width:35px;
+            height:35px;
+            border:0;
+            border-radius:50%;
+            background:#f3f4f6;
+            font-size:20px;
+          "
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div style="
+        display:grid;
+        grid-template-columns:
+          repeat(2,1fr);
+        gap:10px;
+      ">
+
+
+        <button
+          onclick="
+            document
+              .getElementById(
+                'olmoUserSpace'
+              )
+              .remove();
+
+            showOlmoProfile();
+          "
+          style="
+            padding:18px 10px;
+            border:1px solid #e5e7eb;
+            border-radius:15px;
+            background:white;
+            font-weight:bold;
+          "
+        >
+          👤
+          <br>
+          Mon profil
+        </button>
+
+
+        <button
+          onclick="
+            document
+              .getElementById(
+                'olmoUserSpace'
+              )
+              .remove();
+
+            showCart();
+          "
+          style="
+            padding:18px 10px;
+            border:1px solid #e5e7eb;
+            border-radius:15px;
+            background:white;
+            font-weight:bold;
+          "
+        >
+          🛒
+          <br>
+          Mon panier
+        </button>
+
+
+        <button
+          onclick="
+            document
+              .getElementById(
+                'olmoUserSpace'
+              )
+              .remove();
+
+            showOrders();
+          "
+          style="
+            padding:18px 10px;
+            border:1px solid #e5e7eb;
+            border-radius:15px;
+            background:white;
+            font-weight:bold;
+          "
+        >
+          📦
+          <br>
+          Mes commandes
+        </button>
+
+
+        <button
+          onclick="
+            document
+              .getElementById(
+                'olmoUserSpace'
+              )
+              .remove();
+
+            showFavorites();
+          "
+          style="
+            padding:18px 10px;
+            border:1px solid #e5e7eb;
+            border-radius:15px;
+            background:white;
+            font-weight:bold;
+          "
+        >
+          ❤️
+          <br>
+          Mes favoris
+        </button>
+
+
+        <button
+          onclick="
+            document
+              .getElementById(
+                'olmoUserSpace'
+              )
+              .remove();
+
+            showOlmoSellerProducts();
+          "
+          style="
+            padding:18px 10px;
+            border:1px solid #e5e7eb;
+            border-radius:15px;
+            background:white;
+            font-weight:bold;
+          "
+        >
+          🏪
+          <br>
+          Ma boutique
+        </button>
+
+
+        <button
+          onclick="
+            document
+              .getElementById(
+                'olmoUserSpace'
+              )
+              .remove();
+
+            showOlmoProfile();
+          "
+          style="
+            padding:18px 10px;
+            border:1px solid #e5e7eb;
+            border-radius:15px;
+            background:white;
+            font-weight:bold;
+          "
+        >
+          📍
+          <br>
+          Livraison
+        </button>
+
+      </div>
+
+
+      <div style="
+        margin-top:15px;
+        padding:15px;
+        border-radius:15px;
+        background:#f9fafb;
+      ">
+
+        <div style="
+          font-weight:bold;
+          margin-bottom:5px;
+        ">
+          ⚙️ Paramètres
+        </div>
+
+        <div style="
+          font-size:13px;
+          color:#6b7280;
+        ">
+          Les paramètres du compte
+          seront ajoutés prochainement.
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(box);
+
+  }</script>
 
 </body>
   </html>
