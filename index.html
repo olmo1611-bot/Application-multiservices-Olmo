@@ -8106,7 +8106,440 @@ function addPublishedOlmoProductToCart(productId){
     " ajouté au panier 🛒"
   );
 
-  }</script>
+  }// ===== CATALOGUE OLMO CONNECTÉ AUX VENDEURS =====
+
+function getOlmoMarketplaceProducts(){
+
+  const sellerProducts =
+    getOlmoPublishedProducts();
+
+  const convertedSellerProducts =
+    sellerProducts.map(function(product){
+
+      return {
+
+        id: product.id,
+
+        name: product.name,
+
+        price: Number(product.price),
+
+        category: product.category,
+
+        description:
+          "Vendu par " +
+          (product.seller || "Vendeur OLMO"),
+
+        emoji: "🛍️",
+
+        image:
+          product.image || "",
+
+        seller:
+          product.seller ||
+          "Vendeur OLMO",
+
+        stock:
+          Number(product.stock || 0),
+
+        isSellerProduct: true
+
+      };
+
+    });
+
+  return [
+    ...products,
+    ...convertedSellerProducts
+  ];
+
+}
+
+
+function renderOlmoMarketplace(){
+
+  const marketplace =
+    getOlmoMarketplaceProducts();
+
+  const grid =
+    document.getElementById(
+      "productsGrid"
+    );
+
+  if(!grid){
+
+    return;
+
+  }
+
+  if(marketplace.length === 0){
+
+    grid.innerHTML = `
+
+      <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:40px;
+        color:#6b7280;
+      ">
+
+        <div style="
+          font-size:45px;
+        ">
+          🛍️
+        </div>
+
+        <h3>
+          Aucun produit disponible
+        </h3>
+
+        <p>
+          Les produits apparaîtront ici.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML =
+    marketplace.map(function(product){
+
+      const image =
+        product.image
+        ?
+        `
+          <img
+            src="${product.image}"
+            alt="${product.name}"
+            style="
+              width:100%;
+              height:100%;
+              object-fit:cover;
+              display:block;
+            "
+          >
+        `
+        :
+        `
+          <div style="
+            width:100%;
+            height:100%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:48px;
+          ">
+            ${product.emoji || "🛍️"}
+          </div>
+        `;
+
+
+      const sellerBadge =
+        product.isSellerProduct
+        ?
+        `
+          <div style="
+            display:inline-block;
+            margin-top:6px;
+            padding:4px 8px;
+            border-radius:8px;
+            background:#f3f4f6;
+            color:#4b5563;
+            font-size:11px;
+          ">
+            🏪 ${product.seller}
+          </div>
+        `
+        :
+        "";
+
+
+      const stockText =
+        product.isSellerProduct
+        ?
+        (
+          product.stock > 0
+          ?
+          `
+            <div style="
+              margin-top:5px;
+              color:#16a34a;
+              font-size:12px;
+            ">
+              ● ${product.stock} disponible(s)
+            </div>
+          `
+          :
+          `
+            <div style="
+              margin-top:5px;
+              color:#dc2626;
+              font-size:12px;
+            ">
+              ● Rupture de stock
+            </div>
+          `
+        )
+        :
+        "";
+
+
+      return `
+
+        <article class="product-card">
+
+          <div class="product-image">
+
+            ${image}
+
+            <button
+              class="favorite"
+              onclick="
+                favoriteOlmoMarketplaceProduct(
+                  '${product.id}'
+                )
+              "
+            >
+              ♡
+            </button>
+
+          </div>
+
+          <div class="product-info">
+
+            <div class="product-category">
+              ${product.category}
+            </div>
+
+            <h3 class="product-name">
+              ${product.name}
+            </h3>
+
+            <p class="product-description">
+              ${product.description}
+            </p>
+
+            ${sellerBadge}
+
+            ${stockText}
+
+            <div class="product-bottom">
+
+              <span class="price">
+                ${formatPrice(
+                  product.price
+                )}
+              </span>
+
+              <button
+                class="add-btn"
+                onclick="
+                  addOlmoMarketplaceProductToCart(
+                    '${product.id}'
+                  )
+                "
+              >
+                +
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      `;
+
+    }).join("");
+
+}
+
+
+function addOlmoMarketplaceProductToCart(
+  productId
+){
+
+  const marketplace =
+    getOlmoMarketplaceProducts();
+
+  const product =
+    marketplace.find(function(item){
+
+      return String(item.id) ===
+        String(productId);
+
+    });
+
+
+  if(!product){
+
+    showToast(
+      "Produit introuvable"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    product.isSellerProduct &&
+    Number(product.stock) <= 0
+  ){
+
+    showToast(
+      "Produit en rupture de stock"
+    );
+
+    return;
+
+  }
+
+
+  const existing =
+    cart.find(function(item){
+
+      return String(item.id) ===
+        String(product.id);
+
+    });
+
+
+  if(existing){
+
+    existing.quantity += 1;
+
+  }else{
+
+    cart.push({
+
+      ...product,
+
+      quantity:1
+
+    });
+
+  }
+
+
+  saveCart();
+
+  updateCart();
+
+  showToast(
+    product.name +
+    " ajouté au panier 🛒"
+  );
+
+}
+
+
+function favoriteOlmoMarketplaceProduct(
+  productId
+){
+
+  const marketplace =
+    getOlmoMarketplaceProducts();
+
+  const product =
+    marketplace.find(function(item){
+
+      return String(item.id) ===
+        String(productId);
+
+    });
+
+
+  if(!product){
+
+    showToast(
+      "Produit introuvable"
+    );
+
+    return;
+
+  }
+
+
+  let favorites = [];
+
+  try{
+
+    favorites =
+      JSON.parse(
+        localStorage.getItem(
+          "olmo_favorites"
+        )
+      ) || [];
+
+  }catch(error){
+
+    favorites = [];
+
+  }
+
+
+  const exists =
+    favorites.some(function(item){
+
+      return String(
+        typeof item === "object"
+        ? item.id
+        : item
+      ) === String(product.id);
+
+    });
+
+
+  if(exists){
+
+    favorites =
+      favorites.filter(function(item){
+
+        return String(
+          typeof item === "object"
+          ? item.id
+          : item
+        ) !== String(product.id);
+
+      });
+
+    showToast(
+      "Retiré des favoris"
+    );
+
+  }else{
+
+    favorites.push(product);
+
+    showToast(
+      product.name +
+      " ajouté aux favoris ❤️"
+    );
+
+  }
+
+
+  localStorage.setItem(
+    "olmo_favorites",
+    JSON.stringify(
+      favorites
+    )
+  );
+
+}
+
+
+setTimeout(function(){
+
+  renderOlmoMarketplace();
+
+},1500);</script>
 
 </body>
   </html>
