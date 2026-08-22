@@ -8015,6 +8015,97 @@ function addPublishedOlmoProductToCart(productId){
     "Produit ajouté au panier 🛒"
   );
 
+  }// ===== CORRECTION DÉFINITIVE PANIER VENDEUR OLMO =====
+
+function addPublishedOlmoProductToCart(productId){
+
+  const published =
+    getOlmoPublishedProducts();
+
+  const product =
+    published.find(function(item){
+
+      return String(item.id) ===
+        String(productId);
+
+    });
+
+  if(!product){
+
+    showToast(
+      "Produit introuvable"
+    );
+
+    return;
+
+  }
+
+  if(Number(product.stock) <= 0){
+
+    showToast(
+      "Produit temporairement indisponible"
+    );
+
+    return;
+
+  }
+
+  // Recherche du produit dans le vrai panier OLMO
+  const existing =
+    cart.find(function(item){
+
+      return String(item.id) ===
+        String(product.id);
+
+    });
+
+  if(existing){
+
+    existing.quantity += 1;
+
+  }else{
+
+    cart.push({
+
+      id: product.id,
+
+      name: product.name,
+
+      price: Number(product.price),
+
+      category: product.category,
+
+      image: product.image || "",
+
+      emoji: "🛍️",
+
+      description:
+        "Produit vendu par " +
+        (product.seller || "Vendeur OLMO"),
+
+      quantity: 1,
+
+      seller:
+        product.seller ||
+        "Vendeur OLMO"
+
+    });
+
+  }
+
+  // Sauvegarde dans le vrai panier OLMO
+  saveCart();
+
+  // Actualisation immédiate de l'affichage
+  updateCart();
+
+  refreshCartSummary();
+
+  showToast(
+    product.name +
+    " ajouté au panier 🛒"
+  );
+
   }</script>
 
 </body>
