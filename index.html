@@ -9846,7 +9846,84 @@ function showOlmoUserSpace(){
 
   document.body.appendChild(box);
 
-  }</script>
+  }// ===== BOUTON MON ESPACE OLMO - PARTIE 2 =====
+
+function addOlmoUserSpaceButton(){
+
+  if(
+    document.getElementById(
+      "olmoUserSpaceButton"
+    )
+  ){
+
+    return;
+
+  }
+
+  const button =
+    document.createElement("button");
+
+  button.id =
+    "olmoUserSpaceButton";
+
+  button.innerHTML = `
+    👤 Mon espace
+  `;
+
+  button.style.cssText = `
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:calc(100% - 30px);
+    max-width:430px;
+    margin:15px auto;
+    padding:15px;
+    border:0;
+    border-radius:15px;
+    background:#111827;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+  `;
+
+  button.addEventListener(
+    "click",
+    function(){
+
+      showOlmoUserSpace();
+
+    }
+  );
+
+  const profileButton =
+    document.getElementById(
+      "olmoProfileButton"
+    );
+
+  if(profileButton){
+
+    profileButton.parentNode.insertBefore(
+      button,
+      profileButton
+    );
+
+  }else{
+
+    document.body.prepend(
+      button
+    );
+
+  }
+
+}
+
+
+setTimeout(function(){
+
+  addOlmoUserSpaceButton();
+
+},2400);</script>
 
 </body>
   </html>
