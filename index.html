@@ -7849,7 +7849,173 @@ setTimeout(function(){
 
   addOlmoPublishedProductsButton();
 
-},1200);</script>
+},1200);// ===== CORRECTION PANIER PRODUITS VENDEURS OLMO =====
+
+function addPublishedOlmoProductToCart(productId){
+
+  const products =
+    getOlmoPublishedProducts();
+
+  const product =
+    products.find(function(item){
+
+      return String(item.id) === String(productId);
+
+    });
+
+  if(!product){
+
+    showToast("Produit introuvable");
+
+    return;
+
+  }
+
+  if(Number(product.stock) <= 0){
+
+    showToast(
+      "Produit temporairement indisponible"
+    );
+
+    return;
+
+  }
+
+  // Utilise le vrai système de panier OLMO
+  if(typeof addToCart === "function"){
+
+    try{
+
+      addToCart(product);
+
+      showToast(
+        "Produit ajouté au panier 🛒"
+      );
+
+      return;
+
+    }catch(error){
+
+      console.log(
+        "Tentative panier OLMO :",
+        error
+      );
+
+    }
+
+  }
+
+  // Recherche des variables de panier existantes
+  const possibleKeys = [
+    "olmo_cart",
+    "cart",
+    "olmoCart"
+  ];
+
+  let cart = [];
+  let cartKey = "olmo_cart";
+
+  for(
+    let i = 0;
+    i < possibleKeys.length;
+    i++
+  ){
+
+    try{
+
+      const saved =
+        localStorage.getItem(
+          possibleKeys[i]
+        );
+
+      if(saved){
+
+        const parsed =
+          JSON.parse(saved);
+
+        if(Array.isArray(parsed)){
+
+          cart = parsed;
+          cartKey = possibleKeys[i];
+
+          break;
+
+        }
+
+      }
+
+    }catch(error){
+
+      console.log(error);
+
+    }
+
+  }
+
+  const existing =
+    cart.find(function(item){
+
+      return String(item.id) ===
+        String(product.id);
+
+    });
+
+  if(existing){
+
+    existing.quantity =
+      Number(existing.quantity || 1) + 1;
+
+  }else{
+
+    cart.push({
+
+      id: product.id,
+
+      name: product.name,
+
+      price: Number(product.price),
+
+      image: product.image || "",
+
+      quantity: 1,
+
+      seller: product.seller || "Vendeur OLMO"
+
+    });
+
+  }
+
+  localStorage.setItem(
+    cartKey,
+    JSON.stringify(cart)
+  );
+
+  // Actualise l'affichage du panier OLMO
+  if(typeof renderCart === "function"){
+
+    try{
+      renderCart();
+    }catch(error){
+      console.log(error);
+    }
+
+  }
+
+  if(typeof updateCart === "function"){
+
+    try{
+      updateCart();
+    }catch(error){
+      console.log(error);
+    }
+
+  }
+
+  showToast(
+    "Produit ajouté au panier 🛒"
+  );
+
+  }</script>
 
 </body>
   </html>
