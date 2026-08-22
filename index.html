@@ -8858,7 +8858,591 @@ setTimeout(function(){
 
   activateOlmoMarketplaceSearch();
 
-},1800);</script>
+},1800);// ===== PROFIL UTILISATEUR OLMO - PARTIE 1 =====
+
+let olmoUserProfile = {
+
+  name: "",
+
+  phone: "",
+
+  email: "",
+
+  city: "",
+
+  address: "",
+
+  role: "client"
+
+};
+
+
+function loadOlmoUserProfile(){
+
+  try{
+
+    const saved =
+      localStorage.getItem(
+        "olmo_user_profile"
+      );
+
+    if(saved){
+
+      const data =
+        JSON.parse(saved);
+
+      if(data){
+
+        olmoUserProfile = {
+
+          ...olmoUserProfile,
+
+          ...data
+
+        };
+
+      }
+
+    }
+
+  }catch(error){
+
+    console.log(
+      "Erreur profil OLMO"
+    );
+
+  }
+
+}
+
+
+function saveOlmoUserProfile(){
+
+  localStorage.setItem(
+
+    "olmo_user_profile",
+
+    JSON.stringify(
+      olmoUserProfile
+    )
+
+  );
+
+}
+
+
+function showOlmoProfile(){
+
+  const old =
+    document.getElementById(
+      "olmoProfile"
+    );
+
+  if(old){
+
+    old.remove();
+
+  }
+
+
+  const box =
+    document.createElement(
+      "div"
+    );
+
+  box.id =
+    "olmoProfile";
+
+
+  box.style.cssText = `
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:100020;
+
+    background:rgba(0,0,0,.6);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:15px;
+
+    box-sizing:border-box;
+
+  `;
+
+
+  box.innerHTML = `
+
+    <div style="
+
+      width:100%;
+
+      max-width:430px;
+
+      max-height:90vh;
+
+      overflow:auto;
+
+      background:white;
+
+      border-radius:20px;
+
+      padding:22px;
+
+      box-sizing:border-box;
+
+    ">
+
+      <div style="
+
+        display:flex;
+
+        justify-content:space-between;
+
+        align-items:center;
+
+        margin-bottom:15px;
+
+      ">
+
+        <h2 style="margin:0;">
+
+          👤 Mon profil
+
+        </h2>
+
+
+        <button
+
+          onclick="
+
+            document
+
+              .getElementById(
+
+                'olmoProfile'
+
+              )
+
+              .remove()
+
+          "
+
+          style="
+
+            width:35px;
+
+            height:35px;
+
+            border:0;
+
+            border-radius:50%;
+
+            background:#f3f4f6;
+
+            font-size:20px;
+
+          "
+
+        >
+
+          ×
+
+        </button>
+
+      </div>
+
+
+      <label style="
+
+        display:block;
+
+        margin-top:10px;
+
+        font-weight:bold;
+
+      ">
+
+        Nom
+
+      </label>
+
+
+      <input
+
+        id="olmoProfileName"
+
+        type="text"
+
+        value="${olmoUserProfile.name}"
+
+        placeholder="Votre nom"
+
+        style="
+
+          width:100%;
+
+          box-sizing:border-box;
+
+          padding:14px;
+
+          margin-top:6px;
+
+          border:1px solid #ddd;
+
+          border-radius:10px;
+
+        "
+
+      >
+
+
+      <label style="
+
+        display:block;
+
+        margin-top:12px;
+
+        font-weight:bold;
+
+      ">
+
+        Téléphone
+
+      </label>
+
+
+      <input
+
+        id="olmoProfilePhone"
+
+        type="tel"
+
+        value="${olmoUserProfile.phone}"
+
+        placeholder="Votre numéro"
+
+        style="
+
+          width:100%;
+
+          box-sizing:border-box;
+
+          padding:14px;
+
+          margin-top:6px;
+
+          border:1px solid #ddd;
+
+          border-radius:10px;
+
+        "
+
+      >
+
+
+      <label style="
+
+        display:block;
+
+        margin-top:12px;
+
+        font-weight:bold;
+
+      ">
+
+        Email
+
+      </label>
+
+
+      <input
+
+        id="olmoProfileEmail"
+
+        type="email"
+
+        value="${olmoUserProfile.email}"
+
+        placeholder="Votre adresse email"
+
+        style="
+
+          width:100%;
+
+          box-sizing:border-box;
+
+          padding:14px;
+
+          margin-top:6px;
+
+          border:1px solid #ddd;
+
+          border-radius:10px;
+
+        "
+
+      >
+
+
+      <label style="
+
+        display:block;
+
+        margin-top:12px;
+
+        font-weight:bold;
+
+      ">
+
+        Ville
+
+      </label>
+
+
+      <input
+
+        id="olmoProfileCity"
+
+        type="text"
+
+        value="${olmoUserProfile.city}"
+
+        placeholder="Ex : Libreville"
+
+        style="
+
+          width:100%;
+
+          box-sizing:border-box;
+
+          padding:14px;
+
+          margin-top:6px;
+
+          border:1px solid #ddd;
+
+          border-radius:10px;
+
+        "
+
+      >
+
+
+      <label style="
+
+        display:block;
+
+        margin-top:12px;
+
+        font-weight:bold;
+
+      ">
+
+        Adresse de livraison
+
+      </label>
+
+
+      <textarea
+
+        id="olmoProfileAddress"
+
+        placeholder="Votre adresse"
+
+        style="
+
+          width:100%;
+
+          min-height:80px;
+
+          box-sizing:border-box;
+
+          padding:14px;
+
+          margin-top:6px;
+
+          border:1px solid #ddd;
+
+          border-radius:10px;
+
+          resize:none;
+
+        "
+
+      >${olmoUserProfile.address}</textarea>
+
+
+      <button
+
+        onclick="saveOlmoProfileForm()"
+
+        style="
+
+          width:100%;
+
+          margin-top:18px;
+
+          padding:14px;
+
+          border:0;
+
+          border-radius:12px;
+
+          background:#111827;
+
+          color:white;
+
+          font-size:16px;
+
+          font-weight:bold;
+
+        "
+
+      >
+
+        💾 Enregistrer mon profil
+
+      </button>
+
+
+      <div style="
+
+        margin-top:12px;
+
+        padding:12px;
+
+        border-radius:10px;
+
+        background:#f3f4f6;
+
+        color:#6b7280;
+
+        font-size:13px;
+
+      ">
+
+        🔒 Vos informations sont
+
+        actuellement enregistrées
+
+        sur cet appareil.
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  document.body.appendChild(box);
+
+}
+
+
+function saveOlmoProfileForm(){
+
+  olmoUserProfile.name =
+
+    document
+
+      .getElementById(
+
+        "olmoProfileName"
+
+      )
+
+      .value
+
+      .trim();
+
+
+  olmoUserProfile.phone =
+
+    document
+
+      .getElementById(
+
+        "olmoProfilePhone"
+
+      )
+
+      .value
+
+      .trim();
+
+
+  olmoUserProfile.email =
+
+    document
+
+      .getElementById(
+
+        "olmoProfileEmail"
+
+      )
+
+      .value
+
+      .trim();
+
+
+  olmoUserProfile.city =
+
+    document
+
+      .getElementById(
+
+        "olmoProfileCity"
+
+      )
+
+      .value
+
+      .trim();
+
+
+  olmoUserProfile.address =
+
+    document
+
+      .getElementById(
+
+        "olmoProfileAddress"
+
+      )
+
+      .value
+
+      .trim();
+
+
+  saveOlmoUserProfile();
+
+
+  showToast(
+
+    "Profil enregistré 👤"
+
+  );
+
+
+  setTimeout(function(){
+
+    showOlmoProfile();
+
+  },300);
+
+}
+
+
+loadOlmoUserProfile();</script>
 
 </body>
   </html>
