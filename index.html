@@ -8539,7 +8539,326 @@ setTimeout(function(){
 
   renderOlmoMarketplace();
 
-},1500);</script>
+},1500);// ===== RECHERCHE + CATÉGORIES PRODUITS VENDEURS =====
+
+function getOlmoCompleteCatalog(){
+
+  return getOlmoMarketplaceProducts();
+
+}
+
+
+function searchOlmoCompleteCatalog(){
+
+  const input =
+    document.getElementById(
+      "searchInput"
+    );
+
+  if(!input){
+
+    return;
+
+  }
+
+  const query =
+    input.value
+      .toLowerCase()
+      .trim();
+
+  const catalog =
+    getOlmoCompleteCatalog();
+
+  if(!query){
+
+    renderOlmoMarketplace();
+
+    return;
+
+  }
+
+  const results =
+    catalog.filter(function(product){
+
+      return (
+
+        product.name
+          .toLowerCase()
+          .includes(query)
+
+        ||
+
+        product.category
+          .toLowerCase()
+          .includes(query)
+
+        ||
+
+        product.description
+          .toLowerCase()
+          .includes(query)
+
+        ||
+
+        (
+          product.seller || ""
+        )
+        .toLowerCase()
+        .includes(query)
+
+      );
+
+    });
+
+
+  renderOlmoMarketplaceList(
+    results
+  );
+
+}
+
+
+function renderOlmoMarketplaceList(
+  list
+){
+
+  const grid =
+    document.getElementById(
+      "productsGrid"
+    );
+
+  if(!grid){
+
+    return;
+
+  }
+
+
+  if(list.length === 0){
+
+    grid.innerHTML = `
+
+      <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:40px;
+        color:#6b7280;
+      ">
+
+        <div style="
+          font-size:45px;
+        ">
+          🔎
+        </div>
+
+        <h3>
+          Aucun produit trouvé
+        </h3>
+
+        <p>
+          Essayez un autre mot.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML =
+    list.map(function(product){
+
+      const image =
+        product.image
+        ?
+        `
+          <img
+            src="${product.image}"
+            alt="${product.name}"
+            style="
+              width:100%;
+              height:100%;
+              object-fit:cover;
+              display:block;
+            "
+          >
+        `
+        :
+        `
+          <div style="
+            width:100%;
+            height:100%;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:48px;
+          ">
+            ${product.emoji || "🛍️"}
+          </div>
+        `;
+
+
+      return `
+
+        <article class="product-card">
+
+          <div class="product-image">
+
+            ${image}
+
+            <button
+              class="favorite"
+              onclick="
+                favoriteOlmoMarketplaceProduct(
+                  '${product.id}'
+                )
+              "
+            >
+              ♡
+            </button>
+
+          </div>
+
+          <div class="product-info">
+
+            <div class="product-category">
+              ${product.category}
+            </div>
+
+            <h3 class="product-name">
+              ${product.name}
+            </h3>
+
+            <p class="product-description">
+              ${product.description}
+            </p>
+
+            ${
+              product.isSellerProduct
+              ?
+              `
+                <div style="
+                  display:inline-block;
+                  margin-top:5px;
+                  padding:4px 8px;
+                  border-radius:8px;
+                  background:#f3f4f6;
+                  color:#4b5563;
+                  font-size:11px;
+                ">
+                  🏪 ${product.seller}
+                </div>
+              `
+              :
+              ""
+            }
+
+            <div class="product-bottom">
+
+              <span class="price">
+                ${formatPrice(
+                  product.price
+                )}
+              </span>
+
+              <button
+                class="add-btn"
+                onclick="
+                  addOlmoMarketplaceProductToCart(
+                    '${product.id}'
+                  )
+                "
+              >
+                +
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      `;
+
+    }).join("");
+
+}
+
+
+function filterOlmoMarketplaceCategory(
+  category
+){
+
+  const catalog =
+    getOlmoCompleteCatalog();
+
+  if(
+    !category ||
+    category === "Tous"
+  ){
+
+    renderOlmoMarketplaceList(
+      catalog
+    );
+
+    return;
+
+  }
+
+
+  const results =
+    catalog.filter(function(product){
+
+      return (
+        product.category
+          .toLowerCase() ===
+        category
+          .toLowerCase()
+      );
+
+    });
+
+
+  renderOlmoMarketplaceList(
+    results
+  );
+
+}
+
+
+function activateOlmoMarketplaceSearch(){
+
+  const input =
+    document.getElementById(
+      "searchInput"
+    );
+
+  if(!input){
+
+    return;
+
+  }
+
+  input.addEventListener(
+    "input",
+    function(){
+
+      searchOlmoCompleteCatalog();
+
+    }
+  );
+
+}
+
+
+setTimeout(function(){
+
+  activateOlmoMarketplaceSearch();
+
+},1800);</script>
 
 </body>
   </html>
