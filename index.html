@@ -11828,6 +11828,245 @@ document.addEventListener(
 
 console.log(
   "✅ Boutons Mon espace corrigés"
+);// ===== COMPTE OLMO - PARTIE 1 =====
+
+let olmoAccount = {
+
+  loggedIn: false,
+
+  name: "",
+
+  phone: "",
+
+  email: "",
+
+  role: "client"
+
+};
+
+
+function loadOlmoAccount(){
+
+  try{
+
+    const saved =
+      localStorage.getItem(
+        "olmo_account"
+      );
+
+    if(saved){
+
+      const data =
+        JSON.parse(saved);
+
+      if(data){
+
+        olmoAccount = {
+
+          ...olmoAccount,
+
+          ...data
+
+        };
+
+      }
+
+    }
+
+  }catch(error){
+
+    console.log(
+      "Erreur compte OLMO"
+    );
+
+  }
+
+}
+
+
+function saveOlmoAccount(){
+
+  localStorage.setItem(
+
+    "olmo_account",
+
+    JSON.stringify(
+      olmoAccount
+    )
+
+  );
+
+}
+
+
+function showOlmoAccountScreen(){
+
+  const old =
+    document.getElementById(
+      "olmoAccountScreen"
+    );
+
+  if(old){
+
+    old.remove();
+
+  }
+
+
+  const box =
+    document.createElement(
+      "div"
+    );
+
+
+  box.id =
+    "olmoAccountScreen";
+
+
+  box.style.cssText = `
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:100080;
+
+    background:rgba(0,0,0,.65);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:15px;
+
+    box-sizing:border-box;
+
+  `;
+
+
+  box.innerHTML = `
+
+    <div style="
+
+      width:100%;
+
+      max-width:430px;
+
+      background:white;
+
+      border-radius:24px;
+
+      padding:25px;
+
+      box-sizing:border-box;
+
+      text-align:center;
+
+    ">
+
+
+      <div style="
+        font-size:55px;
+        margin-bottom:8px;
+      ">
+        🛍️
+      </div>
+
+
+      <h2 style="
+        margin:0;
+      ">
+        Bienvenue sur OLMO
+      </h2>
+
+
+      <p style="
+        color:#6b7280;
+        margin-bottom:25px;
+      ">
+        Votre marketplace
+        multiservices
+      </p>
+
+
+      <button
+        onclick="
+          showOlmoLogin();
+        "
+        style="
+          width:100%;
+          padding:15px;
+          border:0;
+          border-radius:13px;
+          background:#111827;
+          color:white;
+          font-size:16px;
+          font-weight:bold;
+        "
+      >
+        🔐 Se connecter
+      </button>
+
+
+      <button
+        onclick="
+          showOlmoRegister();
+        "
+        style="
+          width:100%;
+          margin-top:10px;
+          padding:15px;
+          border:1px solid #ddd;
+          border-radius:13px;
+          background:white;
+          color:#111827;
+          font-size:16px;
+          font-weight:bold;
+        "
+      >
+        📝 Créer un compte
+      </button>
+
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoAccountScreen'
+            )
+            .remove();
+        "
+        style="
+          width:100%;
+          margin-top:12px;
+          padding:12px;
+          border:0;
+          background:transparent;
+          color:#6b7280;
+        "
+      >
+        Continuer sans compte
+      </button>
+
+
+    </div>
+
+  `;
+
+
+  document.body.appendChild(
+    box
+  );
+
+}
+
+
+loadOlmoAccount();
+
+console.log(
+  "✅ Système de compte OLMO prêt"
 );</script>
 
 </body>
