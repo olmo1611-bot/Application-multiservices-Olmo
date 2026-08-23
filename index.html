@@ -12067,6 +12067,669 @@ loadOlmoAccount();
 
 console.log(
   "✅ Système de compte OLMO prêt"
+);// ===== COMPTE OLMO - PARTIE 2 =====
+
+function showOlmoLogin(){
+
+  const box =
+    document.getElementById(
+      "olmoAccountScreen"
+    );
+
+  if(!box){
+
+    return;
+
+  }
+
+
+  box.innerHTML = `
+
+    <div style="
+
+      width:100%;
+
+      max-width:430px;
+
+      background:white;
+
+      border-radius:24px;
+
+      padding:25px;
+
+      box-sizing:border-box;
+
+    ">
+
+
+      <div style="
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:space-between;
+
+        margin-bottom:20px;
+
+      ">
+
+        <h2 style="
+          margin:0;
+        ">
+          🔐 Connexion
+        </h2>
+
+
+        <button
+
+          onclick="
+            document
+              .getElementById(
+                'olmoAccountScreen'
+              )
+              .remove()
+          "
+
+          style="
+            width:35px;
+            height:35px;
+            border:0;
+            border-radius:50%;
+            background:#f3f4f6;
+            font-size:20px;
+          "
+
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <input
+
+        id="olmoLoginEmail"
+
+        type="email"
+
+        placeholder="Adresse email"
+
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-bottom:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+
+      >
+
+
+      <input
+
+        id="olmoLoginPhone"
+
+        type="tel"
+
+        placeholder="Numéro de téléphone"
+
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-bottom:15px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+
+      >
+
+
+      <button
+
+        onclick="
+          olmoLocalLogin()
+        "
+
+        style="
+          width:100%;
+          padding:15px;
+          border:0;
+          border-radius:13px;
+          background:#111827;
+          color:white;
+          font-size:16px;
+          font-weight:bold;
+        "
+
+      >
+
+        🔓 Se connecter
+
+      </button>
+
+
+      <button
+
+        onclick="
+          showOlmoRegister()
+        "
+
+        style="
+          width:100%;
+          margin-top:10px;
+          padding:12px;
+          border:0;
+          background:transparent;
+          color:#6b7280;
+        "
+
+      >
+
+        Créer un nouveau compte
+
+      </button>
+
+
+    </div>
+
+  `;
+
+}
+
+
+function showOlmoRegister(){
+
+  const box =
+    document.getElementById(
+      "olmoAccountScreen"
+    );
+
+  if(!box){
+
+    return;
+
+  }
+
+
+  box.innerHTML = `
+
+    <div style="
+
+      width:100%;
+
+      max-width:430px;
+
+      background:white;
+
+      border-radius:24px;
+
+      padding:25px;
+
+      box-sizing:border-box;
+
+    ">
+
+
+      <div style="
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:space-between;
+
+        margin-bottom:20px;
+
+      ">
+
+        <h2 style="
+          margin:0;
+        ">
+          📝 Créer un compte
+        </h2>
+
+
+        <button
+
+          onclick="
+            document
+              .getElementById(
+                'olmoAccountScreen'
+              )
+              .remove()
+          "
+
+          style="
+            width:35px;
+            height:35px;
+            border:0;
+            border-radius:50%;
+            background:#f3f4f6;
+            font-size:20px;
+          "
+
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <input
+
+        id="olmoRegisterName"
+
+        type="text"
+
+        placeholder="Nom complet"
+
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-bottom:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+
+      >
+
+
+      <input
+
+        id="olmoRegisterEmail"
+
+        type="email"
+
+        placeholder="Adresse email"
+
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-bottom:10px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+
+      >
+
+
+      <input
+
+        id="olmoRegisterPhone"
+
+        type="tel"
+
+        placeholder="Numéro de téléphone"
+
+        style="
+          width:100%;
+          box-sizing:border-box;
+          padding:14px;
+          margin-bottom:15px;
+          border:1px solid #ddd;
+          border-radius:10px;
+        "
+
+      >
+
+
+      <h3>
+        Je souhaite utiliser OLMO comme :
+      </h3>
+
+
+      <label style="
+
+        display:block;
+
+        padding:15px;
+
+        margin-top:10px;
+
+        border:1px solid #ddd;
+
+        border-radius:13px;
+
+      ">
+
+        <input
+
+          type="radio"
+
+          name="olmoRole"
+
+          value="client"
+
+          checked
+
+        >
+
+        🛍️ Client
+
+      </label>
+
+
+      <label style="
+
+        display:block;
+
+        padding:15px;
+
+        margin-top:10px;
+
+        border:1px solid #ddd;
+
+        border-radius:13px;
+
+      ">
+
+        <input
+
+          type="radio"
+
+          name="olmoRole"
+
+          value="vendeur"
+
+        >
+
+        🏪 Vendeur
+
+      </label>
+
+
+      <button
+
+        onclick="
+          createOlmoLocalAccount()
+        "
+
+        style="
+          width:100%;
+          margin-top:18px;
+          padding:15px;
+          border:0;
+          border-radius:13px;
+          background:#111827;
+          color:white;
+          font-size:16px;
+          font-weight:bold;
+        "
+
+      >
+
+        ✅ Créer mon compte
+
+      </button>
+
+
+    </div>
+
+  `;
+
+}
+
+
+function createOlmoLocalAccount(){
+
+  const name =
+    document
+      .getElementById(
+        "olmoRegisterName"
+      )
+      .value
+      .trim();
+
+
+  const email =
+    document
+      .getElementById(
+        "olmoRegisterEmail"
+      )
+      .value
+      .trim();
+
+
+  const phone =
+    document
+      .getElementById(
+        "olmoRegisterPhone"
+      )
+      .value
+      .trim();
+
+
+  const role =
+    document.querySelector(
+      'input[name="olmoRole"]:checked'
+    );
+
+
+  if(
+    !name ||
+    !email ||
+    !phone ||
+    !role
+  ){
+
+    showToast(
+      "Veuillez remplir tous les champs"
+    );
+
+    return;
+
+  }
+
+
+  olmoAccount = {
+
+    loggedIn:true,
+
+    name:name,
+
+    phone:phone,
+
+    email:email,
+
+    role:role.value
+
+  };
+
+
+  saveOlmoAccount();
+
+
+  olmoUserProfile.name =
+    name;
+
+  olmoUserProfile.phone =
+    phone;
+
+  olmoUserProfile.email =
+    email;
+
+  olmoUserProfile.role =
+    role.value;
+
+
+  saveOlmoUserProfile();
+
+
+  const screen =
+    document.getElementById(
+      "olmoAccountScreen"
+    );
+
+
+  if(screen){
+
+    screen.remove();
+
+  }
+
+
+  showToast(
+    "Compte OLMO créé ✅"
+  );
+
+
+  console.log(
+    "Compte OLMO créé :",
+    olmoAccount
+  );
+
+}
+
+
+function olmoLocalLogin(){
+
+  const email =
+    document
+      .getElementById(
+        "olmoLoginEmail"
+      )
+      .value
+      .trim();
+
+
+  const phone =
+    document
+      .getElementById(
+        "olmoLoginPhone"
+      )
+      .value
+      .trim();
+
+
+  if(
+    !email &&
+    !phone
+  ){
+
+    showToast(
+      "Entrez votre email ou votre numéro"
+    );
+
+    return;
+
+  }
+
+
+  const saved =
+    localStorage.getItem(
+      "olmo_account"
+    );
+
+
+  if(!saved){
+
+    showToast(
+      "Aucun compte OLMO trouvé"
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    const account =
+      JSON.parse(
+        saved
+      );
+
+
+    const emailOk =
+      email &&
+      account.email ===
+      email;
+
+
+    const phoneOk =
+      phone &&
+      account.phone ===
+      phone;
+
+
+    if(
+      !emailOk &&
+      !phoneOk
+    ){
+
+      showToast(
+        "Compte introuvable"
+      );
+
+      return;
+
+    }
+
+
+    olmoAccount = {
+
+      ...account,
+
+      loggedIn:true
+
+    };
+
+
+    saveOlmoAccount();
+
+
+    olmoUserProfile.name =
+      account.name || "";
+
+    olmoUserProfile.phone =
+      account.phone || "";
+
+    olmoUserProfile.email =
+      account.email || "";
+
+    olmoUserProfile.role =
+      account.role || "client";
+
+
+    saveOlmoUserProfile();
+
+
+    const screen =
+      document.getElementById(
+        "olmoAccountScreen"
+      );
+
+
+    if(screen){
+
+      screen.remove();
+
+    }
+
+
+    showToast(
+      "Connexion réussie ✅"
+    );
+
+
+  }catch(error){
+
+    showToast(
+      "Erreur de connexion"
+    );
+
+  }
+
+}
+
+
+console.log(
+  "✅ Connexion et inscription OLMO prêtes"
 );</script>
 
 </body>
