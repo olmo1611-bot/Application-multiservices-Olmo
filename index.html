@@ -13440,6 +13440,192 @@ if(oldSpaceButton){
 
 console.log(
   "✅ Espace Client/Vendeur activé"
+);// ===== OLMO : COMMANDES VENDEUR - PARTIE 1 =====
+
+function getOlmoSellerOrders(){
+
+  let orders = [];
+
+  try{
+
+    orders =
+      JSON.parse(
+        localStorage.getItem(
+          "olmo_orders"
+        )
+      ) || [];
+
+  }catch(error){
+
+    orders = [];
+
+  }
+
+
+  return orders;
+
+}
+
+
+function saveOlmoSellerOrders(
+  orders
+){
+
+  localStorage.setItem(
+    "olmo_orders",
+    JSON.stringify(
+      orders
+    )
+  );
+
+}
+
+
+function getOlmoSellerOrderStatus(
+  order
+){
+
+  return (
+    order.sellerStatus ||
+    order.status ||
+    "Nouvelle"
+  );
+
+}
+
+
+function getOlmoSellerStatusLabel(
+  status
+){
+
+  const labels = {
+
+    "Nouvelle":
+      "🆕 Nouvelle",
+
+    "Acceptée":
+      "✅ Acceptée",
+
+    "Préparation":
+      "📦 En préparation",
+
+    "Expédiée":
+      "🚚 Expédiée",
+
+    "Livrée":
+      "🎉 Livrée",
+
+    "Annulée":
+      "❌ Annulée"
+
+  };
+
+
+  return (
+    labels[status] ||
+    "🆕 Nouvelle"
+  );
+
+}
+
+
+function getOlmoSellerStatusNext(
+  status
+){
+
+  const next = {
+
+    "Nouvelle":
+      "Acceptée",
+
+    "Acceptée":
+      "Préparation",
+
+    "Préparation":
+      "Expédiée",
+
+    "Expédiée":
+      "Livrée"
+
+  };
+
+
+  return next[status] ||
+    null;
+
+}
+
+
+function updateOlmoSellerOrderStatus(
+  orderId,
+  newStatus
+){
+
+  const orders =
+    getOlmoSellerOrders();
+
+
+  const index =
+    orders.findIndex(
+      function(order){
+
+        return String(
+          order.id
+        ) === String(
+          orderId
+        );
+
+      }
+    );
+
+
+  if(index === -1){
+
+    showToast(
+      "Commande introuvable"
+    );
+
+    return;
+
+  }
+
+
+  orders[index].sellerStatus =
+    newStatus;
+
+
+  orders[index].status =
+    newStatus;
+
+
+  orders[index].sellerUpdatedAt =
+    new Date().toISOString();
+
+
+  saveOlmoSellerOrders(
+    orders
+  );
+
+
+  showToast(
+    "Commande mise à jour ✅"
+  );
+
+
+  if(
+    typeof showOlmoSellerOrdersScreen ===
+    "function"
+  ){
+
+    showOlmoSellerOrdersScreen();
+
+  }
+
+}
+
+
+console.log(
+  "✅ Système commandes vendeur partie 1 prêt"
 );</script>
 
 </body>
