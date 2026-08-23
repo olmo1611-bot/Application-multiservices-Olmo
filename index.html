@@ -12838,6 +12838,79 @@ setTimeout(
 
 console.log(
   "✅ Bouton Compte OLMO ajouté"
+);// ===== ESPACE CLIENT / VENDEUR OLMO - PARTIE 1 =====
+
+function getOlmoCurrentRole(){
+
+  if(
+    typeof olmoAccount !==
+    "undefined" &&
+    olmoAccount.loggedIn
+  ){
+
+    return (
+      olmoAccount.role ||
+      "client"
+    );
+
+  }
+
+
+  if(
+    typeof olmoUserProfile !==
+    "undefined"
+  ){
+
+    return (
+      olmoUserProfile.role ||
+      "client"
+    );
+
+  }
+
+
+  return "client";
+
+}
+
+
+function isOlmoSeller(){
+
+  return (
+    getOlmoCurrentRole() ===
+    "vendeur"
+  );
+
+}
+
+
+function isOlmoClient(){
+
+  return (
+    getOlmoCurrentRole() ===
+    "client"
+  );
+
+}
+
+
+function getOlmoRoleLabel(){
+
+  if(isOlmoSeller()){
+
+    return "🏪 Vendeur";
+
+  }
+
+
+  return "🛍️ Client";
+
+}
+
+
+console.log(
+  "Rôle OLMO actuel :",
+  getOlmoRoleLabel()
 );</script>
 
 </body>
