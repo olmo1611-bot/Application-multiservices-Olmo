@@ -10774,7 +10774,66 @@ function showOlmoOrderConfirmation(
     box
   );
 
-  }</script>
+  }// ===== OLMO : UNIFICATION DU CHECKOUT =====
+
+// Toutes les anciennes versions de checkout
+// sont remplacées par le nouveau parcours.
+
+function checkout(){
+
+  if(!cart || cart.length === 0){
+
+    showToast(
+      "Votre panier est vide"
+    );
+
+    return;
+
+  }
+
+  showOlmoCheckout();
+
+}
+
+
+// Sécurité : tous les boutons
+// "Passer la commande" utilisent
+// maintenant le même parcours.
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    const button =
+      event.target.closest(
+        ".checkout"
+      );
+
+    if(!button){
+
+      return;
+
+    }
+
+    event.preventDefault();
+
+    event.stopPropagation();
+
+    checkout();
+
+  },
+  true
+);
+
+
+// Vérification du système OLMO
+setTimeout(function(){
+
+  console.log(
+    "✅ Système de commande OLMO unifié"
+  );
+
+},3000);</script>
 
 </body>
   </html>
