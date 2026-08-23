@@ -12730,6 +12730,114 @@ function olmoLocalLogin(){
 
 console.log(
   "✅ Connexion et inscription OLMO prêtes"
+);// ===== BOUTON COMPTE OLMO =====
+
+function addOlmoAccountButton(){
+
+  if(
+    document.getElementById(
+      "olmoAccountButton"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  const button =
+    document.createElement(
+      "button"
+    );
+
+
+  button.id =
+    "olmoAccountButton";
+
+
+  button.innerHTML =
+    "👤 Compte OLMO";
+
+
+  button.style.cssText = `
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:calc(100% - 30px);
+
+    max-width:430px;
+
+    margin:15px auto;
+
+    padding:15px;
+
+    border:0;
+
+    border-radius:15px;
+
+    background:#111827;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+
+  `;
+
+
+  button.addEventListener(
+    "click",
+    function(){
+
+      showOlmoAccountScreen();
+
+    }
+  );
+
+
+  const spaceButton =
+    document.getElementById(
+      "olmoUserSpaceButton"
+    );
+
+
+  if(spaceButton){
+
+    spaceButton.parentNode.insertBefore(
+      button,
+      spaceButton
+    );
+
+  }else{
+
+    document.body.prepend(
+      button
+    );
+
+  }
+
+}
+
+
+setTimeout(
+  function(){
+
+    addOlmoAccountButton();
+
+  },
+  2600
+);
+
+
+console.log(
+  "✅ Bouton Compte OLMO ajouté"
 );</script>
 
 </body>
