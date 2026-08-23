@@ -11362,6 +11362,472 @@ function showOrders(){
 
 console.log(
   "✅ Bouton Mes commandes corrigé"
+);// ===== CORRECTION DES BOUTONS MON ESPACE =====
+
+// 🛒 MON PANIER
+function openOlmoSpaceCart(){
+
+  const cartButton =
+    document.querySelector(
+      '[onclick*="showCart"]'
+    );
+
+  if(
+    typeof openCart ===
+    "function"
+  ){
+
+    openCart();
+
+    return;
+
+  }
+
+  if(
+    typeof renderCart ===
+    "function"
+  ){
+
+    renderCart();
+
+    return;
+
+  }
+
+  showToast(
+    "Ouverture du panier..."
+  );
+
+}
+
+
+// ❤️ MES FAVORIS
+function openOlmoSpaceFavorites(){
+
+  // Recherche d'une fonction
+  // de favoris déjà présente
+  if(
+    typeof showOlmoFavorites ===
+    "function"
+  ){
+
+    showOlmoFavorites();
+
+    return;
+
+  }
+
+  if(
+    typeof renderFavorites ===
+    "function"
+  ){
+
+    renderFavorites();
+
+    return;
+
+  }
+
+  // Sinon on affiche directement
+  // les favoris enregistrés.
+  let favorites = [];
+
+  try{
+
+    favorites =
+      JSON.parse(
+        localStorage.getItem(
+          "olmo_favorites"
+        )
+      ) || [];
+
+  }catch(error){
+
+    favorites = [];
+
+  }
+
+
+  const box =
+    document.createElement(
+      "div"
+    );
+
+  box.id =
+    "olmoSpaceFavorites";
+
+  box.style.cssText = `
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:100070;
+
+    background:rgba(0,0,0,.6);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:15px;
+
+  `;
+
+
+  let content = "";
+
+
+  if(
+    favorites.length === 0
+  ){
+
+    content = `
+
+      <div style="
+        text-align:center;
+        padding:35px 10px;
+      ">
+
+        <div style="
+          font-size:50px;
+        ">
+          ❤️
+        </div>
+
+        <h3>
+          Aucun favori
+        </h3>
+
+        <p style="
+          color:#6b7280;
+        ">
+          Les produits que vous aimez
+          apparaîtront ici.
+        </p>
+
+      </div>
+
+    `;
+
+  }else{
+
+    content =
+      favorites.map(
+        function(item){
+
+          const product =
+            typeof item ===
+            "object"
+            ? item
+            : null;
+
+          if(!product){
+
+            return "";
+
+          }
+
+          return `
+
+            <div style="
+
+              display:flex;
+
+              align-items:center;
+
+              gap:12px;
+
+              padding:12px;
+
+              margin-bottom:10px;
+
+              border:1px solid #e5e7eb;
+
+              border-radius:14px;
+
+            ">
+
+              <div style="
+                width:55px;
+                height:55px;
+                border-radius:10px;
+                background:#f3f4f6;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                overflow:hidden;
+                font-size:25px;
+              ">
+
+                ${
+                  product.image
+                  ?
+                  `
+                    <img
+                      src="${product.image}"
+                      style="
+                        width:100%;
+                        height:100%;
+                        object-fit:cover;
+                      "
+                    >
+                  `
+                  :
+                  "❤️"
+                }
+
+              </div>
+
+              <div style="
+                flex:1;
+              ">
+
+                <strong>
+                  ${product.name || "Produit"}
+                </strong>
+
+                <div style="
+                  margin-top:5px;
+                  font-weight:bold;
+                ">
+
+                  ${
+                    typeof formatPrice ===
+                    "function"
+                    ?
+                    formatPrice(
+                      Number(
+                        product.price || 0
+                      )
+                    )
+                    :
+                    (
+                      product.price || 0
+                    ) +
+                    " FCFA"
+                  }
+
+                </div>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      ).join("");
+
+  }
+
+
+  box.innerHTML = `
+
+    <div style="
+
+      width:100%;
+
+      max-width:430px;
+
+      max-height:90vh;
+
+      overflow:auto;
+
+      background:white;
+
+      border-radius:22px;
+
+      padding:20px;
+
+      box-sizing:border-box;
+
+    ">
+
+      <div style="
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:space-between;
+
+        margin-bottom:15px;
+
+      ">
+
+        <h2 style="
+          margin:0;
+        ">
+          ❤️ Mes favoris
+        </h2>
+
+        <button
+
+          onclick="
+
+            document
+              .getElementById(
+                'olmoSpaceFavorites'
+              )
+              .remove()
+
+          "
+
+          style="
+
+            width:35px;
+
+            height:35px;
+
+            border:0;
+
+            border-radius:50%;
+
+            background:#f3f4f6;
+
+            font-size:20px;
+
+          "
+
+        >
+
+          ×
+
+        </button>
+
+      </div>
+
+      ${content}
+
+    </div>
+
+  `;
+
+
+  document.body.appendChild(
+    box
+  );
+
+}
+
+
+// 📍 LIVRAISON
+function openOlmoSpaceDelivery(){
+
+  showOlmoProfile();
+
+}
+
+
+// ===== REMPLACEMENT DES ANCIENS CLICS =====
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    const button =
+      event.target.closest(
+        "#olmoUserSpace button"
+      );
+
+    if(!button){
+
+      return;
+
+    }
+
+    const text =
+      button.innerText
+        .toLowerCase();
+
+
+    // Panier
+    if(
+      text.includes(
+        "mon panier"
+      )
+    ){
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      const space =
+        document.getElementById(
+          "olmoUserSpace"
+        );
+
+      if(space){
+        space.remove();
+      }
+
+      openOlmoSpaceCart();
+
+      return;
+
+    }
+
+
+    // Favoris
+    if(
+      text.includes(
+        "mes favoris"
+      )
+    ){
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      const space =
+        document.getElementById(
+          "olmoUserSpace"
+        );
+
+      if(space){
+        space.remove();
+      }
+
+      openOlmoSpaceFavorites();
+
+      return;
+
+    }
+
+
+    // Livraison
+    if(
+      text.includes(
+        "livraison"
+      )
+    ){
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      const space =
+        document.getElementById(
+          "olmoUserSpace"
+        );
+
+      if(space){
+        space.remove();
+      }
+
+      openOlmoSpaceDelivery();
+
+      return;
+
+    }
+
+  },
+  true
+);
+
+
+console.log(
+  "✅ Boutons Mon espace corrigés"
 );</script>
 
 </body>
