@@ -13626,6 +13626,536 @@ function updateOlmoSellerOrderStatus(
 
 console.log(
   "✅ Système commandes vendeur partie 1 prêt"
+);// ===== OLMO : COMMANDES VENDEUR - PARTIE 2 =====
+
+function showOlmoSellerOrdersScreen(){
+
+  const old =
+    document.getElementById(
+      "olmoSellerOrdersScreen"
+    );
+
+  if(old){
+
+    old.remove();
+
+  }
+
+
+  const orders =
+    getOlmoSellerOrders();
+
+
+  const box =
+    document.createElement(
+      "div"
+    );
+
+
+  box.id =
+    "olmoSellerOrdersScreen";
+
+
+  box.style.cssText = `
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:100090;
+
+    background:rgba(0,0,0,.6);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:15px;
+
+    box-sizing:border-box;
+
+  `;
+
+
+  let content = "";
+
+
+  if(orders.length === 0){
+
+    content = `
+
+      <div style="
+        text-align:center;
+        padding:35px 10px;
+      ">
+
+        <div style="
+          font-size:50px;
+        ">
+          📦
+        </div>
+
+        <h3>
+          Aucune commande reçue
+        </h3>
+
+        <p style="
+          color:#6b7280;
+        ">
+          Les commandes de vos clients
+          apparaîtront ici.
+        </p>
+
+      </div>
+
+    `;
+
+  }else{
+
+    content =
+      orders.map(
+        function(order){
+
+          const status =
+            getOlmoSellerOrderStatus(
+              order
+            );
+
+
+          const nextStatus =
+            getOlmoSellerStatusNext(
+              status
+            );
+
+
+          const items =
+            order.items ||
+            order.products ||
+            [];
+
+
+          const total =
+            Number(
+              order.total ||
+              order.subtotal ||
+              0
+            );
+
+
+          const customer =
+            order.customerName ||
+            order.name ||
+            "Client OLMO";
+
+
+          return `
+
+            <div style="
+
+              padding:16px;
+
+              margin-bottom:12px;
+
+              border:1px solid #e5e7eb;
+
+              border-radius:16px;
+
+              background:white;
+
+            ">
+
+
+              <div style="
+
+                display:flex;
+
+                justify-content:space-between;
+
+                gap:10px;
+
+              ">
+
+                <strong>
+
+                  📦 ${
+                    order.id ||
+                    "Commande"
+                  }
+
+                </strong>
+
+
+                <span style="
+                  font-size:12px;
+                  color:#6b7280;
+                ">
+
+                  ${
+                    order.date ||
+                    ""
+                  }
+
+                </span>
+
+              </div>
+
+
+              <div style="
+                margin-top:12px;
+              ">
+
+                <strong>
+                  👤 Client
+                </strong>
+
+                <div style="
+                  margin-top:5px;
+                  color:#4b5563;
+                ">
+
+                  ${customer}
+
+                </div>
+
+              </div>
+
+
+              <div style="
+                margin-top:12px;
+              ">
+
+                <strong>
+                  📦 Produits
+                </strong>
+
+
+                ${
+                  items.map(
+                    function(item){
+
+                      return `
+
+                        <div style="
+                          margin-top:6px;
+                          font-size:14px;
+                        ">
+
+                          ${item.name || "Produit"}
+
+                          ×
+
+                          ${
+                            item.quantity ||
+                            1
+                          }
+
+                        </div>
+
+                      `;
+
+                    }
+                  ).join("")
+                }
+
+              </div>
+
+
+              <div style="
+                margin-top:12px;
+                padding-top:10px;
+                border-top:1px solid #eee;
+              ">
+
+                <div style="
+                  display:flex;
+                  justify-content:space-between;
+                ">
+
+                  <strong>
+                    Total
+                  </strong>
+
+                  <strong>
+                    ${
+                      typeof formatPrice ===
+                      "function"
+                      ?
+                      formatPrice(total)
+                      :
+                      total + " FCFA"
+                    }
+                  </strong>
+
+                </div>
+
+
+                <div style="
+                  margin-top:8px;
+                ">
+
+                  Statut :
+
+                  <strong>
+
+                    ${
+                      getOlmoSellerStatusLabel(
+                        status
+                      )
+                    }
+
+                  </strong>
+
+                </div>
+
+              </div>
+
+
+              ${
+                nextStatus
+                ?
+                `
+
+                  <button
+
+                    onclick="
+
+                      updateOlmoSellerOrderStatus(
+
+                        '${String(
+                          order.id || ""
+                        ).replace(
+                          /'/g,
+                          "\\'"
+                        )}',
+
+                        '${nextStatus}'
+
+                      )
+
+                    "
+
+                    style="
+
+                      width:100%;
+
+                      margin-top:14px;
+
+                      padding:13px;
+
+                      border:0;
+
+                      border-radius:12px;
+
+                      background:#111827;
+
+                      color:white;
+
+                      font-weight:bold;
+
+                    "
+
+                  >
+
+                    ${
+                      getOlmoSellerStatusLabel(
+                        nextStatus
+                      )
+                    }
+
+                  </button>
+
+                `
+                :
+                `
+
+                  <div style="
+                    margin-top:14px;
+                    text-align:center;
+                    padding:10px;
+                    border-radius:10px;
+                    background:#f3f4f6;
+                  ">
+
+                    ✅ Commande terminée
+
+                  </div>
+
+                `
+
+              }
+
+            </div>
+
+          `;
+
+        }
+      ).join("");
+
+  }
+
+
+  box.innerHTML = `
+
+    <div style="
+
+      width:100%;
+
+      max-width:430px;
+
+      max-height:90vh;
+
+      overflow:auto;
+
+      background:white;
+
+      border-radius:22px;
+
+      padding:20px;
+
+      box-sizing:border-box;
+
+    ">
+
+
+      <div style="
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:space-between;
+
+        margin-bottom:18px;
+
+      ">
+
+        <h2 style="
+          margin:0;
+        ">
+
+          📦 Commandes reçues
+
+        </h2>
+
+
+        <button
+
+          onclick="
+
+            document
+
+              .getElementById(
+
+                'olmoSellerOrdersScreen'
+
+              )
+
+              .remove()
+
+          "
+
+          style="
+
+            width:35px;
+
+            height:35px;
+
+            border:0;
+
+            border-radius:50%;
+
+            background:#f3f4f6;
+
+            font-size:20px;
+
+          "
+
+        >
+
+          ×
+
+        </button>
+
+      </div>
+
+
+      ${content}
+
+
+    </div>
+
+  `;
+
+
+  document.body.appendChild(
+    box
+  );
+
+}
+
+
+// Le bouton "Commandes reçues"
+// du vendeur ouvre maintenant
+// le nouvel écran.
+
+document.addEventListener(
+  "click",
+  function(event){
+
+    const button =
+      event.target.closest(
+        "#olmoUserSpace button"
+      );
+
+    if(!button){
+
+      return;
+
+    }
+
+
+    const text =
+      button.innerText
+        .toLowerCase();
+
+
+    if(
+      text.includes(
+        "commandes reçues"
+      )
+    ){
+
+      event.preventDefault();
+
+      event.stopPropagation();
+
+
+      const space =
+        document.getElementById(
+          "olmoUserSpace"
+        );
+
+
+      if(space){
+
+        space.remove();
+
+      }
+
+
+      showOlmoSellerOrdersScreen();
+
+    }
+
+  },
+  true
+);
+
+
+console.log(
+  "✅ Commandes reçues vendeur activées"
 );</script>
 
 </body>
