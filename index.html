@@ -12911,6 +12911,535 @@ function getOlmoRoleLabel(){
 console.log(
   "Rôle OLMO actuel :",
   getOlmoRoleLabel()
+);// ===== ESPACE ADAPTATIF OLMO - PARTIE 2 =====
+
+function showOlmoAdaptiveSpace(){
+
+  const old =
+    document.getElementById(
+      "olmoUserSpace"
+    );
+
+  if(old){
+
+    old.remove();
+
+  }
+
+
+  const seller =
+    isOlmoSeller();
+
+
+  const name =
+    (
+      olmoAccount &&
+      olmoAccount.name
+    ) ||
+    (
+      olmoUserProfile &&
+      olmoUserProfile.name
+    ) ||
+    "Utilisateur OLMO";
+
+
+  const role =
+    seller
+      ? "🏪 Vendeur"
+      : "🛍️ Client";
+
+
+  const box =
+    document.createElement(
+      "div"
+    );
+
+
+  box.id =
+    "olmoUserSpace";
+
+
+  box.style.cssText = `
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:100030;
+
+    background:rgba(0,0,0,.6);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:15px;
+
+    box-sizing:border-box;
+
+  `;
+
+
+  let buttons = "";
+
+
+  if(seller){
+
+    buttons = `
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoUserSpace'
+            )
+            .remove();
+
+          showOlmoProfile();
+        "
+        style="
+          padding:18px 10px;
+          border:1px solid #e5e7eb;
+          border-radius:15px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        👤
+        <br>
+        Mon profil
+      </button>
+
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoUserSpace'
+            )
+            .remove();
+
+          showOlmoSellerProducts();
+        "
+        style="
+          padding:18px 10px;
+          border:1px solid #e5e7eb;
+          border-radius:15px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        🏪
+        <br>
+        Ma boutique
+      </button>
+
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoUserSpace'
+            )
+            .remove();
+
+          showOlmoSellerProducts();
+        "
+        style="
+          padding:18px 10px;
+          border:1px solid #e5e7eb;
+          border-radius:15px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        📦
+        <br>
+        Mes produits
+      </button>
+
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoUserSpace'
+            )
+            .remove();
+
+          showOlmoProfile();
+        "
+        style="
+          padding:18px 10px;
+          border:1px solid #e5e7eb;
+          border-radius:15px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        📢
+        <br>
+        Publier
+      </button>
+
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoUserSpace'
+            )
+            .remove();
+
+          showOlmoSellerProducts();
+        "
+        style="
+          padding:18px 10px;
+          border:1px solid #e5e7eb;
+          border-radius:15px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        📊
+        <br>
+        Gestion produits
+      </button>
+
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoUserSpace'
+            )
+            .remove();
+
+          showOrders();
+        "
+        style="
+          padding:18px 10px;
+          border:1px solid #e5e7eb;
+          border-radius:15px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        📦
+        <br>
+        Commandes reçues
+      </button>
+
+    `;
+
+  }else{
+
+    buttons = `
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoUserSpace'
+            )
+            .remove();
+
+          showOlmoProfile();
+        "
+        style="
+          padding:18px 10px;
+          border:1px solid #e5e7eb;
+          border-radius:15px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        👤
+        <br>
+        Mon profil
+      </button>
+
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoUserSpace'
+            )
+            .remove();
+
+          openOlmoSpaceCart();
+        "
+        style="
+          padding:18px 10px;
+          border:1px solid #e5e7eb;
+          border-radius:15px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        🛒
+        <br>
+        Mon panier
+      </button>
+
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoUserSpace'
+            )
+            .remove();
+
+          showOrders();
+        "
+        style="
+          padding:18px 10px;
+          border:1px solid #e5e7eb;
+          border-radius:15px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        📦
+        <br>
+        Mes commandes
+      </button>
+
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoUserSpace'
+            )
+            .remove();
+
+          openOlmoSpaceFavorites();
+        "
+        style="
+          padding:18px 10px;
+          border:1px solid #e5e7eb;
+          border-radius:15px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        ❤️
+        <br>
+        Mes favoris
+      </button>
+
+
+      <button
+        onclick="
+          document
+            .getElementById(
+              'olmoUserSpace'
+            )
+            .remove();
+
+          openOlmoSpaceDelivery();
+        "
+        style="
+          padding:18px 10px;
+          border:1px solid #e5e7eb;
+          border-radius:15px;
+          background:white;
+          font-weight:bold;
+        "
+      >
+        📍
+        <br>
+        Livraison
+      </button>
+
+    `;
+
+  }
+
+
+  box.innerHTML = `
+
+    <div style="
+
+      width:100%;
+
+      max-width:430px;
+
+      max-height:90vh;
+
+      overflow:auto;
+
+      background:white;
+
+      border-radius:22px;
+
+      padding:20px;
+
+      box-sizing:border-box;
+
+    ">
+
+
+      <div style="
+
+        display:flex;
+
+        align-items:center;
+
+        gap:12px;
+
+        margin-bottom:20px;
+
+      ">
+
+
+        <div style="
+
+          width:52px;
+
+          height:52px;
+
+          border-radius:50%;
+
+          background:#f3f4f6;
+
+          display:flex;
+
+          align-items:center;
+
+          justify-content:center;
+
+          font-size:27px;
+
+        ">
+
+          ${
+            seller
+              ? "🏪"
+              : "👤"
+          }
+
+        </div>
+
+
+        <div style="
+          flex:1;
+        ">
+
+          <div style="
+            font-size:13px;
+            color:#6b7280;
+          ">
+
+            ${role}
+
+          </div>
+
+
+          <strong style="
+            font-size:18px;
+          ">
+
+            ${name}
+
+          </strong>
+
+        </div>
+
+
+        <button
+
+          onclick="
+
+            document
+              .getElementById(
+                'olmoUserSpace'
+              )
+              .remove()
+
+          "
+
+          style="
+
+            width:35px;
+
+            height:35px;
+
+            border:0;
+
+            border-radius:50%;
+
+            background:#f3f4f6;
+
+            font-size:20px;
+
+          "
+
+        >
+
+          ×
+
+        </button>
+
+      </div>
+
+
+      <div style="
+
+        display:grid;
+
+        grid-template-columns:
+          repeat(2,1fr);
+
+        gap:10px;
+
+      ">
+
+        ${buttons}
+
+      </div>
+
+
+    </div>
+
+  `;
+
+
+  document.body.appendChild(
+    box
+  );
+
+}
+
+
+// Le bouton Mon espace ouvre
+// maintenant l'espace adapté.
+
+const oldSpaceButton =
+  document.getElementById(
+    "olmoUserSpaceButton"
+  );
+
+
+if(oldSpaceButton){
+
+  oldSpaceButton.onclick =
+    function(){
+
+      showOlmoAdaptiveSpace();
+
+    };
+
+}
+
+
+console.log(
+  "✅ Espace Client/Vendeur activé"
 );</script>
 
 </body>
