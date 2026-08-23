@@ -11334,6 +11334,34 @@ function openOlmoUnifiedOrders(){
 
 console.log(
   "✅ Mes commandes OLMO unifiées"
+);// ===== CORRECTION MES COMMANDES OLMO =====
+
+function showOrders(){
+
+  if(
+    typeof showOlmoUnifiedOrders ===
+    "function"
+  ){
+
+    showOlmoUnifiedOrders();
+
+    return;
+
+  }
+
+  console.log(
+    "Système Mes commandes indisponible"
+  );
+
+}
+
+
+// Le bouton Mes commandes de
+// Mon espace utilise maintenant
+// le système unifié.
+
+console.log(
+  "✅ Bouton Mes commandes corrigé"
 );</script>
 
 </body>
