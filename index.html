@@ -10833,7 +10833,155 @@ setTimeout(function(){
     "✅ Système de commande OLMO unifié"
   );
 
-},3000);</script>
+},3000);// ===== OLMO : SYNCHRONISATION DES COMMANDES =====
+
+function getOlmoUnifiedOrders(){
+
+  let orders = [];
+
+  try{
+
+    orders =
+      JSON.parse(
+        localStorage.getItem(
+          "olmo_orders"
+        )
+      ) || [];
+
+  }catch(error){
+
+    orders = [];
+
+  }
+
+  // Ajouter aussi les anciennes commandes
+  if(
+    typeof olmoOrders !== "undefined" &&
+    Array.isArray(olmoOrders)
+  ){
+
+    olmoOrders.forEach(function(order){
+
+      const exists =
+        orders.some(function(item){
+
+          return String(item.id) ===
+            String(order.id);
+
+        });
+
+      if(!exists){
+
+        orders.push(order);
+
+      }
+
+    });
+
+  }
+
+  return orders;
+
+}
+
+
+function saveOlmoUnifiedOrders(
+  orders
+){
+
+  localStorage.setItem(
+    "olmo_orders",
+    JSON.stringify(
+      orders
+    )
+  );
+
+}
+
+
+function addOlmoUnifiedOrder(
+  order
+){
+
+  const orders =
+    getOlmoUnifiedOrders();
+
+
+  const exists =
+    orders.some(function(item){
+
+      return String(item.id) ===
+        String(order.id);
+
+    });
+
+
+  if(!exists){
+
+    orders.unshift(
+      order
+    );
+
+  }
+
+
+  saveOlmoUnifiedOrders(
+    orders
+  );
+
+
+  // Synchroniser également
+  // l'ancien système OLMO
+
+  if(
+    typeof olmoOrders !== "undefined" &&
+    Array.isArray(olmoOrders)
+  ){
+
+    const oldExists =
+      olmoOrders.some(
+        function(item){
+
+          return String(item.id) ===
+            String(order.id);
+
+        }
+      );
+
+
+    if(!oldExists){
+
+      olmoOrders.unshift(
+        order
+      );
+
+    }
+
+    if(
+      typeof saveOlmoOrders ===
+      "function"
+    ){
+
+      saveOlmoOrders();
+
+    }
+
+  }
+
+}
+
+
+function getOlmoOrderCount(){
+
+  return getOlmoUnifiedOrders()
+    .length;
+
+}
+
+
+console.log(
+  "✅ Commandes OLMO synchronisées"
+);</script>
 
 </body>
   </html>
