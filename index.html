@@ -14652,6 +14652,107 @@ function showOlmoUnifiedOrders(){
 
 console.log(
   "✅ Mes commandes client synchronisées"
+);// ===== OLMO : FILTRAGE COMMANDES VENDEUR - PARTIE 1 =====
+
+function getOlmoCurrentSellerName(){
+
+  if(
+    typeof olmoAccount !== "undefined" &&
+    olmoAccount &&
+    olmoAccount.loggedIn &&
+    olmoAccount.role === "vendeur"
+  ){
+
+    return (
+      olmoAccount.name ||
+      ""
+    );
+
+  }
+
+
+  if(
+    typeof olmoUserProfile !== "undefined" &&
+    olmoUserProfile
+  ){
+
+    return (
+      olmoUserProfile.name ||
+      ""
+    );
+
+  }
+
+
+  return "";
+
+}
+
+
+function getOlmoSellerOrders(){
+
+  const allOrders =
+    getOlmoUnifiedOrders();
+
+
+  const sellerName =
+    getOlmoCurrentSellerName();
+
+
+  // Si aucun vendeur n'est connecté,
+  // aucune commande vendeur n'est affichée.
+
+  if(!sellerName){
+
+    return [];
+
+  }
+
+
+  return allOrders.filter(
+    function(order){
+
+      const items =
+        order.items ||
+        order.products ||
+        [];
+
+
+      // Une commande appartient au vendeur
+      // si au moins un produit porte son nom.
+
+      return items.some(
+        function(item){
+
+          const itemSeller =
+            String(
+              item.seller ||
+              ""
+            )
+            .trim()
+            .toLowerCase();
+
+
+          return (
+            itemSeller ===
+            String(
+              sellerName
+            )
+            .trim()
+            .toLowerCase()
+          );
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+console.log(
+  "✅ Filtrage des commandes vendeur activé"
 );</script>
 
 </body>
