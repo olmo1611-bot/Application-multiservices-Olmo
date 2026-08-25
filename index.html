@@ -14156,6 +14156,121 @@ document.addEventListener(
 
 console.log(
   "✅ Commandes reçues vendeur activées"
+);// ===== OLMO : SYNCHRONISATION STATUT CLIENT - PARTIE 1 =====
+
+function syncOlmoClientOrderStatus(){
+
+  let orders = [];
+
+  try{
+
+    orders =
+      JSON.parse(
+        localStorage.getItem(
+          "olmo_orders"
+        )
+      ) || [];
+
+  }catch(error){
+
+    orders = [];
+
+  }
+
+
+  orders =
+    orders.map(
+      function(order){
+
+        if(
+          order.sellerStatus
+        ){
+
+          order.status =
+            order.sellerStatus;
+
+        }
+
+
+        return order;
+
+      }
+    );
+
+
+  try{
+
+    localStorage.setItem(
+      "olmo_orders",
+      JSON.stringify(
+        orders
+      )
+    );
+
+  }catch(error){
+
+    console.log(
+      "Erreur synchronisation commandes OLMO"
+    );
+
+  }
+
+
+  return orders;
+
+}
+
+
+function getOlmoClientOrderStatus(
+  order
+){
+
+  return (
+    order.sellerStatus ||
+    order.status ||
+    "Nouvelle"
+  );
+
+}
+
+
+function getOlmoClientStatusLabel(
+  status
+){
+
+  const labels = {
+
+    "Nouvelle":
+      "🆕 Nouvelle",
+
+    "Acceptée":
+      "✅ Acceptée",
+
+    "Préparation":
+      "📦 En préparation",
+
+    "Expédiée":
+      "🚚 Expédiée",
+
+    "Livrée":
+      "🎉 Livrée",
+
+    "Annulée":
+      "❌ Annulée"
+
+  };
+
+
+  return (
+    labels[status] ||
+    "🆕 Nouvelle"
+  );
+
+}
+
+
+console.log(
+  "✅ Synchronisation statut client partie 1 prête"
 );</script>
 
 </body>
