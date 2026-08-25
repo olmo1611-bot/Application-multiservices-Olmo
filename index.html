@@ -14753,7 +14753,132 @@ function getOlmoSellerOrders(){
 
 console.log(
   "✅ Filtrage des commandes vendeur activé"
-);</script>
+);// ===== OLMO : FILTRAGE COMMANDES VENDEUR - PARTIE 2 =====
+// Remplace le branchement générique "showOrders()"
+// du bouton "Commandes reçues" par l'écran vendeur filtré.
+
+(function(){
+
+  function connectSellerOrdersButton(){
+
+    const space =
+      document.getElementById(
+        "olmoUserSpace"
+      );
+
+    if(!space){
+
+      return false;
+
+    }
+
+
+    const buttons =
+      space.querySelectorAll(
+        "button"
+      );
+
+
+    let connected = false;
+
+
+    buttons.forEach(
+      function(button){
+
+        const text =
+          button.innerText
+            .trim()
+            .toLowerCase();
+
+
+        if(
+          text.includes(
+            "commandes reçues"
+          )
+        ){
+
+          // On neutralise le branchement
+          // générique existant.
+
+          button.onclick =
+            function(event){
+
+              if(event){
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+              }
+
+
+              const currentSpace =
+                document.getElementById(
+                  "olmoUserSpace"
+                );
+
+
+              if(currentSpace){
+
+                currentSpace.remove();
+
+              }
+
+
+              showOlmoSellerOrdersScreen();
+
+            };
+
+
+          connected = true;
+
+        }
+
+      }
+    );
+
+
+    return connected;
+
+  }
+
+
+  // L'espace est créé dynamiquement.
+  // On surveille donc son apparition.
+
+  const observer =
+    new MutationObserver(
+      function(){
+
+        if(
+          connectSellerOrdersButton()
+        ){
+
+          console.log(
+            "✅ Bouton Commandes reçues connecté au filtre vendeur"
+          );
+
+        }
+
+      }
+    );
+
+
+  observer.observe(
+    document.body,
+    {
+      childList:true,
+      subtree:true
+    }
+  );
+
+
+  // Sécurité : tentative initiale.
+
+  connectSellerOrdersButton();
+
+
+})();</script>
 
 </body>
   </html>
