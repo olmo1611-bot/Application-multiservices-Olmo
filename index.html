@@ -14878,7 +14878,43 @@ console.log(
   connectSellerOrdersButton();
 
 
-})();</script>
+})();// ===== OLMO : NETTOYAGE COMMANDES - PARTIE 1 =====
+// Séparation stricte entre les commandes CLIENT
+// et les commandes VENDEUR.
+
+function getOlmoClientOrders(){
+
+  let orders = [];
+
+  try{
+
+    orders =
+      JSON.parse(
+        localStorage.getItem(
+          "olmo_orders"
+        )
+      ) || [];
+
+  }catch(error){
+
+    console.log(
+      "Erreur lecture commandes client OLMO",
+      error
+    );
+
+    orders = [];
+
+  }
+
+
+  return orders;
+
+}
+
+
+console.log(
+  "✅ Séparation commandes client/vendeur préparée"
+);</script>
 
 </body>
   </html>
