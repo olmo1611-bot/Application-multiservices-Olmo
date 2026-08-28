@@ -14914,6 +14914,121 @@ function getOlmoClientOrders(){
 
 console.log(
   "✅ Séparation commandes client/vendeur préparée"
+);// ===== OLMO : NETTOYAGE COMMANDES - PARTIE 2 =====
+// Mes commandes CLIENT utilise exclusivement
+// la liste complète des commandes enregistrées.
+
+function getOlmoClientOrdersForDisplay(){
+
+  const orders =
+    getOlmoClientOrders();
+
+  return orders.map(
+    function(order){
+
+      const normalizedOrder = {
+        ...order
+      };
+
+      // Le statut vendeur devient visible
+      // côté client lorsqu'il existe.
+      if(order.sellerStatus){
+
+        normalizedOrder.status =
+          order.sellerStatus;
+
+      }
+
+      return normalizedOrder;
+
+    }
+  );
+
+}
+
+
+// On remplace uniquement la source
+// utilisée par l'affichage client.
+
+const originalOlmoUnifiedOrders =
+  window.showOlmoUnifiedOrders;
+
+
+window.showOlmoUnifiedOrders =
+  function(){
+
+    if(
+      typeof getOlmoClientOrdersForDisplay !==
+      "function"
+    ){
+
+      console.log(
+        "Système commandes client indisponible"
+      );
+
+      return;
+
+    }
+
+
+    const clientOrders =
+      getOlmoClientOrdersForDisplay();
+
+
+    // On conserve temporairement les commandes
+    // existantes pour ne modifier que l'affichage.
+    const previousOrders =
+      localStorage.getItem(
+        "olmo_orders"
+      );
+
+
+    try{
+
+      localStorage.setItem(
+        "olmo_orders",
+        JSON.stringify(
+          clientOrders
+        )
+      );
+
+
+      if(
+        typeof originalOlmoUnifiedOrders ===
+        "function"
+      ){
+
+        originalOlmoUnifiedOrders();
+
+      }
+
+    }finally{
+
+      // Les données originales sont restaurées
+      // immédiatement après l'affichage.
+
+      if(previousOrders !== null){
+
+        localStorage.setItem(
+          "olmo_orders",
+          previousOrders
+        );
+
+      }else{
+
+        localStorage.removeItem(
+          "olmo_orders"
+        );
+
+      }
+
+    }
+
+  };
+
+
+console.log(
+  "✅ Affichage Mes commandes séparé du système vendeur"
 );</script>
 
 </body>
