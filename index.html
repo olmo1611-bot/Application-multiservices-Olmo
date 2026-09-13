@@ -15029,7 +15029,105 @@ window.showOlmoUnifiedOrders =
 
 console.log(
   "✅ Affichage Mes commandes séparé du système vendeur"
-);</script>
+);// ===== OLMO : BLOC MAÎTRE - NETTOYAGE COMMANDES =====
+
+(function(){
+
+  // 1. Source unique des commandes
+  window.getOlmoUnifiedOrders = function(){
+
+    let orders = [];
+
+    try{
+      orders =
+        JSON.parse(
+          localStorage.getItem("olmo_orders")
+        ) || [];
+    }catch(error){
+      orders = [];
+    }
+
+    // Conserver aussi les anciennes commandes OLMO
+    if(
+      typeof olmoOrders !== "undefined" &&
+      Array.isArray(olmoOrders)
+    ){
+      olmoOrders.forEach(function(order){
+
+        const exists =
+          orders.some(function(item){
+            return String(item.id) ===
+              String(order.id);
+          });
+
+        if(!exists){
+          orders.push(order);
+        }
+
+      });
+    }
+
+    return orders;
+  };
+
+
+  // 2. Commandes du vendeur connecté uniquement
+  window.getOlmoSellerOrders = function(){
+
+    const allOrders =
+      window.getOlmoUnifiedOrders();
+
+    const sellerName =
+      typeof getOlmoCurrentSellerName === "function"
+        ? getOlmoCurrentSellerName()
+        : "";
+
+    if(!sellerName){
+      return [];
+    }
+
+    return allOrders.filter(function(order){
+
+      const items =
+        order.items ||
+        order.products ||
+        [];
+
+      return items.some(function(item){
+
+        const itemSeller =
+          String(
+            item.seller || ""
+          )
+          .trim()
+          .toLowerCase();
+
+        return (
+          itemSeller ===
+          String(sellerName)
+            .trim()
+            .toLowerCase()
+        );
+
+      });
+
+    });
+  };
+
+
+  // 3. Commandes client = toutes les commandes
+  window.getOlmoClientOrders = function(){
+
+    return window.getOlmoUnifiedOrders();
+
+  };
+
+
+  console.log(
+    "✅ OLMO : bloc maître actif"
+  );
+
+})();</script>
 
 </body>
   </html>
