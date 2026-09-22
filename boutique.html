@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#6c3df5">
+
+  <title>OLMO — Boutiques</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primaire: #6c3df5;
+      --primaire-fonce: #4f27c7;
+      --secondaire: #ff3d72;
+      --fond: #f5f6fa;
+      --blanc: #ffffff;
+      --texte: #171a2b;
+      --gris: #6b7280;
+      --bordure: #e5e7eb;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--fond);
+      color: var(--texte);
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primaire), var(--primaire-fonce));
+      color: white;
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .retour {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      background: rgba(255,255,255,0.15);
+      padding: 9px 13px;
+      border-radius: 10px;
+    }
+
+    .hero {
+      padding: 25px 20px 15px;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      color: var(--gris);
+      line-height: 1.5;
+    }
+
+    .recherche {
+      padding: 10px 20px 20px;
+    }
+
+    .recherche input {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid var(--bordure);
+      border-radius: 14px;
+      font-size: 15px;
+      outline: none;
+      background: white;
+    }
+
+    .categories {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 0 20px 20px;
+    }
+
+    .categorie {
+      border: none;
+      background: white;
+      padding: 10px 16px;
+      border-radius: 20px;
+      white-space: nowrap;
+      color: var(--texte);
+      font-weight: 600;
+    }
+
+    .categorie.active {
+      background: var(--primaire);
+      color: white;
+    }
+
+    .contenu {
+      padding: 0 20px 100px;
+    }
+
+    .titre-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .titre-section h2 {
+      font-size: 20px;
+    }
+
+    .boutiques {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .boutique {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--bordure);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .image {
+      height: 120px;
+      background: linear-gradient(135deg, #ece8ff, #ddd5ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+    }
+
+    .infos {
+      padding: 13px;
+    }
+
+    .infos h3 {
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .infos p {
+      font-size: 13px;
+      color: var(--gris);
+      margin-bottom: 8px;
+    }
+
+    .prix {
+      color: var(--primaire);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid var(--bordure);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 5px;
+      z-index: 20;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--gris);
+      text-align: center;
+      font-size: 11px;
+    }
+
+    nav a.active {
+      color: var(--primaire);
+      font-weight: 700;
+    }
+
+    nav span {
+      display: block;
+      font-size: 21px;
+      margin-bottom: 3px;
+    }
+
+    @media (min-width: 700px) {
+      .boutiques {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .contenu,
+      .hero,
+      .recherche {
+        max-width: 1100px;
+        margin: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="header-top">
+      <div class="logo">OLMO</div>
+      <a href="index.html" class="retour">← Accueil</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Les boutiques</h1>
+    <p>Découvrez les produits proposés par les vendeurs présents sur OLMO.</p>
+  </section>
+
+  <div class="recherche">
+    <input
+      type="search"
+      placeholder="🔎 Rechercher un produit ou une boutique..."
+    >
+  </div>
+
+  <div class="categories">
+    <button class="categorie active">Tout</button>
+    <button class="categorie">Mode</button>
+    <button class="categorie">Téléphones</button>
+    <button class="categorie">Maison</button>
+    <button class="categorie">Alimentation</button>
+  </div>
+
+  <main class="contenu">
+
+    <div class="titre-section">
+      <h2>Boutiques populaires</h2>
+    </div>
+
+    <div class="boutiques">
+
+      <article class="boutique">
+        <div class="image">👕</div>
+        <div class="infos">
+          <h3>Mode & Style</h3>
+          <p>Vêtements et accessoires</p>
+          <div class="prix">★ 4,8</div>
+        </div>
+      </article>
+
+      <article class="boutique">
+        <div class="image">📱</div>
+        <div class="infos">
+          <h3>Tech Store</h3>
+          <p>Téléphones et accessoires</p>
+          <div class="prix">★ 4,7</div>
+        </div>
+      </article>
+
+      <article class="boutique">
+        <div class="image">🛋️</div>
+        <div class="infos">
+          <h3>Maison Plus</h3>
+          <p>Articles pour la maison</p>
+          <div class="prix">★ 4,6</div>
+        </div>
+      </article>
+
+      <article class="boutique">
+        <div class="image">🛒</div>
+        <div class="infos">
+          <h3>Marché OLMO</h3>
+          <p>Produits du quotidien</p>
+          <div class="prix">★ 4,9</div>
+        </div>
+      </article>
+
+    </div>
+
+  </main>
+
+  <nav>
+    <a href="index.html">
+      <span>⌂</span>
+      Accueil
+    </a>
+
+    <a href="boutiques.html" class="active">
+      <span>🛍️</span>
+      Boutiques
+    </a>
+
+    <a href="services.html">
+      <span>🔧</span>
+      Services
+    </a>
+
+    <a href="emplois.html">
+      <span>💼</span>
+      Emplois
+    </a>
+
+    <a href="profil.html">
+      <span>👤</span>
+      Profil
+    </a>
+  </nav>
+
+</body>
+  </html>
