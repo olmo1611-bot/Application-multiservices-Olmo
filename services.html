@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#6c3df5">
+
+  <title>OLMO — Services</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primaire: #6c3df5;
+      --primaire-fonce: #4f27c7;
+      --fond: #f5f6fa;
+      --blanc: #ffffff;
+      --texte: #171a2b;
+      --gris: #6b7280;
+      --bordure: #e5e7eb;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--fond);
+      color: var(--texte);
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primaire), var(--primaire-fonce));
+      color: white;
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .retour {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      background: rgba(255,255,255,0.15);
+      padding: 9px 13px;
+      border-radius: 10px;
+    }
+
+    .hero {
+      padding: 25px 20px 15px;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      color: var(--gris);
+      line-height: 1.5;
+    }
+
+    .recherche {
+      padding: 10px 20px 20px;
+    }
+
+    .recherche input {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid var(--bordure);
+      border-radius: 14px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .contenu {
+      padding: 0 20px 100px;
+    }
+
+    .titre-section {
+      margin: 10px 0 15px;
+    }
+
+    .titre-section h2 {
+      font-size: 20px;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .service {
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: 18px;
+      padding: 20px 15px;
+      text-decoration: none;
+      color: var(--texte);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+    }
+
+    .service:active {
+      transform: scale(0.97);
+    }
+
+    .icone {
+      width: 55px;
+      height: 55px;
+      border-radius: 15px;
+      background: #eeeaff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 14px;
+    }
+
+    .service h3 {
+      font-size: 16px;
+      margin-bottom: 7px;
+    }
+
+    .service p {
+      color: var(--gris);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .info {
+      margin-top: 25px;
+      padding: 18px;
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: 18px;
+    }
+
+    .info h2 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .info p {
+      color: var(--gris);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid var(--bordure);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 5px;
+      z-index: 20;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--gris);
+      text-align: center;
+      font-size: 11px;
+    }
+
+    nav a.active {
+      color: var(--primaire);
+      font-weight: 700;
+    }
+
+    nav span {
+      display: block;
+      font-size: 21px;
+      margin-bottom: 3px;
+    }
+
+    @media (min-width: 700px) {
+      .services {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .hero,
+      .recherche,
+      .contenu {
+        max-width: 1100px;
+        margin: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="header-top">
+      <div class="logo">OLMO</div>
+      <a href="index.html" class="retour">← Accueil</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Services</h1>
+    <p>Trouvez facilement des professionnels et des services près de vous.</p>
+  </section>
+
+  <div class="recherche">
+    <input
+      type="search"
+      placeholder="🔎 Rechercher un service..."
+    >
+  </div>
+
+  <main class="contenu">
+
+    <div class="titre-section">
+      <h2>Catégories de services</h2>
+    </div>
+
+    <div class="services">
+
+      <a href="#" class="service">
+        <div class="icone">🔧</div>
+        <h3>Plomberie</h3>
+        <p>Des plombiers pour vos installations et réparations.</p>
+      </a>
+
+      <a href="#" class="service">
+        <div class="icone">💇</div>
+        <h3>Coiffure</h3>
+        <p>Coiffeurs et coiffeuses pour hommes et femmes.</p>
+      </a>
+
+      <a href="#" class="service">
+        <div class="icone">🚗</div>
+        <h3>Mécanique</h3>
+        <p>Entretien et réparation de vos véhicules.</p>
+      </a>
+
+      <a href="#" class="service">
+        <div class="icone">📦</div>
+        <h3>Livraison</h3>
+        <p>Faites livrer vos produits rapidement.</p>
+      </a>
+
+      <a href="#" class="service">
+        <div class="icone">🧹</div>
+        <h3>Nettoyage</h3>
+        <p>Des professionnels pour vos travaux de nettoyage.</p>
+      </a>
+
+      <a href="#" class="service">
+        <div class="icone">💻</div>
+        <h3>Informatique</h3>
+        <p>Assistance, réparation et installation informatique.</p>
+      </a>
+
+      <a href="#" class="service">
+        <div class="icone">📸</div>
+        <h3>Photographie</h3>
+        <p>Photographes pour vos événements et projets.</p>
+      </a>
+
+      <a href="#" class="service">
+        <div class="icone">🏠</div>
+        <h3>Maison</h3>
+        <p>Des professionnels pour vos travaux à domicile.</p>
+      </a>
+
+    </div>
+
+    <div class="info">
+      <h2>Besoin d'un professionnel ?</h2>
+      <p>
+        OLMO permet aux clients de découvrir des professionnels,
+        consulter leurs services et les contacter facilement.
+      </p>
+    </div>
+
+  </main>
+
+  <nav>
+    <a href="index.html">
+      <span>⌂</span>
+      Accueil
+    </a>
+
+    <a href="boutiques.html">
+      <span>🛍️</span>
+      Boutiques
+    </a>
+
+    <a href="services.html" class="active">
+      <span>🔧</span>
+      Services
+    </a>
+
+    <a href="emplois.html">
+      <span>💼</span>
+      Emplois
+    </a>
+
+    <a href="profil.html">
+      <span>👤</span>
+      Profil
+    </a>
+  </nav>
+
+</body>
+    </html>
