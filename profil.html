@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#6c3df5">
+
+  <title>OLMO — Profil</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primaire: #6c3df5;
+      --primaire-fonce: #4f27c7;
+      --fond: #f5f6fa;
+      --blanc: #ffffff;
+      --texte: #171a2b;
+      --gris: #6b7280;
+      --bordure: #e5e7eb;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--fond);
+      color: var(--texte);
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primaire), var(--primaire-fonce));
+      color: white;
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .retour {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      background: rgba(255,255,255,0.15);
+      padding: 9px 13px;
+      border-radius: 10px;
+    }
+
+    .contenu {
+      padding: 25px 20px 100px;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .profil {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      border: 1px solid var(--bordure);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+    }
+
+    .avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #eeeaff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      margin: 0 auto 15px;
+    }
+
+    .profil h1 {
+      font-size: 22px;
+      margin-bottom: 7px;
+    }
+
+    .profil p {
+      color: var(--gris);
+      font-size: 14px;
+    }
+
+    .connexion {
+      display: inline-block;
+      margin-top: 18px;
+      background: var(--primaire);
+      color: white;
+      text-decoration: none;
+      padding: 12px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .menu {
+      background: white;
+      border-radius: 20px;
+      border: 1px solid var(--bordure);
+      overflow: hidden;
+    }
+
+    .menu a {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 17px 18px;
+      text-decoration: none;
+      color: var(--texte);
+      border-bottom: 1px solid var(--bordure);
+    }
+
+    .menu a:last-child {
+      border-bottom: none;
+    }
+
+    .icone {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #eeeaff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+      flex-shrink: 0;
+    }
+
+    .menu-info {
+      flex: 1;
+    }
+
+    .menu-info strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .menu-info span {
+      color: var(--gris);
+      font-size: 12px;
+    }
+
+    .fleche {
+      color: var(--gris);
+      font-size: 20px;
+    }
+
+    .aide {
+      margin-top: 20px;
+      background: white;
+      border: 1px solid var(--bordure);
+      border-radius: 20px;
+      padding: 20px;
+    }
+
+    .aide h2 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .aide p {
+      color: var(--gris);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-top: 1px solid var(--bordure);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 5px;
+      z-index: 20;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--gris);
+      text-align: center;
+      font-size: 11px;
+    }
+
+    nav a.active {
+      color: var(--primaire);
+      font-weight: 700;
+    }
+
+    nav span {
+      display: block;
+      font-size: 21px;
+      margin-bottom: 3px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="header-top">
+      <div class="logo">OLMO</div>
+      <a href="index.html" class="retour">← Accueil</a>
+    </div>
+  </header>
+
+  <main class="contenu">
+
+    <section class="profil">
+      <div class="avatar">👤</div>
+
+      <h1>Mon profil</h1>
+
+      <p>
+        Connectez-vous pour accéder à votre compte OLMO.
+      </p>
+
+      <a href="#" class="connexion">Se connecter</a>
+    </section>
+
+    <section class="menu">
+
+      <a href="#">
+        <div class="icone">📦</div>
+        <div class="menu-info">
+          <strong>Mes commandes</strong>
+          <span>Consulter vos achats et livraisons</span>
+        </div>
+        <div class="fleche">›</div>
+      </a>
+
+      <a href="#">
+        <div class="icone">❤️</div>
+        <div class="menu-info">
+          <strong>Mes favoris</strong>
+          <span>Retrouver vos produits et services favoris</span>
+        </div>
+        <div class="fleche">›</div>
+      </a>
+
+      <a href="#">
+        <div class="icone">🏪</div>
+        <div class="menu-info">
+          <strong>Ma boutique</strong>
+          <span>Gérer votre activité commerciale</span>
+        </div>
+        <div class="fleche">›</div>
+      </a>
+
+      <a href="#">
+        <div class="icone">💼</div>
+        <div class="menu-info">
+          <strong>Mes candidatures</strong>
+          <span>Suivre vos candidatures aux emplois</span>
+        </div>
+        <div class="fleche">›</div>
+      </a>
+
+      <a href="#">
+        <div class="icone">⚙️</div>
+        <div class="menu-info">
+          <strong>Paramètres</strong>
+          <span>Gérer les paramètres de votre compte</span>
+        </div>
+        <div class="fleche">›</div>
+      </a>
+
+    </section>
+
+    <section class="aide">
+      <h2>Besoin d'aide ?</h2>
+      <p>
+        Le centre d'aide OLMO permettra prochainement de trouver
+        rapidement des réponses à vos questions.
+      </p>
+    </section>
+
+  </main>
+
+  <nav>
+    <a href="index.html">
+      <span>⌂</span>
+      Accueil
+    </a>
+
+    <a href="boutiques.html">
+      <span>🛍️</span>
+      Boutiques
+    </a>
+
+    <a href="services.html">
+      <span>🔧</span>
+      Services
+    </a>
+
+    <a href="emplois.html">
+      <span>💼</span>
+      Emplois
+    </a>
+
+    <a href="profil.html" class="active">
+      <span>👤</span>
+      Profil
+    </a>
+  </nav>
+
+</body>
+</html>
