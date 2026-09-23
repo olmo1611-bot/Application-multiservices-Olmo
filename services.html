@@ -3,102 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#6c3df5">
-
   <title>OLMO — Services</title>
 
   <style>
+    :root {
+      --primaire: #6c3df5;
+      --primaire-fonce: #4f27c7;
+      --secondaire: #ff3d72;
+      --fond: #f5f6fa;
+      --blanc: #ffffff;
+      --texte: #202124;
+      --gris: #777777;
+      --bordure: #e5e5e5;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    :root {
-      --primaire: #6c3df5;
-      --primaire-fonce: #4f27c7;
-      --fond: #f5f6fa;
-      --blanc: #ffffff;
-      --texte: #171a2b;
-      --gris: #6b7280;
-      --bordure: #e5e7eb;
-    }
-
     body {
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
       background: var(--fond);
       color: var(--texte);
-      min-height: 100vh;
+      padding-bottom: 90px;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
     header {
-      background: linear-gradient(135deg, var(--primaire), var(--primaire-fonce));
-      color: white;
-      padding: 20px;
+      background: var(--blanc);
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--bordure);
       position: sticky;
       top: 0;
-      z-index: 10;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      z-index: 20;
     }
 
     .header-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 15px;
     }
 
     .logo {
       font-size: 28px;
       font-weight: 800;
+      color: var(--primaire);
       letter-spacing: 1px;
     }
 
     .retour {
-      color: white;
-      text-decoration: none;
+      color: var(--primaire);
+      font-weight: 600;
       font-size: 14px;
-      background: rgba(255,255,255,0.15);
-      padding: 9px 13px;
-      border-radius: 10px;
     }
 
-    .hero {
-      padding: 25px 20px 15px;
+    .conteneur {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
     }
 
-    .hero h1 {
+    .titre-section {
+      margin-bottom: 18px;
+    }
+
+    .titre-section h1 {
       font-size: 28px;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
     }
 
-    .hero p {
+    .titre-section p {
       color: var(--gris);
+      font-size: 15px;
       line-height: 1.5;
     }
 
     .recherche {
-      padding: 10px 20px 20px;
+      background: var(--blanc);
+      border: 1px solid var(--bordure);
+      border-radius: 14px;
+      padding: 4px 14px;
+      margin-bottom: 20px;
     }
 
     .recherche input {
       width: 100%;
-      padding: 15px;
-      border: 1px solid var(--bordure);
-      border-radius: 14px;
-      font-size: 15px;
+      border: none;
       outline: none;
-    }
-
-    .contenu {
-      padding: 0 20px 100px;
-    }
-
-    .titre-section {
-      margin: 10px 0 15px;
-    }
-
-    .titre-section h2 {
-      font-size: 20px;
+      padding: 13px 0;
+      font-size: 15px;
+      background: transparent;
     }
 
     .services {
@@ -108,35 +109,38 @@
     }
 
     .service {
-      background: white;
+      background: var(--blanc);
       border: 1px solid var(--bordure);
       border-radius: 18px;
-      padding: 20px 15px;
-      text-decoration: none;
-      color: var(--texte);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-      transition: transform 0.2s;
+      padding: 20px 16px;
+      min-height: 145px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      transition: 0.2s ease;
+      cursor: pointer;
+    }
+
+    .service:hover {
+      transform: translateY(-3px);
+      border-color: var(--primaire);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
     }
 
     .service:active {
-      transform: scale(0.97);
+      transform: scale(0.98);
     }
 
-    .icone {
-      width: 55px;
-      height: 55px;
-      border-radius: 15px;
-      background: #eeeaff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      margin-bottom: 14px;
+    .service-icon {
+      font-size: 38px;
+      margin-bottom: 10px;
     }
 
     .service h3 {
-      font-size: 16px;
-      margin-bottom: 7px;
+      font-size: 17px;
+      margin-bottom: 6px;
     }
 
     .service p {
@@ -145,54 +149,137 @@
       line-height: 1.4;
     }
 
-    .info {
-      margin-top: 25px;
-      padding: 18px;
-      background: white;
-      border: 1px solid var(--bordure);
-      border-radius: 18px;
+    .service[hidden] {
+      display: none;
     }
 
-    .info h2 {
-      font-size: 18px;
+    .aucun-service {
+      background: var(--blanc);
+      border: 1px solid var(--bordure);
+      border-radius: 16px;
+      padding: 25px;
+      text-align: center;
+      color: var(--gris);
+      margin-top: 15px;
+    }
+
+    .info {
+      background: #eeeaff;
+      border-radius: 18px;
+      padding: 20px;
+      margin-top: 22px;
+    }
+
+    .info h3 {
+      color: var(--primaire-fonce);
       margin-bottom: 8px;
     }
 
     .info p {
-      color: var(--gris);
-      line-height: 1.5;
+      color: #555;
       font-size: 14px;
+      line-height: 1.5;
     }
 
-    nav {
+    /* MODALE */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 18px;
+      z-index: 100;
+    }
+
+    .modal[hidden] {
+      display: none;
+    }
+
+    .modal-contenu {
+      background: var(--blanc);
+      width: 100%;
+      max-width: 520px;
+      border-radius: 24px;
+      padding: 25px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+      animation: apparition 0.2s ease;
+    }
+
+    @keyframes apparition {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-contenu h2 {
+      color: var(--primaire);
+      margin-bottom: 12px;
+    }
+
+    .modal-contenu p {
+      color: #555;
+      line-height: 1.6;
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .fermer {
+      width: 100%;
+      border: none;
+      background: var(--primaire);
+      color: white;
+      padding: 13px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .fermer:hover {
+      background: var(--primaire-fonce);
+    }
+
+    /* NAVIGATION */
+
+    .navigation {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: white;
+      background: var(--blanc);
       border-top: 1px solid var(--bordure);
       display: flex;
       justify-content: space-around;
       padding: 10px 5px;
-      z-index: 20;
+      z-index: 30;
     }
 
-    nav a {
-      text-decoration: none;
+    .navigation a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
       color: var(--gris);
-      text-align: center;
       font-size: 11px;
+      min-width: 55px;
     }
 
-    nav a.active {
-      color: var(--primaire);
-      font-weight: 700;
-    }
-
-    nav span {
-      display: block;
+    .navigation a span {
       font-size: 21px;
-      margin-bottom: 3px;
+    }
+
+    .navigation a.active {
+      color: var(--primaire);
+      font-weight: bold;
     }
 
     @media (min-width: 700px) {
@@ -200,11 +287,22 @@
         grid-template-columns: repeat(4, 1fr);
       }
 
-      .hero,
-      .recherche,
-      .contenu {
-        max-width: 1100px;
-        margin: auto;
+      .modal {
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .services {
+        gap: 10px;
+      }
+
+      .service {
+        padding: 15px 10px;
+      }
+
+      .service-icon {
+        font-size: 32px;
       }
     }
   </style>
@@ -219,89 +317,119 @@
     </div>
   </header>
 
-  <section class="hero">
-    <h1>Services</h1>
-    <p>Trouvez facilement des professionnels et des services près de vous.</p>
-  </section>
+  <main class="conteneur">
 
-  <div class="recherche">
-    <input
-      type="search"
-      placeholder="🔎 Rechercher un service..."
-    >
-  </div>
+    <section class="titre-section">
+      <h1>Services</h1>
+      <p>
+        Trouvez facilement les services et professionnels dont vous avez besoin.
+      </p>
+    </section>
 
-  <main class="contenu">
-
-    <div class="titre-section">
-      <h2>Catégories de services</h2>
+    <div class="recherche">
+      <input
+        type="search"
+        id="rechercheService"
+        placeholder="🔎 Rechercher un service..."
+        autocomplete="off"
+      >
     </div>
 
-    <div class="services">
+    <section class="services" id="listeServices">
 
-      <a href="#" class="service">
-        <div class="icone">🔧</div>
+      <a href="#" class="service" data-service="Plomberie">
+        <div class="service-icon">🔧</div>
         <h3>Plomberie</h3>
-        <p>Des plombiers pour vos installations et réparations.</p>
+        <p>Installation, réparation et dépannage.</p>
       </a>
 
-      <a href="#" class="service">
-        <div class="icone">💇</div>
+      <a href="#" class="service" data-service="Coiffure">
+        <div class="service-icon">💇</div>
         <h3>Coiffure</h3>
-        <p>Coiffeurs et coiffeuses pour hommes et femmes.</p>
+        <p>Coiffeurs et prestations de beauté.</p>
       </a>
 
-      <a href="#" class="service">
-        <div class="icone">🚗</div>
+      <a href="#" class="service" data-service="Mécanique">
+        <div class="service-icon">🚗</div>
         <h3>Mécanique</h3>
-        <p>Entretien et réparation de vos véhicules.</p>
+        <p>Entretien et réparation de véhicules.</p>
       </a>
 
-      <a href="#" class="service">
-        <div class="icone">📦</div>
+      <a href="#" class="service" data-service="Livraison">
+        <div class="service-icon">📦</div>
         <h3>Livraison</h3>
-        <p>Faites livrer vos produits rapidement.</p>
+        <p>Livraison de produits et colis.</p>
       </a>
 
-      <a href="#" class="service">
-        <div class="icone">🧹</div>
+      <a href="#" class="service" data-service="Nettoyage">
+        <div class="service-icon">🧹</div>
         <h3>Nettoyage</h3>
-        <p>Des professionnels pour vos travaux de nettoyage.</p>
+        <p>Services de nettoyage et entretien.</p>
       </a>
 
-      <a href="#" class="service">
-        <div class="icone">💻</div>
+      <a href="#" class="service" data-service="Informatique">
+        <div class="service-icon">💻</div>
         <h3>Informatique</h3>
-        <p>Assistance, réparation et installation informatique.</p>
+        <p>Assistance, réparation et solutions numériques.</p>
       </a>
 
-      <a href="#" class="service">
-        <div class="icone">📸</div>
+      <a href="#" class="service" data-service="Photographie">
+        <div class="service-icon">📷</div>
         <h3>Photographie</h3>
-        <p>Photographes pour vos événements et projets.</p>
+        <p>Photographes et prestations photo.</p>
       </a>
 
-      <a href="#" class="service">
-        <div class="icone">🏠</div>
+      <a href="#" class="service" data-service="Maison">
+        <div class="service-icon">🏠</div>
         <h3>Maison</h3>
-        <p>Des professionnels pour vos travaux à domicile.</p>
+        <p>Services pour la maison et le quotidien.</p>
       </a>
 
+    </section>
+
+    <div id="aucunService" class="aucun-service" hidden>
+      Aucun service ne correspond à votre recherche.
     </div>
 
-    <div class="info">
-      <h2>Besoin d'un professionnel ?</h2>
+    <section class="info">
+      <h3>Besoin d'un professionnel ?</h3>
       <p>
         OLMO permet aux clients de découvrir des professionnels,
         consulter leurs services et les contacter facilement.
       </p>
-    </div>
+    </section>
 
   </main>
 
-  <nav>
+  <!-- FENÊTRE D'INFORMATION D'UN SERVICE -->
+
+  <div
+    id="serviceModal"
+    class="modal"
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalTitre"
+  >
+    <div class="modal-contenu">
+
+      <h2 id="modalTitre">Service</h2>
+
+      <p id="modalTexte"></p>
+
+      <button type="button" class="fermer" id="fermerModal">
+        Fermer
+      </button>
+
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+
+  <nav class="navigation">
+
     <a href="index.html">
-      <span>⌂</span>
+      <span>🏠</span>
       Accueil
     </a>
 
@@ -311,7 +439,7 @@
     </a>
 
     <a href="services.html" class="active">
-      <span>🔧</span>
+      <span>🛠️</span>
       Services
     </a>
 
@@ -324,7 +452,111 @@
       <span>👤</span>
       Profil
     </a>
+
   </nav>
 
+  <script>
+
+    // Éléments de la page
+    const rechercheService = document.getElementById("rechercheService");
+    const services = document.querySelectorAll(".service");
+    const aucunService = document.getElementById("aucunService");
+
+    const serviceModal = document.getElementById("serviceModal");
+    const modalTitre = document.getElementById("modalTitre");
+    const modalTexte = document.getElementById("modalTexte");
+    const fermerModal = document.getElementById("fermerModal");
+
+
+    // RECHERCHE DES SERVICES
+
+    function filtrerServices() {
+
+      const recherche = rechercheService.value
+        .trim()
+        .toLowerCase();
+
+      let nombreVisible = 0;
+
+      services.forEach(function(service) {
+
+        const contenu = service.textContent.toLowerCase();
+
+        const correspond = contenu.includes(recherche);
+
+        service.hidden = !correspond;
+
+        if (correspond) {
+          nombreVisible++;
+        }
+
+      });
+
+      aucunService.hidden = nombreVisible !== 0;
+    }
+
+    rechercheService.addEventListener("input", filtrerServices);
+
+
+    // OUVERTURE D'UN SERVICE
+
+    services.forEach(function(service) {
+
+      service.addEventListener("click", function(event) {
+
+        event.preventDefault();
+
+        const nomService = service.dataset.service;
+
+        modalTitre.textContent = nomService;
+
+        modalTexte.textContent =
+          "Vous avez sélectionné le service « " +
+          nomService +
+          " ». Cette section permettra ensuite d'afficher les professionnels disponibles, leurs informations et leurs prestations.";
+
+        serviceModal.hidden = false;
+
+        document.body.style.overflow = "hidden";
+      });
+
+    });
+
+
+    // FERMETURE DE LA FENÊTRE
+
+    function fermerFenetre() {
+
+      serviceModal.hidden = true;
+
+      document.body.style.overflow = "";
+    }
+
+    fermerModal.addEventListener("click", fermerFenetre);
+
+
+    // Fermer en cliquant sur l'arrière-plan
+
+    serviceModal.addEventListener("click", function(event) {
+
+      if (event.target === serviceModal) {
+        fermerFenetre();
+      }
+
+    });
+
+
+    // Fermer avec la touche Échap
+
+    document.addEventListener("keydown", function(event) {
+
+      if (event.key === "Escape" && !serviceModal.hidden) {
+        fermerFenetre();
+      }
+
+    });
+
+  </script>
+
 </body>
-    </html>
+  </html>
