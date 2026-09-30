@@ -1096,4 +1096,127 @@ header {
 
   </div>
 
-          </section>
+          </section><!-- ===== EMPLOIS ===== -->
+
+<section id="jobs" class="page">
+
+  <div class="section-title">
+    <h2>💼 Emplois</h2>
+  </div>
+
+  <div class="search-box" style="max-width:100%; margin-bottom:20px;">
+    <input
+      type="text"
+      id="jobSearch"
+      placeholder="Rechercher un emploi..."
+      oninput="searchJobs()">
+  </div>
+
+  <div id="jobsGrid" class="grid">
+
+    <div class="card job-card" data-job="vendeur">
+      <div class="card-image">🛍️</div>
+
+      <div class="card-body">
+        <h3>Vendeur / Vendeuse</h3>
+
+        <p>
+          Boutique de commerce recherche
+          une personne motivée.
+        </p>
+
+        <br>
+
+        <p><strong>📍 Libreville</strong></p>
+
+        <br>
+
+        <button
+          class="btn btn-primary btn-block"
+          onclick="applyJob('Vendeur / Vendeuse')">
+          Postuler
+        </button>
+      </div>
+    </div>
+
+
+    <div class="card job-card" data-job="livreur">
+      <div class="card-image">🏍️</div>
+
+      <div class="card-body">
+        <h3>Livreur</h3>
+
+        <p>
+          Entreprise recherche un livreur
+          pour ses commandes.
+        </p>
+
+        <br>
+
+        <p><strong>📍 Libreville</strong></p>
+
+        <br>
+
+        <button
+          class="btn btn-primary btn-block"
+          onclick="applyJob('Livreur')">
+          Postuler
+        </button>
+      </div>
+    </div>
+
+
+    <div class="card job-card" data-job="commercial">
+      <div class="card-image">💼</div>
+
+      <div class="card-body">
+        <h3>Commercial</h3>
+
+        <p>
+          Recherche d'un commercial
+          dynamique et sérieux.
+        </p>
+
+        <br>
+
+        <p><strong>📍 Libreville</strong></p>
+
+        <br>
+
+        <button
+          class="btn btn-primary btn-block"
+          onclick="applyJob('Commercial')">
+          Postuler
+        </button>
+      </div>
+    </div>
+
+
+    <div class="card job-card" data-job="informatique">
+      <div class="card-image">💻</div>
+
+      <div class="card-body">
+        <h3>Assistant informatique</h3>
+
+        <p>
+          Assistance technique et
+          maintenance informatique.
+        </p>
+
+        <br>
+
+        <p><strong>📍 Libreville</strong></p>
+
+        <br>
+
+        <button
+          class="btn btn-primary btn-block"
+          onclick="applyJob('Assistant informatique')">
+          Postuler
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+      </section>
