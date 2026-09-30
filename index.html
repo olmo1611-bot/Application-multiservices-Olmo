@@ -1020,4 +1020,80 @@ header {
 
   </div>
 
-      </section>
+      </section><!-- ===== SERVICES ===== -->
+
+<section id="services" class="page">
+
+  <div class="section-title">
+    <h2>🔧 Services</h2>
+  </div>
+
+  <div class="search-box" style="max-width:100%; margin-bottom:20px;">
+    <input
+      type="text"
+      id="serviceSearch"
+      placeholder="Rechercher un service..."
+      oninput="searchServices()">
+  </div>
+
+  <div id="servicesGrid" class="grid">
+
+    <div class="card service-card" data-service="plomberie">
+      <div class="card-image">🔧</div>
+      <div class="card-body">
+        <h3>Plombier</h3>
+        <p>Réparation et installation de plomberie.</p>
+        <br>
+        <button
+          class="btn btn-primary btn-block"
+          onclick="requestService('Plombier')">
+          Demander
+        </button>
+      </div>
+    </div>
+
+    <div class="card service-card" data-service="coiffure">
+      <div class="card-image">💇</div>
+      <div class="card-body">
+        <h3>Coiffeur</h3>
+        <p>Coiffure homme, femme et soins capillaires.</p>
+        <br>
+        <button
+          class="btn btn-primary btn-block"
+          onclick="requestService('Coiffeur')">
+          Demander
+        </button>
+      </div>
+    </div>
+
+    <div class="card service-card" data-service="mecanique">
+      <div class="card-image">🚗</div>
+      <div class="card-body">
+        <h3>Mécanicien</h3>
+        <p>Entretien et réparation de véhicules.</p>
+        <br>
+        <button
+          class="btn btn-primary btn-block"
+          onclick="requestService('Mécanicien')">
+          Demander
+        </button>
+      </div>
+    </div>
+
+    <div class="card service-card" data-service="livraison">
+      <div class="card-image">📦</div>
+      <div class="card-body">
+        <h3>Livreur</h3>
+        <p>Livraison de colis et commandes.</p>
+        <br>
+        <button
+          class="btn btn-primary btn-block"
+          onclick="requestService('Livreur')">
+          Demander
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+          </section>
