@@ -563,4 +563,223 @@ header {
   }
 }
   </style></head>
-<body>
+<body><header>
+  <div class="header-inner">
+
+    <div class="logo">
+      OL<span>MO</span>
+    </div>
+
+    <div class="search-box">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Rechercher un produit, service ou emploi..."
+      >
+      <button class="search-btn" onclick="searchAll()">🔍</button>
+    </div>
+
+    <div class="header-actions">
+      <button class="icon-btn" onclick="openFavorites()">
+        ❤️
+      </button>
+
+      <button class="icon-btn" onclick="openCart()">
+        🛒
+        <span id="cartCount">0</span>
+      </button>
+
+      <button class="icon-btn" onclick="showPage('profile')">
+        👤
+      </button>
+    </div>
+
+  </div>
+
+  <nav class="main-nav">
+
+    <button
+      class="nav-btn active"
+      onclick="showPage('home')">
+      Accueil
+    </button>
+
+    <button
+      class="nav-btn"
+      onclick="showPage('commerce')">
+      🛍️ Commerce
+    </button>
+
+    <button
+      class="nav-btn"
+      onclick="showPage('services')">
+      🔧 Services
+    </button>
+
+    <button
+      class="nav-btn"
+      onclick="showPage('jobs')">
+      💼 Emplois
+    </button>
+
+    <button
+      class="nav-btn"
+      onclick="showNearby()">
+      📍 À proximité
+    </button>
+
+  </nav>
+</header>
+
+
+<main class="container">
+
+  <!-- ===== ACCUEIL ===== -->
+
+  <section
+    id="home"
+    class="page active">
+
+    <div class="hero">
+
+      <h1>
+        Bienvenue sur OLMO
+      </h1>
+
+      <p>
+        Commerce, services et opportunités réunis
+        dans une seule application.
+      </p>
+
+      <div class="actions">
+
+        <button
+          class="btn btn-primary"
+          onclick="showPage('commerce')">
+          Découvrir les produits
+        </button>
+
+        <button
+          class="btn btn-success"
+          onclick="showPage('services')">
+          Trouver un service
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="section-title">
+      <h2>Que recherchez-vous ?</h2>
+    </div>
+
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-image">
+          🛍️
+        </div>
+
+        <div class="card-body">
+
+          <h3>Commerce</h3>
+
+          <p>
+            Découvrez des produits et boutiques
+            disponibles sur OLMO.
+          </p>
+
+          <br>
+
+          <button
+            class="btn btn-primary btn-block"
+            onclick="showPage('commerce')">
+            Explorer
+          </button>
+
+        </div>
+      </div>
+
+
+      <div class="card">
+        <div class="card-image">
+          🔧
+        </div>
+
+        <div class="card-body">
+
+          <h3>Services</h3>
+
+          <p>
+            Trouvez facilement des professionnels
+            près de vous.
+          </p>
+
+          <br>
+
+          <button
+            class="btn btn-primary btn-block"
+            onclick="showPage('services')">
+            Trouver un service
+          </button>
+
+        </div>
+      </div>
+
+
+      <div class="card">
+        <div class="card-image">
+          💼
+        </div>
+
+        <div class="card-body">
+
+          <h3>Emplois</h3>
+
+          <p>
+            Découvrez des opportunités d'emploi
+            et proposez votre candidature.
+          </p>
+
+          <br>
+
+          <button
+            class="btn btn-primary btn-block"
+            onclick="showPage('jobs')">
+            Voir les emplois
+          </button>
+
+        </div>
+      </div>
+
+
+      <div class="card">
+        <div class="card-image">
+          📍
+        </div>
+
+        <div class="card-body">
+
+          <h3>À proximité</h3>
+
+          <p>
+            Découvrez les activités et services
+            disponibles autour de vous.
+          </p>
+
+          <br>
+
+          <button
+            class="btn btn-primary btn-block"
+            onclick="showNearby()">
+            Découvrir
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+
+  </section>
