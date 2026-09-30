@@ -1289,4 +1289,179 @@ header {
     </div>
   </div>
 
-        </section>
+        </section><!-- ===== MODALE CONNEXION ===== -->
+
+<div id="loginModal" class="modal">
+
+  <div class="modal-content">
+
+    <button
+      class="modal-close"
+      onclick="closeModal('loginModal')">
+      ×
+    </button>
+
+    <h2 class="modal-title">
+      Se connecter
+    </h2>
+
+    <div class="form-group">
+      <label>Nom ou téléphone</label>
+
+      <input
+        type="text"
+        id="loginName"
+        placeholder="Entrez votre nom ou téléphone">
+    </div>
+
+    <div class="form-group">
+      <label>Mot de passe</label>
+
+      <input
+        type="password"
+        id="loginPassword"
+        placeholder="Entrez votre mot de passe">
+    </div>
+
+    <button
+      class="btn btn-primary btn-block"
+      onclick="login()">
+      Se connecter
+    </button>
+
+    <br>
+
+    <button
+      class="btn btn-light btn-block"
+      onclick="register()">
+      Créer un compte
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- ===== MODALE PANIER ===== -->
+
+<div id="cartModal" class="modal">
+
+  <div class="modal-content">
+
+    <button
+      class="modal-close"
+      onclick="closeModal('cartModal')">
+      ×
+    </button>
+
+    <h2 class="modal-title">
+      🛒 Mon panier
+    </h2>
+
+    <div id="cartItems">
+      <p>Votre panier est vide.</p>
+    </div>
+
+    <div class="cart-total">
+
+      <span>Total</span>
+
+      <span id="cartTotal">
+        0 FCFA
+      </span>
+
+    </div>
+
+    <button
+      class="btn btn-success btn-block"
+      onclick="checkout()">
+      Passer la commande
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- ===== MODALE FAVORIS ===== -->
+
+<div id="favoritesModal" class="modal">
+
+  <div class="modal-content">
+
+    <button
+      class="modal-close"
+      onclick="closeModal('favoritesModal')">
+      ×
+    </button>
+
+    <h2 class="modal-title">
+      ❤️ Mes favoris
+    </h2>
+
+    <div id="favoritesList">
+      <p>Vous n'avez aucun favori.</p>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ===== MODALE SERVICE ===== -->
+
+<div id="serviceModal" class="modal">
+
+  <div class="modal-content">
+
+    <button
+      class="modal-close"
+      onclick="closeModal('serviceModal')">
+      ×
+    </button>
+
+    <h2 class="modal-title">
+      Demander un service
+    </h2>
+
+    <div class="form-group">
+
+      <label>Service</label>
+
+      <input
+        type="text"
+        id="selectedService"
+        readonly>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Votre localisation</label>
+
+      <input
+        type="text"
+        id="serviceLocation"
+        placeholder="Ex : Libreville, Akanda...">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>Description</label>
+
+      <textarea
+        id="serviceDescription"
+        placeholder="Décrivez votre besoin..."></textarea>
+
+    </div>
+
+    <button
+      class="btn btn-primary btn-block"
+      onclick="confirmService()">
+      Envoyer la demande
+    </button>
+
+  </div>
+
+      </div>
