@@ -782,4 +782,242 @@ header {
 
     </div>
 
-  </section>
+  </section><!-- ===== COMMERCE ===== -->
+
+<section id="commerce" class="page">
+
+  <div class="section-title">
+    <h2>🛍️ Commerce</h2>
+  </div>
+
+  <div class="categories">
+
+    <button
+      class="category-btn active"
+      onclick="filterProducts('all')">
+      Tous
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="filterProducts('phones')">
+      📱 Téléphones
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="filterProducts('informatique')">
+      💻 Informatique
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="filterProducts('mode')">
+      👕 Mode
+    </button>
+
+    <button
+      class="category-btn"
+      onclick="filterProducts('maison')">
+      🏠 Maison
+    </button>
+
+  </div>
+
+
+  <div id="productsGrid" class="grid">
+
+    <div
+      class="card product-card"
+      data-category="phones">
+
+      <button
+        class="favorite-btn"
+        onclick="toggleFavorite('Smartphone OLMO')">
+        ♡
+      </button>
+
+      <div class="card-image">
+        📱
+      </div>
+
+      <div class="product-info">
+
+        <small>Téléphones</small>
+
+        <h3>Smartphone OLMO</h3>
+
+        <p>
+          Smartphone moderne et performant.
+        </p>
+
+        <div class="price">
+          85 000 FCFA
+        </div>
+
+        <div class="product-actions">
+
+          <button
+            class="btn btn-primary"
+            onclick="addToCart('Smartphone OLMO',85000)">
+            Ajouter
+          </button>
+
+          <button
+            class="btn btn-light"
+            onclick="showProduct('Smartphone OLMO')">
+            Voir
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <div
+      class="card product-card"
+      data-category="informatique">
+
+      <button
+        class="favorite-btn"
+        onclick="toggleFavorite('Ordinateur portable')">
+        ♡
+      </button>
+
+      <div class="card-image">
+        💻
+      </div>
+
+      <div class="product-info">
+
+        <small>Informatique</small>
+
+        <h3>Ordinateur portable</h3>
+
+        <p>
+          Ordinateur adapté au travail et aux études.
+        </p>
+
+        <div class="price">
+          250 000 FCFA
+        </div>
+
+        <div class="product-actions">
+
+          <button
+            class="btn btn-primary"
+            onclick="addToCart('Ordinateur portable',250000)">
+            Ajouter
+          </button>
+
+          <button
+            class="btn btn-light"
+            onclick="showProduct('Ordinateur portable')">
+            Voir
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <div
+      class="card product-card"
+      data-category="mode">
+
+      <button
+        class="favorite-btn"
+        onclick="toggleFavorite('Ensemble OLMO')">
+        ♡
+      </button>
+
+      <div class="card-image">
+        👕
+      </div>
+
+      <div class="product-info">
+
+        <small>Mode</small>
+
+        <h3>Ensemble OLMO</h3>
+
+        <p>
+          Ensemble tendance pour homme et femme.
+        </p>
+
+        <div class="price">
+          25 000 FCFA
+        </div>
+
+        <div class="product-actions">
+
+          <button
+            class="btn btn-primary"
+            onclick="addToCart('Ensemble OLMO',25000)">
+            Ajouter
+          </button>
+
+          <button
+            class="btn btn-light"
+            onclick="showProduct('Ensemble OLMO')">
+            Voir
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <div
+      class="card product-card"
+      data-category="maison">
+
+      <button
+        class="favorite-btn"
+        onclick="toggleFavorite('Article maison')">
+        ♡
+      </button>
+
+      <div class="card-image">
+        🏠
+      </div>
+
+      <div class="product-info">
+
+        <small>Maison</small>
+
+        <h3>Article maison</h3>
+
+        <p>
+          Articles pratiques pour votre maison.
+        </p>
+
+        <div class="price">
+          15 000 FCFA
+        </div>
+
+        <div class="product-actions">
+
+          <button
+            class="btn btn-primary"
+            onclick="addToCart('Article maison',15000)">
+            Ajouter
+          </button>
+
+          <button
+            class="btn btn-light"
+            onclick="showProduct('Article maison')">
+            Voir
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+      </section>
