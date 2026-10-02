@@ -2448,6 +2448,106 @@ function openProfile() {
 
 }
 
+      </script><script>
+
+/* ===== OUVRIR MES COMMANDES ===== */
+
+function openOrders() {
+
+  if (!checkUser()) return;
+
+  const title =
+    document.getElementById("infoTitle");
+
+  const content =
+    document.getElementById("infoContent");
+
+  title.textContent = "Mes commandes";
+
+  content.innerHTML =
+    "<p>Vous n'avez aucune commande pour le moment.</p>";
+
+  document
+    .getElementById("infoModal")
+    .classList.add("active");
+
+}
+
+
+/* ===== OUVRIR MES FAVORIS ===== */
+
+function openMyFavorites() {
+
+  if (!checkUser()) return;
+
+  openFavorites();
+
+}
+
+
+/* ===== OUVRIR MA BOUTIQUE ===== */
+
+function openSellerShop() {
+
+  if (!checkUser()) return;
+
+  const modal =
+    document.getElementById("sellerModal");
+
+  if (modal) {
+    modal.classList.add("active");
+  }
+
+}
+
+
+/* ===== MES CANDIDATURES ===== */
+
+function openApplications() {
+
+  if (!checkUser()) return;
+
+  const title =
+    document.getElementById("infoTitle");
+
+  const content =
+    document.getElementById("infoContent");
+
+  title.textContent = "Mes candidatures";
+
+  content.innerHTML =
+    "<p>Vous n'avez pas encore envoyé de candidature.</p>";
+
+  document
+    .getElementById("infoModal")
+    .classList.add("active");
+
+}
+
+
+/* ===== PARAMÈTRES ===== */
+
+function openSettings() {
+
+  if (!checkUser()) return;
+
+  const title =
+    document.getElementById("infoTitle");
+
+  const content =
+    document.getElementById("infoContent");
+
+  title.textContent = "Paramètres";
+
+  content.innerHTML =
+    "<p>Les paramètres de votre compte seront disponibles ici.</p>";
+
+  document
+    .getElementById("infoModal")
+    .classList.add("active");
+
+}
+
       </script>
 </body>
       </html>
