@@ -1464,4 +1464,118 @@ header {
 
   </div>
 
-      </div>
+      </div><!-- ===== MODALE BOUTIQUE ===== -->
+
+<div id="sellerModal" class="modal">
+  <div class="modal-content">
+
+    <button class="modal-close"
+      onclick="closeModal('sellerModal')">
+      ×
+    </button>
+
+    <h2 class="modal-title">🏪 Créer ma boutique</h2>
+
+    <div class="form-group">
+      <label>Nom de la boutique</label>
+      <input type="text" id="sellerName"
+        placeholder="Nom de votre boutique">
+    </div>
+
+    <div class="form-group">
+      <label>Votre nom</label>
+      <input type="text" id="sellerOwner"
+        placeholder="Votre nom complet">
+    </div>
+
+    <div class="form-group">
+      <label>Téléphone</label>
+      <input type="tel" id="sellerPhone"
+        placeholder="Votre numéro de téléphone">
+    </div>
+
+    <div class="form-group">
+      <label>Catégorie</label>
+      <select id="sellerCategory">
+        <option value="Mode">Mode</option>
+        <option value="Téléphones">Téléphones</option>
+        <option value="Informatique">Informatique</option>
+        <option value="Maison">Maison</option>
+        <option value="Autre">Autre</option>
+      </select>
+    </div>
+
+    <button class="btn btn-primary btn-block"
+      onclick="submitSeller()">
+      Envoyer ma demande
+    </button>
+
+  </div>
+</div>
+
+
+<!-- ===== MODALE INFORMATIONS ===== -->
+
+<div id="infoModal" class="modal">
+  <div class="modal-content">
+
+    <button class="modal-close"
+      onclick="closeModal('infoModal')">
+      ×
+    </button>
+
+    <h2 class="modal-title" id="infoTitle">
+      Informations
+    </h2>
+
+    <div id="infoContent">
+      <p>Informations OLMO.</p>
+    </div>
+
+    <br>
+
+    <button class="btn btn-primary btn-block"
+      onclick="closeModal('infoModal')">
+      Fermer
+    </button>
+
+  </div>
+</div>
+
+
+<!-- ===== NOTIFICATIONS ===== -->
+
+<div id="toast" class="toast"></div>
+
+
+<!-- ===== NAVIGATION MOBILE ===== -->
+
+<nav class="bottom-nav">
+
+  <button class="active"
+    onclick="showPage('home')">
+    🏠<br>Accueil
+  </button>
+
+  <button onclick="showPage('commerce')">
+    🛍️<br>Commerce
+  </button>
+
+  <button onclick="showPage('services')">
+    🔧<br>Services
+  </button>
+
+  <button onclick="showPage('jobs')">
+    💼<br>Emplois
+  </button>
+
+  <button onclick="showPage('profile')">
+    👤<br>Profil
+  </button>
+
+</nav>
+
+</main>
+
+</body>
+      </html>
