@@ -2336,6 +2336,118 @@ function logoutUser() {
 
 }
 
+      </script><script>
+
+/* ===== INSCRIPTION ===== */
+
+function registerUser() {
+
+  const name =
+    document.getElementById("registerName").value.trim();
+
+  const email =
+    document.getElementById("registerEmail").value.trim();
+
+  const password =
+    document.getElementById("registerPassword").value.trim();
+
+  if (!name || !email || !password) {
+
+    showToast(
+      "Veuillez remplir tous les champs."
+    );
+
+    return;
+  }
+
+  localStorage.setItem(
+    "olmoUser",
+    email
+  );
+
+  localStorage.setItem(
+    "olmoUserName",
+    name
+  );
+
+  closeModal("registerModal");
+
+  showToast(
+    "Compte OLMO créé avec succès."
+  );
+
+}
+
+
+/* ===== VÉRIFIER UTILISATEUR ===== */
+
+function checkUser() {
+
+  const user =
+    localStorage.getItem("olmoUser");
+
+  if (user) {
+
+    showToast(
+      "Vous êtes déjà connecté."
+    );
+
+    return true;
+  }
+
+  openLogin();
+
+  return false;
+
+}
+
+
+/* ===== OUVRIR INSCRIPTION ===== */
+
+function openRegister() {
+
+  closeModal("loginModal");
+
+  const modal =
+    document.getElementById("registerModal");
+
+  if (modal) {
+    modal.classList.add("active");
+  }
+
+}
+
+
+/* ===== PROFIL UTILISATEUR ===== */
+
+function openProfile() {
+
+  const user =
+    localStorage.getItem("olmoUser");
+
+  const name =
+    localStorage.getItem("olmoUserName");
+
+  if (!user) {
+
+    openLogin();
+
+    return;
+  }
+
+  showPage("profile");
+
+  const profileName =
+    document.getElementById("profileName");
+
+  if (profileName) {
+
+    profileName.textContent =
+      name || user;
+  }
+
+}
+
       </script>
 </body>
       </html>
