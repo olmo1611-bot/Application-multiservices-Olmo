@@ -1683,6 +1683,181 @@ function closeModal(id) {
 
 }
 
-  </script>
+  </script><script>
+
+/* ===== PANIER ===== */
+
+function addToCart(name, price) {
+
+  const existing =
+    cart.find(item => item.name === name);
+
+  if (existing) {
+
+    existing.quantity += 1;
+
+  } else {
+
+    cart.push({
+      name: name,
+      price: price,
+      quantity: 1
+    });
+
+  }
+
+  saveData();
+  updateCartCount();
+
+  showToast(
+    name + " ajouté au panier"
+  );
+}
+
+
+/* ===== COMPTEUR PANIER ===== */
+
+function updateCartCount() {
+
+  const count =
+    document.getElementById("cartCount");
+
+  if (!count) return;
+
+  const total =
+    cart.reduce(
+      (sum, item) =>
+        sum + item.quantity,
+      0
+    );
+
+  count.textContent = total;
+}
+
+
+/* ===== OUVRIR PANIER ===== */
+
+function openCart() {
+
+  updateCartDisplay();
+
+  const modal =
+    document.getElementById("cartModal");
+
+  if (modal) {
+
+    modal.classList.add("active");
+
+  }
+
+}
+
+
+/* ===== AFFICHER PANIER ===== */
+
+function updateCartDisplay() {
+
+  const container =
+    document.getElementById("cartItems");
+
+  const totalElement =
+    document.getElementById("cartTotal");
+
+  if (!container || !totalElement) {
+    return;
+  }
+
+  if (cart.length === 0) {
+
+    container.innerHTML =
+      "<p>Votre panier est vide.</p>";
+
+    totalElement.textContent =
+      "0 FCFA";
+
+    return;
+  }
+
+  let total = 0;
+
+  container.innerHTML = "";
+
+  cart.forEach((item, index) => {
+
+    const itemTotal =
+      item.price * item.quantity;
+
+    total += itemTotal;
+
+    container.innerHTML += `
+
+      <div class="cart-item">
+
+        <div class="cart-item-info">
+
+          <strong>
+            ${item.name}
+          </strong>
+
+          <br>
+
+          <small>
+            ${item.price.toLocaleString()} FCFA
+          </small>
+
+        </div>
+
+        <div class="cart-quantity">
+
+          <button
+            class="quantity-btn"
+            onclick="changeQuantity(${index}, -1)">
+            −
+          </button>
+
+          <span>
+            ${item.quantity}
+          </span>
+
+          <button
+            class="quantity-btn"
+            onclick="changeQuantity(${index}, 1)">
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+  totalElement.textContent =
+    total.toLocaleString() + " FCFA";
+}
+
+
+/* ===== MODIFIER QUANTITÉ ===== */
+
+function changeQuantity(index, amount) {
+
+  if (!cart[index]) return;
+
+  cart[index].quantity += amount;
+
+  if (cart[index].quantity <= 0) {
+
+    cart.splice(index, 1);
+
+  }
+
+  saveData();
+  updateCartCount();
+  updateCartDisplay();
+
+}
+
+    </script>
 </body>
       </html>
