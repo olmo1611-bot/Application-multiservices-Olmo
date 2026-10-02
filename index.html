@@ -1960,6 +1960,145 @@ function updateFavoritesDisplay() {
 
 }
 
+    </script><script>
+
+/* ===== RECHERCHE PRODUITS ===== */
+
+function searchAll() {
+
+  const input =
+    document.getElementById("searchInput");
+
+  if (!input) return;
+
+  const query =
+    input.value.toLowerCase().trim();
+
+  if (query === "") {
+
+    showPage("commerce");
+    return;
+
+  }
+
+  showPage("commerce");
+
+  const products =
+    document.querySelectorAll(
+      ".product-card"
+    );
+
+  products.forEach(product => {
+
+    const text =
+      product.textContent.toLowerCase();
+
+    product.style.display =
+      text.includes(query)
+        ? ""
+        : "none";
+
+  });
+
+}
+
+
+/* ===== FILTRE PRODUITS ===== */
+
+function filterProducts(category) {
+
+  const products =
+    document.querySelectorAll(
+      ".product-card"
+    );
+
+  products.forEach(product => {
+
+    if (
+      category === "all" ||
+      product.dataset.category === category
+    ) {
+
+      product.style.display = "";
+
+    } else {
+
+      product.style.display = "none";
+
+    }
+
+  });
+
+}
+
+
+/* ===== RECHERCHE SERVICES ===== */
+
+function searchServices() {
+
+  const input =
+    document.getElementById(
+      "serviceSearch"
+    );
+
+  if (!input) return;
+
+  const query =
+    input.value.toLowerCase().trim();
+
+  const services =
+    document.querySelectorAll(
+      ".service-card"
+    );
+
+  services.forEach(service => {
+
+    const text =
+      service.textContent.toLowerCase();
+
+    service.style.display =
+      text.includes(query)
+        ? ""
+        : "none";
+
+  });
+
+}
+
+
+/* ===== RECHERCHE EMPLOIS ===== */
+
+function searchJobs() {
+
+  const input =
+    document.getElementById(
+      "jobSearch"
+    );
+
+  if (!input) return;
+
+  const query =
+    input.value.toLowerCase().trim();
+
+  const jobs =
+    document.querySelectorAll(
+      ".job-card"
+    );
+
+  jobs.forEach(job => {
+
+    const text =
+      job.textContent.toLowerCase();
+
+    job.style.display =
+      text.includes(query)
+        ? ""
+        : "none";
+
+  });
+
+}
+
     </script>
 </body>
       </html>
