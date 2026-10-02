@@ -2548,6 +2548,101 @@ function openSettings() {
 
 }
 
+      </script><script>
+
+/* ===== CRÉER UNE BOUTIQUE ===== */
+
+function createSellerShop() {
+
+  if (!checkUser()) return;
+
+  const name =
+    document.getElementById("shopName").value.trim();
+
+  const activity =
+    document.getElementById("shopActivity").value.trim();
+
+  const phone =
+    document.getElementById("shopPhone").value.trim();
+
+  if (!name || !activity || !phone) {
+
+    showToast(
+      "Veuillez remplir tous les champs."
+    );
+
+    return;
+  }
+
+  localStorage.setItem(
+    "olmoShopName",
+    name
+  );
+
+  localStorage.setItem(
+    "olmoShopActivity",
+    activity
+  );
+
+  localStorage.setItem(
+    "olmoShopPhone",
+    phone
+  );
+
+  closeModal("sellerModal");
+
+  showToast(
+    "Votre boutique a été créée avec succès."
+  );
+
+}
+
+
+/* ===== AFFICHER MA BOUTIQUE ===== */
+
+function showMyShop() {
+
+  const name =
+    localStorage.getItem("olmoShopName");
+
+  const activity =
+    localStorage.getItem("olmoShopActivity");
+
+  const phone =
+    localStorage.getItem("olmoShopPhone");
+
+  if (!name) {
+
+    showToast(
+      "Vous n'avez pas encore créé de boutique."
+    );
+
+    return;
+  }
+
+  const title =
+    document.getElementById("infoTitle");
+
+  const content =
+    document.getElementById("infoContent");
+
+  title.textContent = name;
+
+  content.innerHTML =
+    "<p><strong>Activité :</strong> " +
+    activity +
+    "</p>" +
+
+    "<p><strong>Téléphone :</strong> " +
+    phone +
+    "</p>";
+
+  document
+    .getElementById("infoModal")
+    .classList.add("active");
+
+}
+
       </script>
 </body>
       </html>
