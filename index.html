@@ -2195,6 +2195,147 @@ function applyJob(job) {
 
 }
 
+      </script><script>
+
+/* ===== DÉTAIL PRODUIT ===== */
+
+function showProduct(name, price) {
+
+  const title =
+    document.getElementById("infoTitle");
+
+  const content =
+    document.getElementById("infoContent");
+
+  if (title) {
+    title.textContent = name;
+  }
+
+  if (content) {
+
+    content.innerHTML =
+      "<p><strong>Produit :</strong> " +
+      name +
+      "</p>" +
+
+      "<p><strong>Prix :</strong> " +
+      price +
+      " FCFA</p>" +
+
+      "<p>Disponible sur OLMO.</p>" +
+
+      '<button class="btn primary" onclick="addToCart(\'' +
+      name +
+      "', " +
+      price +
+      ')">Ajouter au panier</button>';
+  }
+
+  const modal =
+    document.getElementById("infoModal");
+
+  if (modal) {
+    modal.classList.add("active");
+  }
+
+}
+
+
+/* ===== À PROXIMITÉ ===== */
+
+function showNearby() {
+
+  const title =
+    document.getElementById("infoTitle");
+
+  const content =
+    document.getElementById("infoContent");
+
+  if (title) {
+    title.textContent = "À proximité";
+  }
+
+  if (content) {
+
+    content.innerHTML =
+      "<p>Les services et commerces proches de vous seront affichés ici.</p>" +
+
+      '<button class="btn primary" onclick="closeModal(\'infoModal\')">' +
+      "Fermer" +
+      "</button>";
+  }
+
+  const modal =
+    document.getElementById("infoModal");
+
+  if (modal) {
+    modal.classList.add("active");
+  }
+
+}
+
+
+/* ===== CONNEXION ===== */
+
+function openLogin() {
+
+  const modal =
+    document.getElementById("loginModal");
+
+  if (modal) {
+    modal.classList.add("active");
+  }
+
+}
+
+
+/* ===== CONNEXION UTILISATEUR ===== */
+
+function loginUser() {
+
+  const email =
+    document.getElementById("loginEmail").value.trim();
+
+  const password =
+    document.getElementById("loginPassword").value.trim();
+
+  if (!email || !password) {
+
+    showToast(
+      "Veuillez remplir tous les champs."
+    );
+
+    return;
+  }
+
+  localStorage.setItem(
+    "olmoUser",
+    email
+  );
+
+  closeModal("loginModal");
+
+  showToast(
+    "Connexion réussie."
+  );
+
+}
+
+
+/* ===== DÉCONNEXION ===== */
+
+function logoutUser() {
+
+  localStorage.removeItem(
+    "olmoUser"
+  );
+
+  showToast(
+    "Vous êtes déconnecté."
+  );
+
+}
+
       </script>
 </body>
       </html>
