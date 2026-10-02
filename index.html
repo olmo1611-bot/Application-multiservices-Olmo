@@ -1858,6 +1858,108 @@ function changeQuantity(index, amount) {
 
 }
 
+    </script><script>
+
+/* ===== FAVORIS ===== */
+
+function toggleFavorite(name) {
+
+  const index =
+    favorites.indexOf(name);
+
+  if (index === -1) {
+
+    favorites.push(name);
+
+    showToast(
+      name + " ajouté aux favoris ❤️"
+    );
+
+  } else {
+
+    favorites.splice(index, 1);
+
+    showToast(
+      name + " retiré des favoris"
+    );
+
+  }
+
+  saveData();
+
+}
+
+
+/* ===== OUVRIR FAVORIS ===== */
+
+function openFavorites() {
+
+  updateFavoritesDisplay();
+
+  const modal =
+    document.getElementById(
+      "favoritesModal"
+    );
+
+  if (modal) {
+
+    modal.classList.add("active");
+
+  }
+
+}
+
+
+/* ===== AFFICHER FAVORIS ===== */
+
+function updateFavoritesDisplay() {
+
+  const container =
+    document.getElementById(
+      "favoritesList"
+    );
+
+  if (!container) return;
+
+  if (favorites.length === 0) {
+
+    container.innerHTML =
+      "<p>Vous n'avez aucun favori.</p>";
+
+    return;
+
+  }
+
+  container.innerHTML = "";
+
+  favorites.forEach(name => {
+
+    container.innerHTML += `
+
+      <div class="cart-item">
+
+        <div class="cart-item-info">
+
+          <strong>
+            ❤️ ${name}
+          </strong>
+
+        </div>
+
+        <button
+          class="btn btn-light"
+          onclick="toggleFavorite('${name}')">
+          Retirer
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+}
+
     </script>
 </body>
       </html>
