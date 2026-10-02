@@ -2099,6 +2099,102 @@ function searchJobs() {
 
 }
 
-    </script>
+    </script><script>
+
+/* ===== DEMANDE DE SERVICE ===== */
+
+function requestService(service) {
+
+  const input =
+    document.getElementById(
+      "selectedService"
+    );
+
+  if (input) {
+    input.value = service;
+  }
+
+  const modal =
+    document.getElementById(
+      "serviceModal"
+    );
+
+  if (modal) {
+    modal.classList.add("active");
+  }
+
+}
+
+
+/* ===== CONFIRMER SERVICE ===== */
+
+function confirmService() {
+
+  const service =
+    document.getElementById(
+      "selectedService"
+    ).value;
+
+  const location =
+    document.getElementById(
+      "serviceLocation"
+    ).value.trim();
+
+  const description =
+    document.getElementById(
+      "serviceDescription"
+    ).value.trim();
+
+  if (!location) {
+
+    showToast(
+      "Veuillez indiquer votre localisation."
+    );
+
+    return;
+  }
+
+  if (!description) {
+
+    showToast(
+      "Veuillez décrire votre besoin."
+    );
+
+    return;
+  }
+
+  closeModal("serviceModal");
+
+  showToast(
+    "Demande de " +
+    service +
+    " envoyée avec succès."
+  );
+
+}
+
+
+/* ===== POSTULER À UN EMPLOI ===== */
+
+function applyJob(job) {
+
+  const confirmed =
+    confirm(
+      "Voulez-vous postuler au poste : " +
+      job +
+      " ?"
+    );
+
+  if (!confirmed) return;
+
+  showToast(
+    "Votre candidature pour " +
+    job +
+    " a été enregistrée."
+  );
+
+}
+
+      </script>
 </body>
       </html>
