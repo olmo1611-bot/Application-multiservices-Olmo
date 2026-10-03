@@ -4473,6 +4473,25 @@ function refreshNotifications() {
 
 }
 
+    </script><script>
+
+/* ===== NOTIFICATION NOUVELLE COMMANDE ===== */
+
+function createOrderNotification(order) {
+
+  if (!order) {
+    return;
+  }
+
+  saveNotification(
+    "Nouvelle commande : " +
+    (order.id || "Commande")
+  );
+
+  refreshNotifications();
+
+}
+
     </script>
 </body>
       </html>
