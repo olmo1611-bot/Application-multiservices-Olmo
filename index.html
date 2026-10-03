@@ -4306,6 +4306,31 @@ function notifyNewOrder(order) {
 
 }
 
+    </script><script>
+
+/* ===== NOTIFICATIONS OLMO ===== */
+
+function saveNotification(message) {
+
+  const notifications =
+    JSON.parse(
+      localStorage.getItem("olmoNotifications") || "[]"
+    );
+
+  notifications.unshift({
+    id: Date.now(),
+    message: message,
+    date: new Date().toLocaleString("fr-FR"),
+    read: false
+  });
+
+  localStorage.setItem(
+    "olmoNotifications",
+    JSON.stringify(notifications)
+  );
+
+}
+
     </script>
 </body>
       </html>
