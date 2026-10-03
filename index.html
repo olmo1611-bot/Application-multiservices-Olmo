@@ -4832,6 +4832,64 @@ document.addEventListener(
   }
 );
 
+  </script><script>
+
+/* ===== VERIFICATION NOTIFICATIONS OLMO ===== */
+
+function checkNotificationSystem() {
+
+  const checks = {
+    sauvegarde: typeof saveNotification === "function",
+    affichage: typeof openNotificationCenter === "function",
+    lecture: typeof markNotificationsAsRead === "function",
+    suppression: typeof deleteNotification === "function",
+    badge: typeof updateNotificationBadge === "function"
+  };
+
+  const total =
+    Object.keys(checks).length;
+
+  const valid =
+    Object.values(checks)
+      .filter(function(value) {
+        return value === true;
+      }).length;
+
+  console.log(
+    "OLMO Notifications : " +
+    valid + "/" + total +
+    " fonctions disponibles."
+  );
+
+  if (valid === total) {
+
+    showToast(
+      "Système de notifications opérationnel."
+    );
+
+  } else {
+
+    showToast(
+      "Vérification des notifications : " +
+      valid + "/" + total
+    );
+
+  }
+
+}
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    setTimeout(
+      checkNotificationSystem,
+      500
+    );
+
+  }
+);
+
   </script>
 </body>
       </html>
