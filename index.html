@@ -3465,6 +3465,114 @@ function getOlmoData() {
 
 }
 
+      </script><script>
+
+/* ===== SUIVI DES COMMANDES ===== */
+
+function getOrderStatus(order) {
+
+  return order.status || "En attente";
+
+}
+
+
+/* ===== AFFICHER MES COMMANDES ===== */
+
+function openOrders() {
+
+  if (!checkUser()) return;
+
+  const orders =
+    JSON.parse(
+      localStorage.getItem("olmoOrders") || "[]"
+    );
+
+  const title =
+    document.getElementById("infoTitle");
+
+  const content =
+    document.getElementById("infoContent");
+
+  title.textContent =
+    "Mes commandes";
+
+  if (orders.length === 0) {
+
+    content.innerHTML =
+      "<p>Vous n'avez encore aucune commande.</p>";
+
+  } else {
+
+    content.innerHTML =
+      orders.map(function(order) {
+
+        return (
+          "<div class='order-item'>" +
+
+          "<strong>Commande #" +
+          order.id +
+          "</strong><br>" +
+
+          "Total : " +
+          order.total +
+          " FCFA<br>" +
+
+          "Date : " +
+          order.date +
+          "<br>" +
+
+          "Statut : <strong>" +
+          getOrderStatus(order) +
+          "</strong>" +
+
+          "</div><hr>"
+        );
+
+      }).join("");
+
+  }
+
+  document
+    .getElementById("infoModal")
+    .classList.add("active");
+
+}
+
+
+/* ===== ANNULER UNE COMMANDE ===== */
+
+function cancelOrder(orderId) {
+
+  let orders =
+    JSON.parse(
+      localStorage.getItem("olmoOrders") || "[]"
+    );
+
+  orders = orders.map(function(order) {
+
+    if (order.id === orderId) {
+
+      order.status = "Annulée";
+
+    }
+
+    return order;
+
+  });
+
+  localStorage.setItem(
+    "olmoOrders",
+    JSON.stringify(orders)
+  );
+
+  showToast(
+    "Commande annulée."
+  );
+
+  openOrders();
+
+}
+
       </script>
 </body>
       </html>
