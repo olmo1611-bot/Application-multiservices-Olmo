@@ -4383,6 +4383,30 @@ function openNotifications() {
 
 }
 
+    </script><script>
+
+/* ===== MARQUER LES NOTIFICATIONS COMME LUES ===== */
+
+function markNotificationsAsRead() {
+
+  const notifications =
+    JSON.parse(
+      localStorage.getItem("olmoNotifications") || "[]"
+    );
+
+  notifications.forEach(function(notification) {
+    notification.read = true;
+  });
+
+  localStorage.setItem(
+    "olmoNotifications",
+    JSON.stringify(notifications)
+  );
+
+  showToast("Notifications marquées comme lues.");
+
+}
+
     </script>
 </body>
       </html>
