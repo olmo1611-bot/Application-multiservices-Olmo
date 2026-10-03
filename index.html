@@ -3659,6 +3659,78 @@ document.addEventListener(
   }
 );
 
+      </script><script>
+
+/* ===== TABLEAU DE BORD VENDEUR ===== */
+
+function openSellerDashboard() {
+
+  if (!checkUser()) return;
+
+  const shop =
+    localStorage.getItem("olmoShopName");
+
+  if (!shop) {
+
+    showToast(
+      "Créez d'abord votre boutique."
+    );
+
+    return;
+  }
+
+  const products =
+    JSON.parse(
+      localStorage.getItem(
+        "olmoSellerProducts"
+      ) || "[]"
+    );
+
+  const orders =
+    JSON.parse(
+      localStorage.getItem(
+        "olmoOrders"
+      ) || "[]"
+    );
+
+  const title =
+    document.getElementById(
+      "infoTitle"
+    );
+
+  const content =
+    document.getElementById(
+      "infoContent"
+    );
+
+  title.textContent =
+    "Tableau de bord vendeur";
+
+  content.innerHTML =
+
+    "<h3>" +
+    shop +
+    "</h3>" +
+
+    "<p>Produits : <strong>" +
+    products.length +
+    "</strong></p>" +
+
+    "<p>Commandes enregistrées : <strong>" +
+    orders.length +
+    "</strong></p>" +
+
+    '<button class="btn primary" ' +
+    'onclick="showSellerProducts()">' +
+    "Voir mes produits" +
+    "</button>";
+
+  document
+    .getElementById("infoModal")
+    .classList.add("active");
+
+}
+
       </script>
 </body>
       </html>
