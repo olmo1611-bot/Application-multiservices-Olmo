@@ -2643,6 +2643,136 @@ function showMyShop() {
 
 }
 
+      </script><script>
+
+/* ===== TOTAL DU PANIER ===== */
+
+function getCartTotal() {
+
+  return cart.reduce(function(total, item) {
+
+    return total +
+      (Number(item.price) * Number(item.quantity));
+
+  }, 0);
+
+}
+
+
+/* ===== PASSER LA COMMANDE ===== */
+
+function checkout() {
+
+  if (cart.length === 0) {
+
+    showToast(
+      "Votre panier est vide."
+    );
+
+    return;
+  }
+
+  const total =
+    getCartTotal();
+
+  const confirmed =
+    confirm(
+      "Confirmer votre commande de " +
+      total +
+      " FCFA ?"
+    );
+
+  if (!confirmed) return;
+
+  const orders =
+    JSON.parse(
+      localStorage.getItem("olmoOrders") || "[]"
+    );
+
+  orders.push({
+
+    id: Date.now(),
+
+    items: cart,
+
+    total: total,
+
+    date: new Date().toLocaleString("fr-FR")
+
+  });
+
+  localStorage.setItem(
+    "olmoOrders",
+    JSON.stringify(orders)
+  );
+
+  cart = [];
+
+  saveCart();
+
+  updateCartCount();
+
+  updateCartDisplay();
+
+  closeModal("cartModal");
+
+  showToast(
+    "Commande enregistrée avec succès."
+  );
+
+}
+
+
+/* ===== AFFICHER MES COMMANDES ===== */
+
+function showMyOrders() {
+
+  const orders =
+    JSON.parse(
+      localStorage.getItem("olmoOrders") || "[]"
+    );
+
+  const title =
+    document.getElementById("infoTitle");
+
+  const content =
+    document.getElementById("infoContent");
+
+  title.textContent =
+    "Mes commandes";
+
+  if (orders.length === 0) {
+
+    content.innerHTML =
+      "<p>Vous n'avez encore aucune commande.</p>";
+
+  } else {
+
+    content.innerHTML =
+      orders.map(function(order) {
+
+        return (
+          "<div>" +
+          "<strong>Commande #" +
+          order.id +
+          "</strong><br>" +
+          "Total : " +
+          order.total +
+          " FCFA<br>" +
+          "Date : " +
+          order.date +
+          "</div><hr>"
+        );
+
+      }).join("");
+  }
+
+  document
+    .getElementById("infoModal")
+    .classList.add("active");
+
+}
+
       </script>
 </body>
       </html>
