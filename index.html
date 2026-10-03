@@ -3132,6 +3132,77 @@ function goNearby() {
 
 }
 
+      </script><script>
+
+/* ===== UTILISATEUR CONNECTÉ ===== */
+
+function updateUserDisplay() {
+
+  const user =
+    localStorage.getItem("olmoUser");
+
+  const name =
+    localStorage.getItem("olmoUserName");
+
+  const elements =
+    document.querySelectorAll(
+      "[data-user-name]"
+    );
+
+  elements.forEach(function(element) {
+
+    element.textContent =
+      name || user || "Utilisateur";
+
+  });
+
+}
+
+
+/* ===== ÉTAT DU COMPTE ===== */
+
+function updateAccountState() {
+
+  const user =
+    localStorage.getItem("olmoUser");
+
+  const loginButtons =
+    document.querySelectorAll(
+      "[data-login-button]"
+    );
+
+  loginButtons.forEach(function(button) {
+
+    if (user) {
+
+      button.textContent =
+        "Mon compte";
+
+    } else {
+
+      button.textContent =
+        "Se connecter";
+
+    }
+
+  });
+
+}
+
+
+/* ===== INITIALISATION DU COMPTE ===== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    updateUserDisplay();
+
+    updateAccountState();
+
+  }
+);
+
       </script>
 </body>
       </html>
