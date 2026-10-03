@@ -4165,6 +4165,27 @@ function getCancelButton(order) {
   `;
 }
 
-      </script>
+      </script><script>
+
+/* ===== VERIFICATION AVANT ANNULATION ===== */
+
+function canCancelOrder(order) {
+
+  if (!order) {
+    return false;
+  }
+
+  if (order.status === "Livrée") {
+    return false;
+  }
+
+  if (order.status === "Annulée") {
+    return false;
+  }
+
+  return true;
+}
+
+    </script>
 </body>
       </html>
