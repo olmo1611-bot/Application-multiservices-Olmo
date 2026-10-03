@@ -2773,6 +2773,105 @@ function showMyOrders() {
 
 }
 
+      </script><script>
+
+/* ===== LIVRAISON ET PAIEMENT ===== */
+
+function openCheckout() {
+
+  if (cart.length === 0) {
+
+    showToast(
+      "Votre panier est vide."
+    );
+
+    return;
+  }
+
+  const title =
+    document.getElementById("infoTitle");
+
+  const content =
+    document.getElementById("infoContent");
+
+  title.textContent =
+    "Finaliser ma commande";
+
+  content.innerHTML =
+
+    "<p><strong>Total :</strong> " +
+    getCartTotal() +
+    " FCFA</p>" +
+
+    "<label>Mode de livraison</label>" +
+
+    '<select id="deliveryMethod">' +
+
+    '<option value="livraison">Livraison à domicile</option>' +
+
+    '<option value="retrait">Retrait auprès du vendeur</option>' +
+
+    "</select>" +
+
+    "<br><br>" +
+
+    "<label>Mode de paiement</label>" +
+
+    '<select id="paymentMethod">' +
+
+    '<option value="cash">Paiement à la livraison</option>' +
+
+    '<option value="airtel">Airtel Money</option>' +
+
+    '<option value="moov">Moov Money</option>' +
+
+    "</select>" +
+
+    "<br><br>" +
+
+    '<button class="btn primary" onclick="confirmCheckout()">' +
+
+    "Confirmer la commande" +
+
+    "</button>";
+
+  document
+    .getElementById("infoModal")
+    .classList.add("active");
+
+}
+
+
+/* ===== CONFIRMER LA COMMANDE ===== */
+
+function confirmCheckout() {
+
+  const delivery =
+    document.getElementById(
+      "deliveryMethod"
+    ).value;
+
+  const payment =
+    document.getElementById(
+      "paymentMethod"
+    ).value;
+
+  localStorage.setItem(
+    "olmoLastDelivery",
+    delivery
+  );
+
+  localStorage.setItem(
+    "olmoLastPayment",
+    payment
+  );
+
+  closeModal("infoModal");
+
+  checkout();
+
+}
+
       </script>
 </body>
       </html>
