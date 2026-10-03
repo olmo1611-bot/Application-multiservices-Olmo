@@ -3862,6 +3862,91 @@ function editSellerProduct(productId) {
 
 }
 
+      </script><script>
+
+/* ===== COMMANDES VENDEUR ===== */
+
+function showSellerOrders() {
+
+  if (!checkUser()) return;
+
+  const orders =
+    JSON.parse(
+      localStorage.getItem("olmoOrders") || "[]"
+    );
+
+  const title =
+    document.getElementById("infoTitle");
+
+  const content =
+    document.getElementById("infoContent");
+
+  title.textContent =
+    "Commandes reçues";
+
+  if (orders.length === 0) {
+
+    content.innerHTML =
+      "<p>Aucune commande pour le moment.</p>";
+
+  } else {
+
+    content.innerHTML =
+      orders.map(function(order) {
+
+        return (
+          "<div class='order-item'>" +
+
+          "<strong>Commande #" +
+          order.id +
+          "</strong><br>" +
+
+          "Total : " +
+          order.total +
+          " FCFA<br>" +
+
+          "Date : " +
+          order.date +
+          "<br>" +
+
+          "Statut : <strong>" +
+          (order.status || "En attente") +
+          "</strong><br><br>" +
+
+          '<button class="btn primary" ' +
+          'onclick="sellerConfirmOrder(' +
+          order.id +
+          ')">' +
+          "Confirmer" +
+          "</button>" +
+
+          "</div><hr>"
+        );
+
+      }).join("");
+
+  }
+
+  document
+    .getElementById("infoModal")
+    .classList.add("active");
+
+}
+
+
+/* ===== CONFIRMER UNE COMMANDE ===== */
+
+function sellerConfirmOrder(orderId) {
+
+  updateOrderStatus(
+    orderId,
+    "Confirmée"
+  );
+
+  showSellerOrders();
+
+}
+
       </script>
 </body>
       </html>
