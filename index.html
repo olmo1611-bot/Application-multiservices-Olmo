@@ -2928,6 +2928,62 @@ document.addEventListener(
   }
 );
 
+      </script><script>
+
+/* ===== BOUTON FINALISER LE PANIER ===== */
+
+function startCheckout() {
+
+  if (cart.length === 0) {
+
+    showToast(
+      "Votre panier est vide."
+    );
+
+    return;
+  }
+
+  closeModal("cartModal");
+
+  openCheckout();
+
+}
+
+
+/* ===== REMPLACER L'ANCIEN BOUTON PANIER ===== */
+
+function updateCheckoutButton() {
+
+  const button =
+    document.getElementById(
+      "checkoutButton"
+    );
+
+  if (button) {
+
+    button.onclick =
+      startCheckout;
+
+  }
+
+}
+
+
+/* ===== INITIALISATION OLMO ===== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    updateCartCount();
+
+    updateFavoritesDisplay();
+
+    updateCheckoutButton();
+
+  }
+);
+
       </script>
 </body>
       </html>
