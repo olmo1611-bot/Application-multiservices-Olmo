@@ -3731,6 +3731,64 @@ function openSellerDashboard() {
 
 }
 
+      </script><script>
+
+/* ===== SUPPRIMER UN PRODUIT ===== */
+
+function deleteSellerProduct(productId) {
+
+  let products =
+    JSON.parse(
+      localStorage.getItem(
+        "olmoSellerProducts"
+      ) || "[]"
+    );
+
+  products = products.filter(
+    function(product) {
+
+      return product.id !== productId;
+
+    }
+  );
+
+  localStorage.setItem(
+    "olmoSellerProducts",
+    JSON.stringify(products)
+  );
+
+  showToast(
+    "Produit supprimé."
+  );
+
+  showSellerProducts();
+
+}
+
+
+/* ===== VIDER TOUS LES PRODUITS ===== */
+
+function clearSellerProducts() {
+
+  const confirmed =
+    confirm(
+      "Voulez-vous supprimer tous vos produits ?"
+    );
+
+  if (!confirmed) return;
+
+  localStorage.removeItem(
+    "olmoSellerProducts"
+  );
+
+  showToast(
+    "Tous les produits ont été supprimés."
+  );
+
+  showSellerProducts();
+
+}
+
       </script>
 </body>
       </html>
