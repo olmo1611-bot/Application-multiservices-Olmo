@@ -4014,6 +4014,75 @@ function advanceOrderStatus(orderId) {
 
 }
 
+      </script><script>
+
+/* ===== DÉTAIL D'UNE COMMANDE ===== */
+
+function showOrderDetails(orderId) {
+
+  const orders =
+    JSON.parse(
+      localStorage.getItem("olmoOrders") || "[]"
+    );
+
+  const order =
+    orders.find(function(item) {
+      return item.id === orderId;
+    });
+
+  if (!order) {
+
+    showToast(
+      "Commande introuvable."
+    );
+
+    return;
+  }
+
+  const title =
+    document.getElementById("infoTitle");
+
+  const content =
+    document.getElementById("infoContent");
+
+  title.textContent =
+    "Commande #" + order.id;
+
+  content.innerHTML =
+
+    "<p><strong>Total :</strong> " +
+    order.total +
+    " FCFA</p>" +
+
+    "<p><strong>Date :</strong> " +
+    order.date +
+    "</p>" +
+
+    "<p><strong>Statut :</strong> " +
+    (order.status || "En attente") +
+    "</p>";
+
+  document
+    .getElementById("infoModal")
+    .classList.add("active");
+
+}
+
+
+/* ===== STATUT ACTUEL ===== */
+
+function getOrderStatusLabel(status) {
+
+  if (!status) {
+
+    return "En attente";
+
+  }
+
+  return status;
+
+}
+
       </script>
 </body>
       </html>
