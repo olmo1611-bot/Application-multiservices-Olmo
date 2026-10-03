@@ -4407,6 +4407,23 @@ function markNotificationsAsRead() {
 
 }
 
+    </script><script>
+
+/* ===== COMPTER LES NOTIFICATIONS NON LUES ===== */
+
+function getUnreadNotificationsCount() {
+
+  const notifications =
+    JSON.parse(
+      localStorage.getItem("olmoNotifications") || "[]"
+    );
+
+  return notifications.filter(function(notification) {
+    return notification.read !== true;
+  }).length;
+
+}
+
     </script>
 </body>
       </html>
