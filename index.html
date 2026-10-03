@@ -3947,6 +3947,73 @@ function sellerConfirmOrder(orderId) {
 
 }
 
+      </script><script>
+
+/* ===== FAIRE AVANCER UNE COMMANDE ===== */
+
+function advanceOrderStatus(orderId) {
+
+  const orders =
+    JSON.parse(
+      localStorage.getItem("olmoOrders") || "[]"
+    );
+
+  const order =
+    orders.find(function(item) {
+      return item.id === orderId;
+    });
+
+  if (!order) {
+
+    showToast(
+      "Commande introuvable."
+    );
+
+    return;
+  }
+
+  const statuses = [
+    "En attente",
+    "Confirmée",
+    "En préparation",
+    "Expédiée",
+    "Livrée"
+  ];
+
+  const currentIndex =
+    statuses.indexOf(
+      order.status || "En attente"
+    );
+
+  if (
+    currentIndex === -1 ||
+    currentIndex >= statuses.length - 1
+  ) {
+
+    showToast(
+      "La commande est déjà terminée."
+    );
+
+    return;
+  }
+
+  order.status =
+    statuses[currentIndex + 1];
+
+  localStorage.setItem(
+    "olmoOrders",
+    JSON.stringify(orders)
+  );
+
+  showToast(
+    "Commande : " +
+    order.status
+  );
+
+  showSellerOrders();
+
+}
+
       </script>
 </body>
       </html>
