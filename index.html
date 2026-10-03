@@ -4140,6 +4140,31 @@ function cancelMyOrder(orderId) {
 
 }
 
+      </script><script>
+
+/* ===== AFFICHAGE DU BOUTON ANNULER ===== */
+
+function getCancelButton(order) {
+
+  if (!order) return "";
+
+  if (
+    order.status === "Livrée" ||
+    order.status === "Annulée"
+  ) {
+    return "";
+  }
+
+  return `
+    <button
+      class="btn btn-danger"
+      onclick="cancelMyOrder('${order.id}')"
+    >
+      Annuler la commande
+    </button>
+  `;
+}
+
       </script>
 </body>
       </html>
