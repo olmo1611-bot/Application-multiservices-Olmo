@@ -4186,6 +4186,36 @@ function canCancelOrder(order) {
   return true;
 }
 
+    </script><script>
+
+/* ===== STATUT DE COMMANDE ===== */
+
+function showOrderStatus(orderId) {
+
+  const orders =
+    JSON.parse(
+      localStorage.getItem("olmoOrders") || "[]"
+    );
+
+  const order =
+    orders.find(function(item) {
+      return item.id === orderId;
+    });
+
+  if (!order) {
+    showToast("Commande introuvable.");
+    return;
+  }
+
+  const status =
+    order.status || "En attente";
+
+  showToast(
+    "Statut : " + status
+  );
+
+}
+
     </script>
 </body>
       </html>
