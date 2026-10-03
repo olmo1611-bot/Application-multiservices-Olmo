@@ -4602,6 +4602,87 @@ function clearAllNotifications() {
 
 }
 
+  </script><script>
+
+/* ===== CENTRE DE NOTIFICATIONS OLMO ===== */
+
+function openNotificationCenter() {
+
+  const notifications =
+    JSON.parse(
+      localStorage.getItem("olmoNotifications") || "[]"
+    );
+
+  if (notifications.length === 0) {
+
+    showToast("Aucune notification.");
+
+    return;
+  }
+
+  let html = `
+    <div class="modal-content">
+
+      <h2>🔔 Notifications</h2>
+
+      <div style="margin-bottom:15px;">
+        <button
+          class="btn btn-primary"
+          onclick="markNotificationsAsRead(); openNotificationCenter();"
+        >
+          Marquer comme lues
+        </button>
+
+        <button
+          class="btn btn-danger"
+          onclick="clearAllNotifications(); closeModal();"
+        >
+          Tout supprimer
+        </button>
+      </div>
+  `;
+
+  notifications.forEach(function(notification) {
+
+    html += `
+      <div class="cart-item">
+
+        <strong>
+          ${notification.message}
+        </strong>
+
+        <small>
+          ${notification.date}
+        </small>
+
+      </div>
+    `;
+
+  });
+
+  html += `
+      <button
+        class="btn btn-primary"
+        onclick="closeModal()"
+      >
+        Fermer
+      </button>
+
+    </div>
+  `;
+
+  const modal =
+    document.getElementById("infoModal");
+
+  if (modal) {
+
+    modal.innerHTML = html;
+    modal.style.display = "flex";
+
+  }
+
+}
+
   </script>
 </body>
       </html>
