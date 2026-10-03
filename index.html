@@ -3203,6 +3203,30 @@ document.addEventListener(
   }
 );
 
+      </script><script>
+
+/* ===== DÉCONNEXION COMPLÈTE ===== */
+
+function logout() {
+
+  localStorage.removeItem("olmoUser");
+  localStorage.removeItem("olmoUserName");
+
+  showToast(
+    "Vous êtes déconnecté de votre compte."
+  );
+
+  setTimeout(function() {
+
+    showPage("home");
+
+    updateUserDisplay();
+    updateAccountState();
+
+  }, 500);
+
+}
+
       </script>
 </body>
       </html>
