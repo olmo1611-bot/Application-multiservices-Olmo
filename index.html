@@ -4216,6 +4216,54 @@ function showOrderStatus(orderId) {
 
 }
 
+    </script><script>
+
+/* ===== NOTIFICATION DE STATUT ===== */
+
+function notifyOrderStatus(orderId) {
+
+  const orders =
+    JSON.parse(
+      localStorage.getItem("olmoOrders") || "[]"
+    );
+
+  const order =
+    orders.find(function(item) {
+      return item.id === orderId;
+    });
+
+  if (!order) {
+    showToast("Commande introuvable.");
+    return;
+  }
+
+  const status =
+    order.status || "En attente";
+
+  if (status === "Livrée") {
+
+    showToast(
+      "Votre commande a été livrée."
+    );
+
+    return;
+  }
+
+  if (status === "Annulée") {
+
+    showToast(
+      "Votre commande a été annulée."
+    );
+
+    return;
+  }
+
+  showToast(
+    "Votre commande est : " + status
+  );
+
+}
+
     </script>
 </body>
       </html>
