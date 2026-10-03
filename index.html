@@ -4264,6 +4264,27 @@ function notifyOrderStatus(orderId) {
 
 }
 
+    </script><script>
+
+/* ===== NOTIFICATION NOUVELLE COMMANDE ===== */
+
+function notifyNewOrder(order) {
+
+  if (!order) {
+    return;
+  }
+
+  showToast(
+    "Nouvelle commande reçue."
+  );
+
+  console.log(
+    "Nouvelle commande OLMO :",
+    order
+  );
+
+}
+
     </script>
 </body>
       </html>
