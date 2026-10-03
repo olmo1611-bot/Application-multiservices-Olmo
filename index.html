@@ -3227,6 +3227,66 @@ function logout() {
 
 }
 
+      </script><script>
+
+/* ===== PRÉFÉRENCES OLMO ===== */
+
+function savePreference(name, value) {
+
+  localStorage.setItem(
+    "olmo_" + name,
+    value
+  );
+
+}
+
+
+/* ===== RÉCUPÉRER UNE PRÉFÉRENCE ===== */
+
+function getPreference(name) {
+
+  return localStorage.getItem(
+    "olmo_" + name
+  );
+
+}
+
+
+/* ===== MODE D'AFFICHAGE ===== */
+
+function setDisplayMode(mode) {
+
+  savePreference(
+    "displayMode",
+    mode
+  );
+
+  showToast(
+    "Préférence enregistrée."
+  );
+
+}
+
+
+/* ===== INITIALISATION ===== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    const mode =
+      getPreference("displayMode");
+
+    if (mode) {
+
+      document.body.dataset.displayMode =
+        mode;
+
+    }
+
+  }
+);
+
       </script>
 </body>
       </html>
