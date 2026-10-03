@@ -3287,6 +3287,83 @@ document.addEventListener(
   }
 );
 
+      </script><script>
+
+/* ===== GESTION DES ERREURS ===== */
+
+window.addEventListener(
+  "error",
+  function(event) {
+
+    console.error(
+      "Erreur OLMO :",
+      event.message
+    );
+
+  }
+);
+
+
+/* ===== SÉCURITÉ DES DONNÉES ===== */
+
+function safeParse(data, fallback) {
+
+  try {
+
+    return JSON.parse(data);
+
+  } catch (error) {
+
+    return fallback;
+
+  }
+
+}
+
+
+/* ===== VÉRIFICATION DU STOCKAGE ===== */
+
+function checkStorage() {
+
+  try {
+
+    localStorage.setItem(
+      "olmo_test",
+      "ok"
+    );
+
+    localStorage.removeItem(
+      "olmo_test"
+    );
+
+    return true;
+
+  } catch (error) {
+
+    return false;
+
+  }
+
+}
+
+
+/* ===== INITIALISATION ===== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    if (!checkStorage()) {
+
+      showToast(
+        "Attention : le stockage local est indisponible."
+      );
+
+    }
+
+  }
+);
+
       </script>
 </body>
       </html>
