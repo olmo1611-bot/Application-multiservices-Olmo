@@ -3789,6 +3789,79 @@ function clearSellerProducts() {
 
 }
 
+      </script><script>
+
+/* ===== MODIFIER UN PRODUIT ===== */
+
+function editSellerProduct(productId) {
+
+  const products =
+    JSON.parse(
+      localStorage.getItem(
+        "olmoSellerProducts"
+      ) || "[]"
+    );
+
+  const product =
+    products.find(
+      function(item) {
+        return item.id === productId;
+      }
+    );
+
+  if (!product) {
+
+    showToast(
+      "Produit introuvable."
+    );
+
+    return;
+  }
+
+  const newName =
+    prompt(
+      "Nouveau nom du produit :",
+      product.name
+    );
+
+  if (newName === null) return;
+
+  const newPrice =
+    prompt(
+      "Nouveau prix :",
+      product.price
+    );
+
+  if (newPrice === null) return;
+
+  if (!newName.trim() || isNaN(newPrice)) {
+
+    showToast(
+      "Informations invalides."
+    );
+
+    return;
+  }
+
+  product.name =
+    newName.trim();
+
+  product.price =
+    Number(newPrice);
+
+  localStorage.setItem(
+    "olmoSellerProducts",
+    JSON.stringify(products)
+  );
+
+  showToast(
+    "Produit modifié avec succès."
+  );
+
+  showSellerProducts();
+
+}
+
       </script>
 </body>
       </html>
