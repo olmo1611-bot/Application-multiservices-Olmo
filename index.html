@@ -4331,6 +4331,58 @@ function saveNotification(message) {
 
 }
 
+    </script><script>
+
+/* ===== AFFICHER LES NOTIFICATIONS ===== */
+
+function openNotifications() {
+
+  const notifications =
+    JSON.parse(
+      localStorage.getItem("olmoNotifications") || "[]"
+    );
+
+  if (notifications.length === 0) {
+    showToast("Aucune notification.");
+    return;
+  }
+
+  let html = `
+    <div class="modal-content">
+      <h2>🔔 Notifications</h2>
+  `;
+
+  notifications.forEach(function(notification) {
+
+    html += `
+      <div class="cart-item">
+        <strong>${notification.message}</strong>
+        <small>${notification.date}</small>
+      </div>
+    `;
+
+  });
+
+  html += `
+      <button
+        class="btn btn-primary"
+        onclick="closeModal()"
+      >
+        Fermer
+      </button>
+    </div>
+  `;
+
+  const modal =
+    document.getElementById("infoModal");
+
+  if (modal) {
+    modal.innerHTML = html;
+    modal.style.display = "flex";
+  }
+
+}
+
     </script>
 </body>
       </html>
