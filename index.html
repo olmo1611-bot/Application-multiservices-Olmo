@@ -4516,6 +4516,26 @@ function createStatusNotification(order) {
 
 }
 
+    </script><script>
+
+/* ===== NOTIFICATION ANNULATION ===== */
+
+function createCancellationNotification(order) {
+
+  if (!order) {
+    return;
+  }
+
+  saveNotification(
+    "La commande " +
+    (order.id || "") +
+    " a été annulée."
+  );
+
+  refreshNotifications();
+
+}
+
     </script>
 </body>
       </html>
