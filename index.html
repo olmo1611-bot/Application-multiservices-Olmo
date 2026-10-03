@@ -4731,6 +4731,49 @@ document.addEventListener(
   }
 );
 
+  </script><script>
+
+/* ===== CORRECTION AFFICHAGE NOTIFICATIONS ===== */
+
+function refreshNotificationButton() {
+
+  const button =
+    document.getElementById(
+      "olmoNotificationButton"
+    );
+
+  if (!button) {
+    return;
+  }
+
+  const count =
+    getUnreadNotificationsCount();
+
+  if (count > 0) {
+
+    button.innerHTML =
+      "🔔 Notifications (" + count + ")";
+
+  } else {
+
+    button.innerHTML =
+      "🔔 Notifications";
+
+  }
+
+}
+
+/* Mise à jour automatique */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    refreshNotificationButton();
+
+  }
+);
+
   </script>
 </body>
       </html>
