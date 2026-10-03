@@ -4565,6 +4565,43 @@ function deleteNotification(notificationId) {
 
 }
 
-    </script>
+    </script><script>
+
+/* ===== EFFACER TOUTES LES NOTIFICATIONS ===== */
+
+function clearAllNotifications() {
+
+  const notifications =
+    JSON.parse(
+      localStorage.getItem("olmoNotifications") || "[]"
+    );
+
+  if (notifications.length === 0) {
+    showToast("Aucune notification à supprimer.");
+    return;
+  }
+
+  const confirmed =
+    confirm(
+      "Voulez-vous supprimer toutes les notifications ?"
+    );
+
+  if (!confirmed) {
+    return;
+  }
+
+  localStorage.removeItem(
+    "olmoNotifications"
+  );
+
+  refreshNotifications();
+
+  showToast(
+    "Toutes les notifications ont été supprimées."
+  );
+
+}
+
+  </script>
 </body>
       </html>
