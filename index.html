@@ -3396,6 +3396,75 @@ document.addEventListener(
   }
 );
 
+      </script><script>
+
+/* ===== DONNÉES OLMO ===== */
+
+const olmoData = {
+
+  products: [
+    {
+      id: 1,
+      name: "Smartphone OLMO",
+      price: 85000,
+      category: "Téléphones"
+    },
+    {
+      id: 2,
+      name: "Ordinateur portable",
+      price: 250000,
+      category: "Informatique"
+    },
+    {
+      id: 3,
+      name: "Ensemble OLMO",
+      price: 25000,
+      category: "Mode"
+    },
+    {
+      id: 4,
+      name: "Article maison",
+      price: 15000,
+      category: "Maison"
+    }
+  ],
+
+  services: [
+    "Plombier",
+    "Coiffeur",
+    "Mécanicien",
+    "Livreur"
+  ],
+
+  jobs: [
+    "Vendeur/Vendeuse",
+    "Livreur",
+    "Commercial",
+    "Assistant informatique"
+  ]
+
+};
+
+
+/* ===== SAUVEGARDE DES DONNÉES ===== */
+
+localStorage.setItem(
+  "olmoData",
+  JSON.stringify(olmoData)
+);
+
+
+/* ===== RÉCUPÉRER LES DONNÉES ===== */
+
+function getOlmoData() {
+
+  return JSON.parse(
+    localStorage.getItem("olmoData") ||
+    JSON.stringify(olmoData)
+  );
+
+}
+
       </script>
 </body>
       </html>
