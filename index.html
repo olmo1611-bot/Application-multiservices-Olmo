@@ -4536,6 +4536,35 @@ function createCancellationNotification(order) {
 
 }
 
+    </script><script>
+
+/* ===== SUPPRIMER UNE NOTIFICATION ===== */
+
+function deleteNotification(notificationId) {
+
+  const notifications =
+    JSON.parse(
+      localStorage.getItem("olmoNotifications") || "[]"
+    );
+
+  const updatedNotifications =
+    notifications.filter(function(notification) {
+      return notification.id !== notificationId;
+    });
+
+  localStorage.setItem(
+    "olmoNotifications",
+    JSON.stringify(updatedNotifications)
+  );
+
+  refreshNotifications();
+
+  showToast(
+    "Notification supprimée."
+  );
+
+}
+
     </script>
 </body>
       </html>
