@@ -4938,6 +4938,70 @@ function runOlmoNotificationTest() {
 
 }
 
+  </script><script>
+
+/* ===== DIAGNOSTIC GENERAL OLMO ===== */
+
+function diagnosticOLMO() {
+
+  const functions = [
+    "showPage",
+    "addToCart",
+    "openCart",
+    "toggleFavorite",
+    "openFavorites",
+    "requestService",
+    "applyJob",
+    "openLogin",
+    "openProfile",
+    "openOrders",
+    "checkout",
+    "openCheckout",
+    "openSellerDashboard",
+    "openNotifications",
+    "saveNotification",
+    "deleteNotification",
+    "clearAllNotifications"
+  ];
+
+  let available = 0;
+
+  functions.forEach(function(name) {
+
+    if (typeof window[name] === "function") {
+      available++;
+    }
+
+  });
+
+  console.log(
+    "Diagnostic OLMO : " +
+    available +
+    "/" +
+    functions.length +
+    " fonctions disponibles."
+  );
+
+  if (available === functions.length) {
+
+    showToast(
+      "Diagnostic OLMO terminé : système opérationnel."
+    );
+
+  } else {
+
+    showToast(
+      "Diagnostic OLMO : " +
+      available +
+      "/" +
+      functions.length +
+      " fonctions disponibles."
+    );
+
+  }
+
+}
+
   </script>
 </body>
       </html>
