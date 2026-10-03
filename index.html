@@ -4492,6 +4492,30 @@ function createOrderNotification(order) {
 
 }
 
+    </script><script>
+
+/* ===== NOTIFICATION CHANGEMENT DE STATUT ===== */
+
+function createStatusNotification(order) {
+
+  if (!order) {
+    return;
+  }
+
+  const status =
+    order.status || "En attente";
+
+  saveNotification(
+    "Votre commande " +
+    (order.id || "") +
+    " est maintenant : " +
+    status
+  );
+
+  refreshNotifications();
+
+}
+
     </script>
 </body>
       </html>
