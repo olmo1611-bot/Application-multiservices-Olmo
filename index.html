@@ -3061,6 +3061,77 @@ document.addEventListener(
   }
 );
 
+      </script><script>
+
+/* ===== NAVIGATION OLMO ===== */
+
+function goToPage(page) {
+
+  if (!page) return;
+
+  showPage(page);
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+}
+
+
+/* ===== NAVIGATION ACCUEIL ===== */
+
+function goHome() {
+
+  goToPage("home");
+
+}
+
+
+/* ===== NAVIGATION COMMERCE ===== */
+
+function goCommerce() {
+
+  goToPage("commerce");
+
+}
+
+
+/* ===== NAVIGATION SERVICES ===== */
+
+function goServices() {
+
+  goToPage("services");
+
+}
+
+
+/* ===== NAVIGATION EMPLOIS ===== */
+
+function goJobs() {
+
+  goToPage("jobs");
+
+}
+
+
+/* ===== NAVIGATION PROFIL ===== */
+
+function goProfile() {
+
+  openProfile();
+
+}
+
+
+/* ===== NAVIGATION PROXIMITÉ ===== */
+
+function goNearby() {
+
+  showNearby();
+
+}
+
       </script>
 </body>
       </html>
