@@ -4083,6 +4083,63 @@ function getOrderStatusLabel(status) {
 
 }
 
+      </script><script>
+
+/* ===== ANNULER UNE COMMANDE CLIENT ===== */
+
+function cancelMyOrder(orderId) {
+
+  const orders =
+    JSON.parse(
+      localStorage.getItem("olmoOrders") || "[]"
+    );
+
+  const order =
+    orders.find(function(item) {
+      return item.id === orderId;
+    });
+
+  if (!order) {
+
+    showToast(
+      "Commande introuvable."
+    );
+
+    return;
+  }
+
+  if (order.status === "Livrée") {
+
+    showToast(
+      "Cette commande est déjà livrée."
+    );
+
+    return;
+  }
+
+  const confirmed =
+    confirm(
+      "Voulez-vous annuler cette commande ?"
+    );
+
+  if (!confirmed) return;
+
+  order.status =
+    "Annulée";
+
+  localStorage.setItem(
+    "olmoOrders",
+    JSON.stringify(orders)
+  );
+
+  showToast(
+    "Commande annulée avec succès."
+  );
+
+  openOrders();
+
+}
+
       </script>
 </body>
       </html>
