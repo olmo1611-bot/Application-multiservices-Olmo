@@ -3573,6 +3573,92 @@ function cancelOrder(orderId) {
 
 }
 
+      </script><script>
+
+/* ===== STATUTS DES COMMANDES ===== */
+
+function updateOrderStatus(
+  orderId,
+  newStatus
+) {
+
+  let orders =
+    JSON.parse(
+      localStorage.getItem("olmoOrders") || "[]"
+    );
+
+  orders = orders.map(function(order) {
+
+    if (order.id === orderId) {
+
+      order.status = newStatus;
+
+    }
+
+    return order;
+
+  });
+
+  localStorage.setItem(
+    "olmoOrders",
+    JSON.stringify(orders)
+  );
+
+  showToast(
+    "Statut de la commande mis à jour."
+  );
+
+}
+
+
+/* ===== STATUT PAR DÉFAUT ===== */
+
+function initializeOrderStatuses() {
+
+  let orders =
+    JSON.parse(
+      localStorage.getItem("olmoOrders") || "[]"
+    );
+
+  let changed = false;
+
+  orders = orders.map(function(order) {
+
+    if (!order.status) {
+
+      order.status = "En attente";
+
+      changed = true;
+
+    }
+
+    return order;
+
+  });
+
+  if (changed) {
+
+    localStorage.setItem(
+      "olmoOrders",
+      JSON.stringify(orders)
+    );
+
+  }
+
+}
+
+
+/* ===== INITIALISATION ===== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    initializeOrderStatuses();
+
+  }
+);
+
       </script>
 </body>
       </html>
