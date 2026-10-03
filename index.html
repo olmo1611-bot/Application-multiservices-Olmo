@@ -4683,6 +4683,54 @@ function openNotificationCenter() {
 
 }
 
+  </script><script>
+
+/* ===== ACCÈS AUX NOTIFICATIONS ===== */
+
+function showNotificationButton() {
+
+  const existing =
+    document.getElementById(
+      "olmoNotificationButton"
+    );
+
+  if (existing) {
+    return;
+  }
+
+  const button =
+    document.createElement("button");
+
+  button.id =
+    "olmoNotificationButton";
+
+  button.className =
+    "btn btn-primary";
+
+  button.innerHTML =
+    "🔔 Notifications";
+
+  button.onclick =
+    openNotificationCenter;
+
+  const profile =
+    document.getElementById("profile");
+
+  if (profile) {
+    profile.prepend(button);
+  }
+
+}
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    showNotificationButton();
+
+  }
+);
+
   </script>
 </body>
       </html>
