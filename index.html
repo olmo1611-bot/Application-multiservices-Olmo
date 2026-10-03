@@ -2984,6 +2984,83 @@ document.addEventListener(
   }
 );
 
+      </script><script>
+
+/* ===== VÉRIFICATION OLMO ===== */
+
+function olmoSystemCheck() {
+
+  const checks = [];
+
+  checks.push(
+    typeof showPage === "function"
+  );
+
+  checks.push(
+    typeof addToCart === "function"
+  );
+
+  checks.push(
+    typeof toggleFavorite === "function"
+  );
+
+  checks.push(
+    typeof requestService === "function"
+  );
+
+  checks.push(
+    typeof applyJob === "function"
+  );
+
+  checks.push(
+    typeof openCheckout === "function"
+  );
+
+  checks.push(
+    typeof createSellerShop === "function"
+  );
+
+  const total =
+    checks.length;
+
+  const working =
+    checks.filter(Boolean).length;
+
+  if (working === total) {
+
+    showToast(
+      "OLMO : système prêt."
+    );
+
+  } else {
+
+    showToast(
+      "OLMO : " +
+      working +
+      "/" +
+      total +
+      " fonctions disponibles."
+    );
+
+  }
+
+}
+
+
+/* ===== LANCEMENT AUTOMATIQUE ===== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function() {
+
+    setTimeout(
+      olmoSystemCheck,
+      500
+    );
+
+  }
+);
+
       </script>
 </body>
       </html>
