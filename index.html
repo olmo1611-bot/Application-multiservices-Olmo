@@ -5019,6 +5019,23 @@ document.addEventListener(
   }
 );
 
-  </script>
+  </script><!-- ===== CONNEXION SUPABASE ===== -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const OLMO_SUPABASE_URL =
+  "https://atanjkebibbrschgynxr.supabase.co";
+
+const OLMO_SUPABASE_KEY =
+  "COLLE_ICI_TA_CLE_PUBLISHABLE";
+
+const olmoSupabase =
+  window.supabase.createClient(
+    OLMO_SUPABASE_URL,
+    OLMO_SUPABASE_KEY
+  );
+
+console.log("OLMO : connexion Supabase initialisée.");
+</script>
 </body>
       </html>
