@@ -5054,6 +5054,26 @@ async function testOlmoSupabaseProducts() {
 }
 
 testOlmoSupabaseProducts();
+</script><!-- ===== CHARGEMENT DES PRODUITS SUPABASE ===== -->
+<script>
+async function chargerProduitsSupabase() {
+  const { data, error } = await olmoSupabase
+    .from("olmo_products")
+    .select("*")
+    .eq("is_active", true)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("OLMO - erreur chargement produits :", error);
+    return;
+  }
+
+  console.log("OLMO - produits récupérés depuis Supabase :", data);
+
+  window.olmoProduitsSupabase = data;
+}
+
+chargerProduitsSupabase();
 </script>
 </body>
       </html>
