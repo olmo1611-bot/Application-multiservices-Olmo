@@ -5036,6 +5036,24 @@ const olmoSupabase =
   );
 
 console.log("OLMO : connexion Supabase initialisée.");
+</script><!-- ===== TEST CONNEXION PRODUITS SUPABASE ===== -->
+<script>
+async function testOlmoSupabaseProducts() {
+  const { data, error } = await olmoSupabase
+    .from("olmo_products")
+    .select("*")
+    .eq("is_active", true)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("OLMO Supabase produits :", error);
+    return;
+  }
+
+  console.log("OLMO : produits Supabase chargés :", data);
+}
+
+testOlmoSupabaseProducts();
 </script>
 </body>
       </html>
