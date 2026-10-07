@@ -5078,6 +5078,74 @@ async function chargerProduitsSupabase() {
 }
 
 chargerProduitsSupabase();
+</script><!-- ===== AMELIORATION VISUELLE DES PRODUITS OLMO ===== -->
+<script>
+(function() {
+
+  const style = document.createElement("style");
+
+  style.textContent = `
+    .card-image {
+      height: 190px;
+      background: #f3f4f6;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .card-image img {
+      transform: scale(1.04);
+    }
+  `;
+
+  document.head.appendChild(style);
+
+  const products = document.querySelectorAll("#productsGrid .product-card");
+
+  const images = [
+    "https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?auto=format&fit=crop&w=900&q=85",
+    "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=900&q=85",
+    "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85",
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=85"
+  ];
+
+  const names = [
+    "Smartphone OLMO",
+    "Ordinateur portable",
+    "Ensemble OLMO",
+    "Article maison"
+  ];
+
+  products.forEach(function(product, index) {
+
+    if (!images[index]) return;
+
+    const imageBox = product.querySelector(".card-image");
+
+    if (!imageBox) return;
+
+    imageBox.innerHTML = "";
+
+    const img = document.createElement("img");
+
+    img.src = images[index];
+    img.alt = names[index];
+    img.loading = "lazy";
+
+    imageBox.appendChild(img);
+  });
+
+})();
 </script>
 </body>
       </html>
