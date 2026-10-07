@@ -5233,6 +5233,80 @@ chargerProduitsSupabase();
   document.head.appendChild(style);
 
 })();
+</script><!-- ===== STYLE MARKETPLACE OLMO ===== -->
+<script>
+(function() {
+
+  const style = document.createElement("style");
+
+  style.textContent = `
+    #productsGrid .product-card {
+      position: relative;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #productsGrid .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.10);
+    }
+
+    #productsGrid .product-info small {
+      display: inline-block;
+      margin-bottom: 5px;
+      padding: 4px 8px;
+      border-radius: 20px;
+      background: #f1f5f9;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    #productsGrid .product-info h3 {
+      font-weight: 700;
+    }
+
+    #productsGrid .product-info p {
+      color: #64748b;
+      margin-bottom: 6px;
+    }
+
+    #productsGrid .price {
+      font-weight: 800;
+    }
+
+    .olmo-stock-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 4;
+      padding: 5px 8px;
+      border-radius: 20px;
+      background: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+  `;
+
+  document.head.appendChild(style);
+
+  const products = document.querySelectorAll("#productsGrid .product-card");
+
+  products.forEach(function(product) {
+
+    if (product.querySelector(".olmo-stock-badge")) return;
+
+    const badge = document.createElement("span");
+
+    badge.className = "olmo-stock-badge";
+    badge.textContent = "✓ Disponible";
+
+    product.appendChild(badge);
+  });
+
+})();
 </script>
 </body>
       </html>
