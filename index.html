@@ -5753,6 +5753,28 @@ chargerProduitsSupabase();
 function ouvrirFicheProduit(produit) {
     showProduct(produit);
 }
+  </script><script>
+document.addEventListener("click", function(e) {
+    const carte = e.target.closest(".product-card");
+
+    if (!carte) return;
+
+    const nom = carte.dataset.nom;
+    const categorie = carte.dataset.categorie;
+    const prix = carte.dataset.prix;
+    const image = carte.dataset.image;
+    const description = carte.dataset.description || "Aucune description disponible pour ce produit.";
+
+    if (!nom) return;
+
+    ouvrirFicheProduit({
+        name: nom,
+        category: categorie,
+        price: prix,
+        image: image,
+        description: description
+    });
+});
   </script>
   
     
