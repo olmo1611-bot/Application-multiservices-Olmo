@@ -5307,6 +5307,36 @@ chargerProduitsSupabase();
   });
 
 })();
-</script>
+</script><!-- ===== RECHERCHE PRODUITS OLMO ===== -->
+<script>
+(function () {
+  const searchInputs = document.querySelectorAll(
+    'input[type="search"], input[placeholder*="Rechercher" i], input[placeholder*="produit" i]'
+  );
+
+  searchInputs.forEach(function (input) {
+    if (input.dataset.olmoSearchReady === "true") return;
+
+    input.dataset.olmoSearchReady = "true";
+
+    input.addEventListener("input", function () {
+      const query = input.value
+        .trim()
+        .toLocaleLowerCase("fr");
+
+      const cards = document.querySelectorAll(
+        "#productsGrid .product-card"
+      );
+
+      cards.forEach(function (card) {
+        const text = card.textContent.toLocaleLowerCase("fr");
+        card.style.display = text.includes(query) ? "" : "none";
+      });
+    });
+  });
+
+  console.log("OLMO : recherche produits initialisée.");
+})();
+  </script>
 </body>
       </html>
