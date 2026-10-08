@@ -5338,5 +5338,48 @@ chargerProduitsSupabase();
   console.log("OLMO : recherche produits initialisée.");
 })();
   </script>
+<!-- ===== COMPTEUR PANIER OLMO ===== -->
+<script>
+(function () {
+  function actualiserCompteurPanier() {
+    let panier = [];
+
+    try {
+      panier = JSON.parse(
+        localStorage.getItem("olmoCart") ||
+        localStorage.getItem("olmoPanier") ||
+        "[]"
+      );
+    } catch (e) {
+      panier = [];
+    }
+
+    const total = Array.isArray(panier)
+      ? panier.reduce(function (somme, article) {
+          return somme + Math.max(
+            0,
+            Number(article.quantity || article.quantite || 1)
+          );
+        }, 0)
+      : 0;
+
+    document.querySelectorAll(
+      '[data-olmo-cart-count]'
+    ).forEach(function (badge) {
+      badge.textContent = total;
+      badge.hidden = total === 0;
+    });
+  }
+
+  window.olmoActualiserCompteurPanier =
+    actualiserCompteurPanier;
+
+  actualiserCompteurPanier();
+
+  window.addEventListener("storage", actualiserCompteurPanier);
+  window.addEventListener("pageshow", actualiserCompteurPanier);
+})();
+</script>
+  
 </body>
       </html>
