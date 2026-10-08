@@ -5635,6 +5635,122 @@ chargerProduitsSupabase();
   }
 })();
   </script>
+<!-- ===== FILTRES CATEGORIES OLMO ===== -->
+<script>
+(function () {
+  const categories = [
+    "Tout",
+    "Téléphones",
+    "Accessoires",
+    "Informatique",
+    "Électronique",
+    "Mode",
+    "Chaussures",
+    "Accessoires mode",
+    "Maison",
+    "Décoration",
+    "Électroménager",
+    "Alimentation",
+    "Boissons",
+    "Beauté",
+    "Hygiène",
+    "Sport"
+  ];
+
+  function initialiserFiltres() {
+    const grille = document.getElementById("productsGrid");
+    if (!grille || document.getElementById("olmoCategoryFilters")) return;
+
+    const barre = document.createElement("div");
+    barre.id = "olmoCategoryFilters";
+
+    const style = document.createElement("style");
+    style.textContent = `
+      #olmoCategoryFilters {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 10px 2px 16px;
+        margin: 8px 0;
+        scrollbar-width: thin;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      #olmoCategoryFilters button {
+        flex: 0 0 auto;
+        border: 1px solid #dbe2ea;
+        background: #fff;
+        color: #334155;
+        padding: 10px 15px;
+        border-radius: 22px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      #olmoCategoryFilters button.active {
+        background: #166534;
+        color: #fff;
+        border-color: #166534;
+      }
+    `;
+    document.head.appendChild(style);
+
+    categories.forEach(function (categorie, index) {
+      const bouton = document.createElement("button");
+      bouton.type = "button";
+      bouton.textContent = categorie;
+
+      if (index === 0) bouton.classList.add("active");
+
+      bouton.addEventListener("click", function () {
+        barre.querySelectorAll("button").forEach(function (b) {
+          b.classList.remove("active");
+        });
+
+        bouton.classList.add("active");
+
+        const recherche = document.querySelector(
+          'input[type="search"], input[placeholder*="Rechercher" i], input[placeholder*="produit" i]'
+        );
+
+        const terme = recherche
+          ? recherche.value.trim().toLocaleLowerCase("fr")
+          : "";
+
+        grille.querySelectorAll(".product-card").forEach(function (carte) {
+          const etiquette = carte.querySelector(".product-info small");
+          const nomCategorie = etiquette
+            ? etiquette.textContent.trim().toLocaleLowerCase("fr")
+            : "";
+
+          const texte = carte.textContent.toLocaleLowerCase("fr");
+
+          const correspondCategorie =
+            categorie === "Tout" ||
+            nomCategorie === categorie.toLocaleLowerCase("fr");
+
+          const correspondRecherche = texte.includes(terme);
+
+          carte.style.display =
+            correspondCategorie && correspondRecherche ? "" : "none";
+        });
+      });
+
+      barre.appendChild(bouton);
+    });
+
+    grille.parentNode.insertBefore(barre, grille);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initialiserFiltres);
+  } else {
+    initialiserFiltres();
+  }
+})();
+  </script>
+  
     
   
 </body>
