@@ -5380,6 +5380,262 @@ chargerProduitsSupabase();
   window.addEventListener("pageshow", actualiserCompteurPanier);
 })();
 </script>
+<!-- ===== CATALOGUE SUPPLEMENTAIRE OLMO ===== -->
+<script>
+(function () {
+  const produits = [
+    {
+      nom: "Smartphone Android",
+      prix: 95000,
+      categorie: "Téléphones",
+      type: "phones",
+      image: "photo-1511707171634-5f897ff02aa9"
+    },
+    {
+      nom: "iPhone reconditionné",
+      prix: 180000,
+      categorie: "Téléphones",
+      type: "phones",
+      image: "photo-1592750475338-74b7b21085ab"
+    },
+    {
+      nom: "Écouteurs sans fil",
+      prix: 12000,
+      categorie: "Accessoires",
+      type: "phones",
+      image: "photo-1505740420928-5e560c06d30e"
+    },
+    {
+      nom: "Batterie externe",
+      prix: 10000,
+      categorie: "Accessoires",
+      type: "phones",
+      image: "photo-1609091839311-d5365f9ff1c5"
+    },
+    {
+      nom: "Ordinateur portable",
+      prix: 250000,
+      categorie: "Informatique",
+      type: "informatique",
+      image: "photo-1496181133206-80ce9b88a853"
+    },
+    {
+      nom: "Tablette tactile",
+      prix: 85000,
+      categorie: "Informatique",
+      type: "informatique",
+      image: "photo-1544244015-0df4b3ffc6b0"
+    },
+    {
+      nom: "Clavier sans fil",
+      prix: 15000,
+      categorie: "Informatique",
+      type: "informatique",
+      image: "photo-1587829741301-dc798b83add3"
+    },
+    {
+      nom: "Enceinte Bluetooth",
+      prix: 18000,
+      categorie: "Électronique",
+      type: "informatique",
+      image: "photo-1608043152269-423dbba4e7e1"
+    },
+    {
+      nom: "T-shirt classique",
+      prix: 5000,
+      categorie: "Mode",
+      type: "mode",
+      image: "photo-1521572163474-6864f9cf17ab"
+    },
+    {
+      nom: "Baskets urbaines",
+      prix: 22000,
+      categorie: "Chaussures",
+      type: "mode",
+      image: "photo-1542291026-7eec264c27ff"
+    },
+    {
+      nom: "Sac à dos",
+      prix: 12000,
+      categorie: "Mode",
+      type: "mode",
+      image: "photo-1553062407-98eeb64c6a62"
+    },
+    {
+      nom: "Montre moderne",
+      prix: 15000,
+      categorie: "Accessoires mode",
+      type: "mode",
+      image: "photo-1523275335684-37898b6baf30"
+    },
+    {
+      nom: "Chaise moderne",
+      prix: 25000,
+      categorie: "Maison",
+      type: "maison",
+      image: "photo-1503602642458-232111445657"
+    },
+    {
+      nom: "Lampe décorative",
+      prix: 12000,
+      categorie: "Décoration",
+      type: "maison",
+      image: "photo-1507473885765-e6ed057f782c"
+    },
+    {
+      nom: "Mixeur de cuisine",
+      prix: 22000,
+      categorie: "Électroménager",
+      type: "maison",
+      image: "photo-1570222094114-d054a817e56b"
+    },
+    {
+      nom: "Ventilateur",
+      prix: 25000,
+      categorie: "Électroménager",
+      type: "maison",
+      image: "photo-1618941716939-553df3c6c278"
+    },
+    {
+      nom: "Sac de riz",
+      prix: 18000,
+      categorie: "Alimentation",
+      type: "alimentation",
+      image: "photo-1586201375761-83865001e31c"
+    },
+    {
+      nom: "Huile de cuisine",
+      prix: 2500,
+      categorie: "Alimentation",
+      type: "alimentation",
+      image: "photo-1474979266404-7eaacbcd87c5"
+    },
+    {
+      nom: "Panier de fruits",
+      prix: 7500,
+      categorie: "Alimentation",
+      type: "alimentation",
+      image: "photo-1610832958506-aa56368176cf"
+    },
+    {
+      nom: "Jus de fruits",
+      prix: 1500,
+      categorie: "Boissons",
+      type: "alimentation",
+      image: "photo-1622597467836-f3285f2131b8"
+    },
+    {
+      nom: "Parfum",
+      prix: 15000,
+      categorie: "Beauté",
+      type: "beaute",
+      image: "photo-1541643600914-78b084683601"
+    },
+    {
+      nom: "Soins du visage",
+      prix: 8500,
+      categorie: "Beauté",
+      type: "beaute",
+      image: "photo-1608248543803-ba4f8c70ae0b"
+    },
+    {
+      nom: "Shampoing",
+      prix: 3500,
+      categorie: "Hygiène",
+      type: "beaute",
+      image: "photo-1608248543803-ba4f8c70ae0b"
+    },
+    {
+      nom: "Sac de sport",
+      prix: 14000,
+      categorie: "Sport",
+      type: "mode",
+      image: "photo-1553062407-98eeb64c6a62"
+    }
+  ];
+
+  function ajouterCatalogue() {
+    const grille = document.getElementById("productsGrid");
+    if (!grille || grille.dataset.catalogueAjoute === "true") return;
+
+    grille.dataset.catalogueAjoute = "true";
+
+    produits.forEach(function (p, index) {
+      const carte = document.createElement("div");
+      carte.className = "card product-card";
+      carte.dataset.category = p.type;
+      carte.dataset.olmoExtraProduct = "true";
+
+      const imageBox = document.createElement("div");
+      imageBox.className = "card-image";
+
+      const img = document.createElement("img");
+      img.src = "https://images.unsplash.com/" + p.image +
+        "?auto=format&fit=crop&w=700&q=80";
+      img.alt = p.nom;
+      img.loading = "lazy";
+      img.onerror = function () {
+        imageBox.textContent = "🛍️";
+      };
+      imageBox.appendChild(img);
+
+      const info = document.createElement("div");
+      info.className = "product-info";
+
+      const categorie = document.createElement("small");
+      categorie.textContent = p.categorie;
+
+      const titre = document.createElement("h3");
+      titre.textContent = p.nom;
+
+      const description = document.createElement("p");
+      description.textContent = "Découvrez ce produit sur OLMO.";
+
+      const prix = document.createElement("div");
+      prix.className = "price";
+      prix.textContent = p.prix.toLocaleString("fr-FR") + " FCFA";
+
+      const actions = document.createElement("div");
+      actions.className = "product-actions";
+
+      const ajouter = document.createElement("button");
+      ajouter.className = "btn btn-primary";
+      ajouter.textContent = "Ajouter au panier";
+      ajouter.addEventListener("click", function () {
+        if (typeof window.addToCart === "function") {
+          window.addToCart(p.nom, p.prix);
+        } else {
+          alert("Le panier sera relié à ce produit dans la prochaine étape.");
+        }
+      });
+
+      const voir = document.createElement("button");
+      voir.className = "btn btn-light";
+      voir.textContent = "Voir le produit";
+      voir.addEventListener("click", function () {
+        if (typeof window.showProduct === "function") {
+          window.showProduct(p.nom);
+        }
+      });
+
+      actions.append(ajouter, voir);
+      info.append(categorie, titre, description, prix, actions);
+      carte.append(imageBox, info);
+      grille.appendChild(carte);
+    });
+
+    console.log("OLMO : " + produits.length +
+      " produits supplémentaires ajoutés.");
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", ajouterCatalogue);
+  } else {
+    ajouterCatalogue();
+  }
+})();
+  </script>
+    
   
 </body>
       </html>
