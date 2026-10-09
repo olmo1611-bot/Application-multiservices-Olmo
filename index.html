@@ -6099,3 +6099,208 @@ document.addEventListener("click", function(e) {
 })();
 </script>
 <!-- ===== FIN CORRECTION GENERALE DES PHOTOS ===== -->
+<!-- ===== OLMO : PHOTOS ET DESCRIPTIONS PRODUITS CORRIGEES ===== -->
+<script>
+(function () {
+  "use strict";
+
+  const catalogue = {
+    "Smartphone OLMO": {
+      images: ["photo-1592899677977-9c10ca588bbd"],
+      description: "Smartphone pour communiquer, naviguer sur Internet et utiliser des applications."
+    },
+    "Ordinateur portable": {
+      images: [
+        "photo-1496181133206-80ce9b88a853",
+        "photo-1517336714731-489689fd1ca8"
+      ],
+      description: "Ordinateur portable adapté au travail, aux études et aux tâches numériques."
+    },
+    "Ensemble OLMO": {
+      images: ["photo-1521572163474-6864f9cf17ab"],
+      description: "Ensemble vestimentaire pour compléter une tenue décontractée."
+    },
+    "Article maison": {
+      images: ["photo-1600585154340-be6161a56a0c"],
+      description: "Article destiné à l'aménagement et au confort de la maison."
+    },
+    "Smartphone Android": {
+      images: ["photo-1511707171634-5f897ff02aa9"],
+      description: "Téléphone Android pour les appels, les applications et la navigation."
+    },
+    "iPhone reconditionné": {
+      images: ["photo-1592750475338-74b7b21085ab"],
+      description: "iPhone reconditionné. Vérifiez l'état, la capacité et la garantie auprès du vendeur."
+    },
+    "Écouteurs sans fil": {
+      images: ["photo-1606220945770-b5b6c2c55bf1"],
+      description: "Écouteurs sans fil pour écouter de la musique et prendre des appels."
+    },
+    "Batterie externe": {
+      images: ["photo-1609091839311-d5365f9ff1c5"],
+      description: "Batterie externe pour recharger un appareil compatible en déplacement."
+    },
+    "Tablette tactile": {
+      images: ["photo-1544244015-0df4b3ffc6b0"],
+      description: "Tablette tactile pour lire, étudier, naviguer et utiliser des applications."
+    },
+    "Clavier sans fil": {
+      images: ["photo-1587829741301-dc798b83add3"],
+      description: "Clavier sans fil pour saisir du texte sur un appareil compatible."
+    },
+    "Enceinte Bluetooth": {
+      images: ["photo-1608043152269-423dbba4e7e1"],
+      description: "Enceinte Bluetooth pour diffuser du son depuis un appareil compatible."
+    },
+    "T-shirt classique": {
+      images: ["photo-1521572163474-6864f9cf17ab"],
+      description: "T-shirt classique à porter au quotidien."
+    },
+    "Baskets urbaines": {
+      images: ["photo-1542291026-7eec264c27ff"],
+      description: "Baskets pour une tenue urbaine et décontractée."
+    },
+    "Sac à dos": {
+      images: ["photo-1553062407-98eeb64c6a62"],
+      description: "Sac à dos pour transporter des effets personnels."
+    },
+    "Montre moderne": {
+      images: ["photo-1523275335684-37898b6baf30"],
+      description: "Montre pour consulter l'heure et compléter une tenue."
+    },
+    "Chaise moderne": {
+      images: ["photo-1503602642458-232111445657"],
+      description: "Chaise destinée à l'assise dans un espace de vie ou de travail."
+    },
+    "Lampe décorative": {
+      images: ["photo-1507473885765-e6ed057f782c"],
+      description: "Lampe décorative pour apporter un éclairage d'appoint."
+    },
+    "Mixeur de cuisine": {
+      images: ["photo-1570222094114-d054a817e56b"],
+      description: "Appareil de cuisine pour mixer ou préparer des ingrédients."
+    },
+    "Ventilateur": {
+      images: ["photo-1618941716939-553df3c6c278"],
+      description: "Ventilateur destiné à faire circuler l'air dans une pièce."
+    },
+    "Sac de riz": {
+      images: ["photo-1586201375761-83865001e31c"],
+      description: "Riz conditionné en sac. Vérifiez le poids et la marque auprès du vendeur."
+    },
+    "Huile de cuisine": {
+      images: ["photo-1474979266404-7eaacbcd87c5"],
+      description: "Huile alimentaire pour la préparation des repas."
+    },
+    "Panier de fruits": {
+      images: ["photo-1610832958506-aa56368176cf"],
+      description: "Sélection de fruits. La composition dépend de l'offre du vendeur."
+    },
+    "Jus de fruits": {
+      images: ["photo-1622597467836-f3285f2131b8"],
+      description: "Boisson aux fruits. Vérifiez le parfum, le volume et la composition."
+    },
+    "Parfum": {
+      images: ["photo-1541643600914-78b084683601"],
+      description: "Parfum. Consultez le nom, le volume et la marque proposés par le vendeur."
+    },
+    "Soins du visage": {
+      images: ["photo-1608248543803-ba4f8c70ae0b"],
+      description: "Produit de soin du visage. Vérifiez la référence et les indications d'utilisation."
+    },
+    "Shampoing": {
+      images: ["photo-1556228720-195a672e8a03"],
+      description: "Shampoing pour le lavage des cheveux. Vérifiez la formule et le volume."
+    },
+    "Sac de sport": {
+      images: ["photo-1519861531473-9200262188bf"],
+      description: "Sac destiné au transport d'affaires et d'équipements de sport."
+    }
+  };
+
+  function corrigerCatalogue() {
+    const cartes = document.querySelectorAll(
+      "#productsGrid .product-card"
+    );
+    const occurrences = {};
+
+    cartes.forEach(function (carte) {
+      const titre = carte.querySelector("h3");
+      const zone = carte.querySelector(".card-image");
+      if (!titre || !zone) return;
+
+      const nom = titre.textContent.trim();
+      const fiche = catalogue[nom];
+
+      // Ne pas remplacer au hasard les produits non répertoriés.
+      if (!fiche) return;
+
+      const index = occurrences[nom] || 0;
+      occurrences[nom] = index + 1;
+
+      const listeImages = fiche.images;
+      const identifiant =
+        listeImages[Math.min(index, listeImages.length - 1)];
+
+      let image = zone.querySelector("img");
+      if (!image) {
+        image = document.createElement("img");
+        zone.replaceChildren(image);
+      }
+
+      image.alt = "Photo illustrative : " + nom;
+      image.loading = "lazy";
+      image.decoding = "async";
+      image.style.cssText =
+        "display:block;width:100%;height:100%;min-height:150px;" +
+        "object-fit:contain;object-position:center;background:#fff;";
+
+      image.onerror = function () {
+        image.style.display = "none";
+        zone.style.background = "#f1f5f9";
+        zone.setAttribute(
+          "aria-label",
+          "Photo indisponible pour " + nom
+        );
+      };
+
+      image.src =
+        "https://images.unsplash.com/" + identifiant +
+        "?auto=format&fit=crop&w=900&q=85";
+
+      zone.style.height = "190px";
+      zone.style.overflow = "hidden";
+      zone.style.background = "#f1f5f9";
+
+      const description = carte.querySelector(".product-info p");
+      if (description) {
+        description.textContent = fiche.description;
+      }
+    });
+
+    console.log("OLMO : photos et descriptions du catalogue corrigées.");
+  }
+
+  function lancerCorrection() {
+    setTimeout(corrigerCatalogue, 500);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      lancerCorrection,
+      { once: true }
+    );
+  } else {
+    lancerCorrection();
+  }
+
+  window.addEventListener(
+    "load",
+    lancerCorrection,
+    { once: true }
+  );
+})();
+</script>
+<!-- ===== FIN CORRECTION CATALOGUE ===== -->
+
