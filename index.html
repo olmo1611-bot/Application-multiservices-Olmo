@@ -5775,7 +5775,121 @@ document.addEventListener("click", function(e) {
         description: description
     });
 });
-  </script>
+  </script><!-- ===== FICHES PRODUITS DETAILLEES OLMO ===== -->
+<script>
+(function () {
+  const ancienneFonction = window.showProduct;
+
+  window.showProduct = function (produit, prixFourni) {
+    const nom = typeof produit === "object" && produit !== null
+      ? (produit.name || produit.nom || "")
+      : produit;
+
+    if (!nom) return;
+
+    const cartes = Array.from(
+      document.querySelectorAll("#productsGrid .product-card")
+    );
+
+    const carte = cartes.find(function (element) {
+      const titre = element.querySelector("h3");
+      return titre && titre.textContent.trim() === String(nom);
+    });
+
+    const titre = document.getElementById("infoTitle");
+    const contenu = document.getElementById("infoContent");
+    const modal = document.getElementById("infoModal");
+
+    if (!titre || !contenu || !modal) {
+      if (typeof ancienneFonction === "function") {
+        ancienneFonction(nom, prixFourni);
+      }
+      return;
+    }
+
+    let categorie = "";
+    let prix = Number(prixFourni || 0);
+    let image = "";
+    let description = "Découvrez ce produit sur OLMO.";
+
+    if (carte) {
+      const etiquette = carte.querySelector(".product-info small");
+      const prixTexte = carte.querySelector(".price");
+      const photo = carte.querySelector(".card-image img");
+      const texteDescription = carte.querySelector(".product-info p");
+
+      categorie = etiquette ? etiquette.textContent.trim() : "";
+      image = photo ? photo.src : "";
+      description = texteDescription
+        ? texteDescription.textContent.trim()
+        : description;
+
+      if (prixTexte) {
+        prix = Number(
+          prixTexte.textContent.replace(/[^\d]/g, "")
+        );
+      }
+    } else if (typeof produit === "object" && produit !== null) {
+      categorie = produit.category || produit.categorie || "";
+      image = produit.image || "";
+      description = produit.description || description;
+      prix = Number(produit.price || produit.prix || prix);
+    }
+
+    titre.textContent = String(nom);
+    contenu.replaceChildren();
+
+    if (image) {
+      const photo = document.createElement("img");
+      photo.src = image;
+      photo.alt = String(nom);
+      photo.style.cssText =
+        "width:100%;max-height:300px;object-fit:contain;" +
+        "border-radius:12px;margin-bottom:16px;";
+      contenu.appendChild(photo);
+    }
+
+    if (categorie) {
+      const ligneCategorie = document.createElement("p");
+      ligneCategorie.textContent = "Catégorie : " + categorie;
+      ligneCategorie.style.marginBottom = "10px";
+      contenu.appendChild(ligneCategorie);
+    }
+
+    const lignePrix = document.createElement("p");
+    lignePrix.textContent =
+      "Prix : " + prix.toLocaleString("fr-FR") + " FCFA";
+    lignePrix.style.cssText =
+      "font-size:21px;font-weight:bold;margin-bottom:14px;";
+    contenu.appendChild(lignePrix);
+
+    const texte = document.createElement("p");
+    texte.textContent = description;
+    texte.style.cssText =
+      "line-height:1.6;margin-bottom:20px;";
+    contenu.appendChild(texte);
+
+    const bouton = document.createElement("button");
+    bouton.type = "button";
+    bouton.className = "btn btn-primary btn-block";
+    bouton.textContent = "Ajouter au panier";
+
+    bouton.addEventListener("click", function () {
+      if (typeof window.addToCart === "function") {
+        window.addToCart(String(nom), prix);
+        modal.classList.remove("active");
+      } else {
+        alert("Le panier est momentanément indisponible.");
+      }
+    });
+
+    contenu.appendChild(bouton);
+    modal.classList.add("active");
+  };
+
+  console.log("OLMO : fiches produits détaillées activées.");
+})();
+</script>
   
     
   
