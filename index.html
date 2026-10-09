@@ -6303,4 +6303,174 @@ document.addEventListener("click", function(e) {
 })();
 </script>
 <!-- ===== FIN CORRECTION CATALOGUE ===== -->
+<!-- OLMO : NOUVEAUX PRODUITS - BLOC 1/2 -->
+<script>
+(function () {
+  const produits = [
+    {
+      nom: "Smart TV",
+      prix: 180000,
+      categorie: "Électronique",
+      type: "informatique",
+      image: "photo-1593359677879-a4bb92f829d1",
+      description: "Téléviseur intelligent pour regarder des contenus compatibles."
+    },
+    {
+      nom: "Imprimante",
+      prix: 65000,
+      categorie: "Informatique",
+      type: "informatique",
+      image: "photo-1612815154858-60aa4c59eaa6",
+      description: "Imprimante pour documents scolaires et professionnels."
+    },
+    {
+      nom: "Souris sans fil",
+      prix: 8000,
+      categorie: "Informatique",
+      type: "informatique",
+      image: "photo-1527814050087-3793815479db",
+      description: "Souris sans fil pour ordinateur compatible."
+    },
+    {
+      nom: "Chargeur USB-C",
+      prix: 7000,
+      categorie: "Accessoires",
+      type: "phones",
+      image: "photo-1583863788434-e58a36330cf0",
+      description: "Chargeur pour appareils compatibles USB-C."
+    },
+    {
+      nom: "Montre connectée",
+      prix: 25000,
+      categorie: "Accessoires",
+      type: "phones",
+      image: "photo-1546868871-7041f2a55e12",
+      description: "Montre connectée avec fonctions selon le modèle."
+    },
+    {
+      nom: "Robe femme",
+      prix: 12000,
+      categorie: "Mode",
+      type: "mode",
+      image: "photo-1595777457583-95e059d581b8",
+      description: "Robe pour femme. Vérifiez les tailles disponibles."
+    },
+    {
+      nom: "Chemise homme",
+      prix: 9000,
+      categorie: "Mode",
+      type: "mode",
+      image: "photo-1598033129183-c4f50c736f10",
+      description: "Chemise pour homme adaptée à différentes occasions."
+    },
+    {
+      nom: "Sandales",
+      prix: 6500,
+      categorie: "Mode",
+      type: "mode",
+      image: "photo-1603487742131-4160ec999306",
+      description: "Sandales pour un usage quotidien."
+    },
+    {
+      nom: "Sac à main",
+      prix: 15000,
+      categorie: "Mode",
+      type: "mode",
+      image: "photo-1584917865442-de89df76afd3",
+      description: "Sac à main pour transporter ses effets personnels."
+    },
+    {
+      nom: "Draps de lit",
+      prix: 18000,
+      categorie: "Maison",
+      type: "maison",
+      image: "photo-1631049307264-da0ec9d70304",
+      description: "Linge de lit. Vérifiez les dimensions disponibles."
+    }
+  ];
+
+  function ajouterProduitsOLMO() {
+    const grille = document.getElementById("productsGrid");
+    if (!grille) return;
+
+    const existants = new Set(
+      Array.from(grille.querySelectorAll(".product-card h3"))
+        .map(e => e.textContent.trim().toLowerCase())
+    );
+
+    produits.forEach(p => {
+      if (existants.has(p.nom.toLowerCase())) return;
+
+      const carte = document.createElement("article");
+      carte.className = "card product-card";
+      carte.dataset.category = p.type;
+
+      const zone = document.createElement("div");
+      zone.className = "card-image";
+
+      const img = document.createElement("img");
+      img.src = "https://images.unsplash.com/" + p.image +
+        "?auto=format&fit=crop&w=800&q=80";
+      img.alt = p.nom;
+      img.loading = "lazy";
+      img.style.cssText =
+        "width:100%;height:190px;object-fit:contain;background:white";
+      img.onerror = function () {
+        img.style.display = "none";
+        zone.textContent = "🛍️";
+      };
+      zone.appendChild(img);
+
+      const info = document.createElement("div");
+      info.className = "product-info";
+
+      const cat = document.createElement("small");
+      cat.textContent = p.categorie;
+
+      const titre = document.createElement("h3");
+      titre.textContent = p.nom;
+
+      const desc = document.createElement("p");
+      desc.textContent = p.description;
+
+      const prix = document.createElement("div");
+      prix.className = "price";
+      prix.textContent =
+        p.prix.toLocaleString("fr-FR") + " FCFA";
+
+      const actions = document.createElement("div");
+      actions.className = "product-actions";
+
+      const ajouter = document.createElement("button");
+      ajouter.className = "btn btn-primary";
+      ajouter.textContent = "Ajouter";
+      ajouter.type = "button";
+      ajouter.onclick = function () {
+        if (typeof window.addToCart === "function") {
+          window.addToCart(p.nom, p.prix);
+        } else {
+          alert("Fonction panier indisponible.");
+        }
+      };
+
+      info.append(cat, titre, desc, prix, actions);
+      actions.appendChild(ajouter);
+      carte.append(zone, info);
+      grille.appendChild(carte);
+      existants.add(p.nom.toLowerCase());
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      ajouterProduitsOLMO
+    );
+  } else {
+    ajouterProduitsOLMO();
+  }
+})();
+</script>
+<!-- FIN BLOC 1/2 -->
+
 
