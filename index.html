@@ -6680,6 +6680,122 @@ document.addEventListener("click", function(e) {
   }
 })();
 </script>
-<!-- FIN OLMO : EMPLOI + COMMANDES - BLOC 1/2 -->
+<!-- FIN OLMO : EMPLOI + COMMANDES - BLOC 1/2 --><!-- OLMO : EMPLOI + COMMANDES - BLOC 2/2 -->
+<script>
+(function () {
+  function ajouterSuiviOlmo() {
+    if (document.getElementById("olmoSuiviEspace")) return;
+
+    const zone = document.createElement("section");
+    zone.id = "olmoSuiviEspace";
+    zone.style.cssText = "max-width:900px;margin:30px auto;padding:20px;border:1px solid #ddd;border-radius:12px;";
+
+    zone.innerHTML = `
+      <h2>Mon espace OLMO</h2>
+      <p>Consulte les commandes et candidatures enregistrées sur cet appareil.</p>
+      <button id="olmoVoirCommandes" type="button">Voir mes commandes</button>
+      <button id="olmoVoirCandidatures" type="button">Voir mes candidatures</button>
+      <div id="olmoResultatsEspace" style="margin-top:18px;"></div>
+    `;
+
+    const emploi = document.getElementById("jobsGrid");
+    if (emploi && emploi.parentElement) {
+      emploi.parentElement.appendChild(zone);
+    } else {
+      document.body.appendChild(zone);
+    }
+
+    const resultats = zone.querySelector("#olmoResultatsEspace");
+
+    function lire(cle) {
+      try {
+        const valeur = JSON.parse(localStorage.getItem(cle) || "[]");
+        return Array.isArray(valeur) ? valeur : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    zone.querySelector("#olmoVoirCommandes").onclick = function() {
+      const commandes = lire("olmo_commandes");
+      resultats.replaceChildren();
+
+      const titre = document.createElement("h3");
+      titre.textContent = "Mes commandes";
+      resultats.appendChild(titre);
+
+      if (!commandes.length) {
+        resultats.appendChild(document.createTextNode("Aucune commande enregistrée sur cet appareil."));
+        return;
+      }
+
+      commandes.slice().reverse().forEach(function(c) {
+        const carte = document.createElement("article");
+        carte.style.cssText = "padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:8px;";
+
+        const ref = document.createElement("strong");
+        ref.textContent = c.numero || "Commande OLMO";
+        carte.appendChild(ref);
+
+        const infos = document.createElement("p");
+        infos.textContent = "Client : " + (c.client || "Non précisé") +
+          " — Téléphone : " + (c.telephone || "Non précisé");
+        carte.appendChild(infos);
+
+        const adresse = document.createElement("p");
+        adresse.textContent = "Livraison : " + (c.adresse || "Non précisée");
+        carte.appendChild(adresse);
+
+        const statut = document.createElement("p");
+        statut.textContent = "Statut : " + (c.statut || "En attente");
+        carte.appendChild(statut);
+
+        resultats.appendChild(carte);
+      });
+    };
+
+    zone.querySelector("#olmoVoirCandidatures").onclick = function() {
+      const candidatures = lire("olmo_candidatures");
+      resultats.replaceChildren();
+
+      const titre = document.createElement("h3");
+      titre.textContent = "Mes candidatures";
+      resultats.appendChild(titre);
+
+      if (!candidatures.length) {
+        resultats.appendChild(document.createTextNode("Aucune candidature enregistrée sur cet appareil."));
+        return;
+      }
+
+      candidatures.slice().reverse().forEach(function(c) {
+        const carte = document.createElement("article");
+        carte.style.cssText = "padding:12px;margin:10px 0;border:1px solid #ddd;border-radius:8px;";
+
+        const poste = document.createElement("strong");
+        poste.textContent = c.poste || "Poste demandé";
+        carte.appendChild(poste);
+
+        const infos = document.createElement("p");
+        infos.textContent = "Candidat : " + (c.nom || "Non précisé") +
+          " — Téléphone : " + (c.telephone || "Non précisé");
+        carte.appendChild(infos);
+
+        const motivation = document.createElement("p");
+        motivation.textContent = "Motivation : " + (c.motivation || "Non précisée");
+        carte.appendChild(motivation);
+
+        resultats.appendChild(carte);
+      });
+    };
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", ajouterSuiviOlmo);
+  } else {
+    ajouterSuiviOlmo();
+  }
+})();
+</script>
+<!-- FIN OLMO : EMPLOI + COMMANDES - BLOC 2/2 -->
 
 
