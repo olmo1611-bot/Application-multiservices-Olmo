@@ -6471,6 +6471,101 @@ document.addEventListener("click", function(e) {
   }
 })();
 </script>
-<!-- FIN BLOC 1/2 -->
+<!-- FIN BLOC 1/2 --><!-- OLMO : NOUVEAUX PRODUITS ET SERVICES - BLOC 2/2 -->
+<script>
+(function () {
+  function ajouterProduitsServices() {
+    const produits = [
+      ["Marmite de cuisine",12000,"Cuisine","cuisine","photo-1584990347449-a9b7e7b4e0d7"],
+      ["Réchaud à gaz",22000,"Cuisine","cuisine","photo-1585515320310-259814833e62"],
+      ["Lait en poudre",6500,"Alimentation","alimentation","photo-1550583724-b2692b85b150"],
+      ["Café moulu",3500,"Alimentation","alimentation","photo-1559525839-b184a4d698c7"],
+      ["Eau minérale",500,"Alimentation","alimentation","photo-1560023907-5f339617ea30"],
+      ["Crème hydratante",6000,"Beauté","beaute","photo-1556229010-6c3f2c9ca5f8"],
+      ["Gel douche",2500,"Beauté","beaute","photo-1608248543803-ba4f8c70ae0b"],
+      ["Ballon de football",10000,"Sport","sport","photo-1614632537423-1e6c2e7e0b47"],
+      ["Tapis de sport",12000,"Sport","sport","photo-1517836357463-d25dfeac3438"],
+      ["Cahier scolaire",1000,"Fournitures","fournitures","photo-1531346878377-a5be20888e57"]
+    ];
+
+    const grille = document.getElementById("productsGrid");
+    if (grille) {
+      produits.forEach(function(p) {
+        if ([...grille.querySelectorAll("h3")].some(h => h.textContent.trim() === p[0])) return;
+        const carte = document.createElement("div");
+        carte.className = "product-card";
+        carte.dataset.category = p[3];
+        carte.innerHTML = `
+          <img class="card-image" src="https://images.unsplash.com/${p[4]}?auto=format&fit=crop&w=600&q=80"
+               alt="${p[0]}" onerror="this.style.display='none'">
+          <div class="card-body">
+            <p>${p[2]}</p>
+            <h3>${p[0]}</h3>
+            <p>Produit disponible chez OLMO.</p>
+            <strong>${p[1].toLocaleString("fr-FR")} FCFA</strong>
+            <button onclick="window.addToCart('${p[0]}',${p[1]})">Ajouter au panier</button>
+          </div>`;
+        grille.appendChild(carte);
+      });
+    }
+
+    const filtres = document.querySelector(".category-filters");
+    if (filtres) {
+      [
+        ["cuisine","Cuisine"],["alimentation","Alimentation"],
+        ["beaute","Beauté"],["sport","Sport"],["fournitures","Fournitures"]
+      ].forEach(function(f) {
+        if ([...filtres.querySelectorAll("button")].some(b => b.textContent.trim().toLowerCase() === f[1].toLowerCase())) return;
+        const bouton = document.createElement("button");
+        bouton.textContent = f[1];
+        bouton.onclick = function() {
+          if (typeof window.filterProducts === "function") window.filterProducts(f[0]);
+        };
+        filtres.appendChild(bouton);
+      });
+    }
+
+    const services = [
+      ["Électricien","Installation et dépannage électrique.","photo-1621905251918-48416bd8575a"],
+      ["Peintre en bâtiment","Peinture et rénovation de vos murs.","photo-1562259949-e8e7689d7828"],
+      ["Menuisier","Fabrication et réparation de meubles.","photo-1504148455328-c376907d081c"],
+      ["Couturier","Retouches et confection de vêtements.","photo-1590736969955-71cc94901144"],
+      ["Réparateur de téléphones","Diagnostic et réparation de smartphones.","photo-1511707171634-5f897ff02aa9"],
+      ["Nettoyage à domicile","Nettoyage de maisons et de bureaux.","photo-1581578731548-c64695cc6952"],
+      ["Jardinier","Entretien des jardins et espaces verts.","photo-1416879595882-3373a0480b5b"],
+      ["Déménageur","Aide au transport de meubles et cartons.","photo-1600518464441-9306b6d8e8f6"],
+      ["Réparateur électroménager","Réparation de vos appareils ménagers.","photo-1581092160562-40aa08e78837"],
+      ["Photographe","Photos pour événements et portraits.","photo-1542038784456-1ea8e935640e"],
+      ["Traiteur","Préparation de repas pour vos événements.","photo-1555939594-58d7cb561ad1"],
+      ["Cours particuliers","Accompagnement scolaire personnalisé.","photo-1503676260728-1c00da094a0b"]
+    ];
+
+    const grilleServices = document.getElementById("servicesGrid");
+    if (grilleServices) {
+      services.forEach(function(s) {
+        if ([...grilleServices.querySelectorAll("h3")].some(h => h.textContent.trim() === s[0])) return;
+        const carte = document.createElement("div");
+        carte.className = "service-card";
+        carte.innerHTML = `
+          <img class="card-image" src="https://images.unsplash.com/${s[2]}?auto=format&fit=crop&w=600&q=80"
+               alt="${s[0]}" onerror="this.style.display='none'">
+          <div class="card-body">
+            <h3>${s[0]}</h3>
+            <p>${s[1]}</p>
+            <button onclick="window.requestService('${s[0]}')">Demander ce service</button>
+          </div>`;
+        grilleServices.appendChild(carte);
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", ajouterProduitsServices);
+  } else {
+    ajouterProduitsServices();
+  }
+})();
+</script>
+<!-- FIN BLOC 2/2 -->
 
 
