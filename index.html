@@ -6796,6 +6796,92 @@ document.addEventListener("click", function(e) {
   }
 })();
 </script>
-<!-- FIN OLMO : EMPLOI + COMMANDES - BLOC 2/2 -->
+<!-- FIN OLMO : EMPLOI + COMMANDES - BLOC 2/2 --><!-- OLMO : ENREGISTREMENT DES COMMANDES DANS SUPABASE -->
+<script>
+(function () {
+  window.olmoPasserCommande = async function () {
+    if (!Array.isArray(cart) || cart.length === 0) {
+      alert("Ton panier est vide. Ajoute d'abord des produits.");
+      return;
+    }
+
+    const nom = prompt("Entre ton nom complet :");
+    if (!nom || !nom.trim()) return;
+
+    const telephone = prompt("Entre ton numéro de téléphone :");
+    if (!telephone || !telephone.trim()) return;
+
+    const adresse = prompt("Entre ton quartier et ton adresse de livraison :");
+    if (!adresse || !adresse.trim()) return;
+
+    const numero = "OLMO-" + Date.now();
+
+    const commande = {
+      order_number: numero,
+      customer_name: nom.trim(),
+      phone: telephone.trim(),
+      delivery_address: adresse.trim(),
+      items: cart.map(function (p) {
+        return {
+          name: p.name,
+          price: Number(p.price),
+          quantity: Number(p.quantity)
+        };
+      }),
+      status: "En attente"
+    };
+
+    try {
+      const { data, error } = await olmoSupabase
+        .from("olmo_orders")
+        .insert([commande])
+        .select();
+
+      if (error) {
+        console.error("Erreur commande OLMO :", error);
+        alert("La commande n'a pas été enregistrée dans Supabase : " + error.message);
+        return;
+      }
+
+      const anciennes = JSON.parse(
+        localStorage.getItem("olmo_commandes") || "[]"
+      );
+
+      anciennes.push({
+        numero: numero,
+        client: nom.trim(),
+        telephone: telephone.trim(),
+        adresse: adresse.trim(),
+        produits: commande.items,
+        date: new Date().toISOString(),
+        statut: "En attente"
+      });
+
+      localStorage.setItem("olmo_commandes", JSON.stringify(anciennes));
+
+      cart.length = 0;
+      saveData();
+      updateCartCount();
+      updateCartDisplay();
+
+      alert(
+        "Commande enregistrée avec succès dans OLMO !\n" +
+        "Référence : " + numero
+      );
+
+    } catch (e) {
+      console.error("Erreur OLMO :", e);
+      alert("Une erreur est survenue. Vérifie ta connexion Internet et réessaie.");
+    }
+  };
+
+  const bouton = document.getElementById("olmoBoutonCommander");
+
+  if (bouton) {
+    bouton.onclick = window.olmoPasserCommande;
+  }
+})();
+</script>
+<!-- FIN ENREGISTREMENT DES COMMANDES OLMO -->
 
 
