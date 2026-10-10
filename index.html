@@ -6566,6 +6566,120 @@ document.addEventListener("click", function(e) {
   }
 })();
 </script>
-<!-- FIN BLOC 2/2 -->
+<!-- FIN BLOC 2/2 --><!-- OLMO : EMPLOI + COMMANDES - BLOC 1/2 -->
+<script>
+(function () {
+  function initialiserEmploiCommandes() {
+
+    /* AMÉLIORATION DES CANDIDATURES */
+    document.querySelectorAll(".job-card").forEach(function(carte) {
+      if (carte.dataset.olmoAmeliore === "oui") return;
+      carte.dataset.olmoAmeliore = "oui";
+
+      const bouton = carte.querySelector("button");
+      if (bouton) {
+        bouton.onclick = function() {
+          const titre = carte.querySelector("h3")?.textContent.trim() || "Offre d'emploi";
+          const nom = prompt("Entre ton nom complet pour postuler :");
+          if (!nom || !nom.trim()) return;
+
+          const telephone = prompt("Entre ton numéro de téléphone :");
+          if (!telephone || !telephone.trim()) return;
+
+          const experience = prompt("Décris brièvement ton expérience ou ta motivation :");
+          if (experience === null) return;
+
+          const candidature = {
+            poste: titre,
+            nom: nom.trim(),
+            telephone: telephone.trim(),
+            motivation: experience.trim(),
+            date: new Date().toISOString()
+          };
+
+          try {
+            const cle = "olmo_candidatures";
+            const anciennes = JSON.parse(localStorage.getItem(cle) || "[]");
+            anciennes.push(candidature);
+            localStorage.setItem(cle, JSON.stringify(anciennes));
+            alert("Candidature enregistrée sur cet appareil. Pour la transmettre réellement au recruteur, il faudra connecter les candidatures à Supabase.");
+          } catch (e) {
+            alert("Impossible d'enregistrer la candidature sur cet appareil.");
+          }
+        };
+      }
+    });
+
+    /* AMÉLIORATION DU PANIER ET PRÉPARATION DE LA COMMANDE */
+    if (!window.olmoCommandeInitialisee) {
+      window.olmoCommandeInitialisee = true;
+
+      window.olmoPasserCommande = function() {
+        let panier = [];
+        try {
+          panier = JSON.parse(localStorage.getItem("olmo_panier") || "[]");
+        } catch (e) {}
+
+        if (!Array.isArray(panier) || panier.length === 0) {
+          alert("Ton panier semble vide. Ajoute d'abord des produits.");
+          return;
+        }
+
+        const nom = prompt("Entre ton nom complet :");
+        if (!nom || !nom.trim()) return;
+
+        const telephone = prompt("Entre ton numéro de téléphone :");
+        if (!telephone || !telephone.trim()) return;
+
+        const adresse = prompt("Entre ton quartier et ton adresse de livraison :");
+        if (!adresse || !adresse.trim()) return;
+
+        const commande = {
+          numero: "OLMO-" + Date.now(),
+          client: nom.trim(),
+          telephone: telephone.trim(),
+          adresse: adresse.trim(),
+          produits: panier,
+          date: new Date().toISOString(),
+          statut: "En attente"
+        };
+
+        try {
+          const cle = "olmo_commandes";
+          const anciennes = JSON.parse(localStorage.getItem(cle) || "[]");
+          anciennes.push(commande);
+          localStorage.setItem(cle, JSON.stringify(anciennes));
+
+          alert(
+            "Commande préparée avec succès !\n" +
+            "Référence : " + commande.numero +
+            "\nElle est enregistrée sur cet appareil, mais pas encore envoyée au vendeur."
+          );
+        } catch (e) {
+          alert("La commande n'a pas pu être enregistrée.");
+        }
+      };
+    }
+
+    /* AJOUT DU BOUTON COMMANDER DANS LE PANIER */
+    const panier = document.getElementById("cartItems");
+    if (panier && !document.getElementById("olmoBoutonCommander")) {
+      const bouton = document.createElement("button");
+      bouton.id = "olmoBoutonCommander";
+      bouton.textContent = "Passer la commande";
+      bouton.style.cssText = "display:block;width:100%;padding:14px;margin-top:12px;cursor:pointer;";
+      bouton.onclick = window.olmoPasserCommande;
+      panier.parentElement.appendChild(bouton);
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initialiserEmploiCommandes);
+  } else {
+    initialiserEmploiCommandes();
+  }
+})();
+</script>
+<!-- FIN OLMO : EMPLOI + COMMANDES - BLOC 1/2 -->
 
 
