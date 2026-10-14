@@ -6882,6 +6882,59 @@ document.addEventListener("click", function(e) {
   }
 })();
 </script>
-<!-- FIN ENREGISTREMENT DES COMMANDES OLMO -->
+<!-- FIN ENREGISTREMENT DES COMMANDES OLMO --><!-- OLMO : CONNEXION DES CANDIDATURES À SUPABASE -->
+<script>
+(function () {
+  document.querySelectorAll(".job-card").forEach(function (carte) {
+    const bouton = carte.querySelector("button");
+    if (!bouton || bouton.dataset.olmoSupabaseActif === "oui") return;
+
+    bouton.dataset.olmoSupabaseActif = "oui";
+
+    bouton.onclick = async function () {
+      const poste =
+        carte.querySelector("h3")?.textContent.trim() || "Offre d'emploi";
+
+      const nom = prompt("Entre ton nom complet :");
+      if (!nom || !nom.trim()) return;
+
+      const telephone = prompt("Entre ton numéro de téléphone :");
+      if (!telephone || !telephone.trim()) return;
+
+      const motivation = prompt("Décris ton expérience ou ta motivation :");
+      if (motivation === null) return;
+
+      if (!window.olmoSupabase) {
+        alert("La connexion à Supabase n'est pas disponible.");
+        return;
+      }
+
+      bouton.disabled = true;
+
+      try {
+        const { error } = await window.olmoSupabase
+          .from("olmo_job_applications")
+          .insert([{
+            job_title: poste,
+            full_name: nom.trim(),
+            phone: telephone.trim(),
+            motivation: motivation.trim()
+          }]);
+
+        if (error) throw error;
+
+        alert("Candidature transmise avec succès à OLMO !");
+
+      } catch (erreur) {
+        console.error("Erreur candidature OLMO :", erreur);
+        alert("Échec de l'envoi : " + (erreur.message || "Erreur inconnue"));
+      } finally {
+        bouton.disabled = false;
+      }
+    };
+  });
+})();
+</script>
+<!-- FIN CONNEXION DES CANDIDATURES -->
 
 
