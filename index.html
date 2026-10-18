@@ -7387,5 +7387,238 @@ document.addEventListener("click", function(e) {
 })();
 </script>
 <!-- FIN REFONTE VISUELLE OLMO -->
+<!-- ===== OLMO CODE 1 : SERVICES ET EMPLOI ===== -->
+<style>
+#olmo-extra-tools{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.olmo-extra-card{background:#fff;border:1px solid #e9e5f2;border-radius:16px;overflow:hidden;box-shadow:0 5px 18px #2520440b}
+.olmo-extra-card .olmo-extra-icon{background:linear-gradient(135deg,#f5eaff,#fff0f4);font-size:34px;padding:18px}
+.olmo-extra-card .olmo-extra-body{padding:15px}
+.olmo-extra-card h3{font-size:17px;margin:0 0 8px}
+.olmo-extra-card p{font-size:14px;line-height:1.5;margin:6px 0;color:#596174}
+.olmo-extra-card .olmo-extra-meta{font-size:12px;color:#7650a9;margin:9px 0}
+.olmo-extra-card button,.olmo-extra-modal button{border:0;border-radius:10px;padding:11px 14px;background:#7138a5;color:white;font-weight:700;cursor:pointer}
+.olmo-extra-card button{width:100%;margin-top:8px}
+.olmo-extra-modal{position:fixed;inset:0;z-index:99999;background:#11182799;display:none;align-items:center;justify-content:center;padding:15px}
+.olmo-extra-modal.active{display:flex}
+.olmo-extra-modal .olmo-extra-box{width:100%;max-width:480px;max-height:90vh;overflow:auto;background:white;border-radius:20px;padding:22px}
+.olmo-extra-modal h2{font-size:22px;margin:0 0 14px}
+.olmo-extra-modal label{display:block;font-size:13px;font-weight:700;margin:12px 0 5px}
+.olmo-extra-modal input,.olmo-extra-modal textarea,.olmo-extra-modal select{width:100%;padding:12px;border:1px solid #ddd6e8;border-radius:10px;background:white;color:#17202a}
+.olmo-extra-modal textarea{min-height:85px;resize:vertical}
+.olmo-extra-actions{display:flex;gap:9px;margin-top:16px}
+.olmo-extra-actions button{flex:1}
+.olmo-extra-modal .olmo-extra-cancel{background:#eee8f5;color:#30213e}
+#olmoExtraHistory{margin-top:15px}
+.olmo-extra-record{padding:12px;margin:9px 0;background:#f7f4fb;border-radius:12px;font-size:14px}
+@media(min-width:700px){.olmo-extra-card{width:calc(33.333% - 10px)}}
+@media(max-width:699px){.olmo-extra-card{width:calc(50% - 5px)}}
+@media(max-width:380px){.olmo-extra-card{width:100%}}
+</style>
+
+<script>
+(function(){
+"use strict";
+
+/* Les offres supplémentaires de services */
+const olmoExtraServices=[
+ {n:"Livraison à domicile",i:"🛵",d:"Livraison de colis, repas et achats à l'adresse souhaitée.",c:"Livraison"},
+ {n:"Réparation de téléphone",i:"📱",d:"Diagnostic, écran, batterie et dépannage mobile.",c:"Téléphonie"},
+ {n:"Dépannage informatique",i:"💻",d:"Assistance informatique, logiciels et entretien d'ordinateur.",c:"Informatique"},
+ {n:"Coiffure à domicile",i:"💈",d:"Coiffure, tresses et soins capillaires sur rendez-vous.",c:"Beauté"},
+ {n:"Ménage à domicile",i:"🧹",d:"Entretien des pièces, nettoyage et rangement.",c:"Maison"},
+ {n:"Électricité",i:"💡",d:"Installation, vérification et dépannage électrique.",c:"Bâtiment"},
+ {n:"Plomberie",i:"🔧",d:"Recherche de fuite, réparation et installation.",c:"Bâtiment"},
+ {n:"Cours de soutien",i:"📚",d:"Accompagnement scolaire et aide aux révisions.",c:"Éducation"},
+ {n:"Photographie",i:"📸",d:"Photos pour événements, portraits et petites entreprises.",c:"Événementiel"},
+ {n:"Entretien automobile",i:"🚗",d:"Entretien courant et recherche d'un professionnel automobile.",c:"Automobile"},
+ {n:"Déménagement",i:"📦",d:"Aide au transport de meubles et de cartons.",c:"Transport"},
+ {n:"Infographie",i:"🎨",d:"Création de visuels, affiches et supports publicitaires.",c:"Création"}
+];
+
+/* Les offres supplémentaires d'emploi */
+const olmoExtraJobs=[
+ {n:"Assistant commercial",i:"🤝",c:"Commerce",t:"Temps plein",l:"Libreville",d:"Accueil des clients, suivi des ventes et prospection."},
+ {n:"Community manager",i:"📲",c:"Numérique",t:"Stage ou emploi",l:"Libreville",d:"Gestion des réseaux sociaux et création de contenus."},
+ {n:"Comptable assistant",i:"🧾",c:"Administration",t:"Temps plein",l:"Libreville",d:"Classement des pièces et suivi des opérations comptables."},
+ {n:"Caissier / Caissière",i:"💳",c:"Commerce",t:"Temps plein",l:"Libreville",d:"Encaissement, accueil et suivi de caisse."},
+ {n:"Agent de livraison",i:"🛵",c:"Logistique",t:"Temps plein",l:"Libreville",d:"Préparation et livraison de commandes."},
+ {n:"Secrétaire",i:"🗂️",c:"Administration",t:"Temps plein",l:"Owendo",d:"Gestion des appels, documents et rendez-vous."},
+ {n:"Technicien informatique",i:"🖥️",c:"Informatique",t:"Temps plein",l:"Libreville",d:"Maintenance des ordinateurs et assistance aux utilisateurs."},
+ {n:"Vendeur en boutique",i:"🛍️",c:"Commerce",t:"Temps plein",l:"Akanda",d:"Conseil aux clients, présentation et vente de produits."},
+ {n:"Assistant marketing",i:"📈",c:"Marketing",t:"Stage",l:"Libreville",d:"Études de marché, promotion et suivi des campagnes."},
+ {n:"Agent d'accueil",i:"🙋",c:"Accueil",t:"Temps plein",l:"Port-Gentil",d:"Orientation des visiteurs et renseignement des clients."},
+ {n:"Aide-cuisinier",i:"🍲",c:"Restauration",t:"Temps plein",l:"Libreville",d:"Préparation des ingrédients et aide en cuisine."},
+ {n:"Graphiste",i:"🖌️",c:"Création",t:"Stage ou emploi",l:"Libreville",d:"Conception de visuels et supports de communication."}
+];
+
+const $=id=>document.getElementById(id);
+const read=(key)=>{try{return JSON.parse(localStorage.getItem(key)||"[]")}catch(e){return []}};
+const write=(key,data)=>localStorage.setItem(key,JSON.stringify(data));
+
+function safe(s){
+ return String(s??"").replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+}
+
+function notify(msg){
+ if(typeof window.showToast==="function")window.showToast(msg);
+ else alert(msg);
+}
+
+function ensureModal(){
+ if($("olmoExtraModal"))return;
+ const modal=document.createElement("div");
+ modal.id="olmoExtraModal";
+ modal.className="olmo-extra-modal";
+ modal.innerHTML=`
+ <div class="olmo-extra-box">
+  <h2 id="olmoExtraTitle">OLMO</h2>
+  <div id="olmoExtraFormArea"></div>
+  <div class="olmo-extra-actions">
+   <button type="button" class="olmo-extra-cancel" id="olmoExtraClose">Annuler</button>
+   <button type="button" id="olmoExtraSubmit">Envoyer</button>
+  </div>
+ </div>`;
+ document.body.appendChild(modal);
+ $("olmoExtraClose").onclick=()=>modal.classList.remove("active");
+ modal.addEventListener("click",e=>{if(e.target===modal)modal.classList.remove("active")});
+}
+
+function openForm(title,html,onSubmit){
+ ensureModal();
+ $("olmoExtraTitle").textContent=title;
+ $("olmoExtraFormArea").innerHTML=html;
+ $("olmoExtraModal").classList.add("active");
+ $("olmoExtraSubmit").onclick=()=>{
+  const form=$("olmoExtraFormArea");
+  if(!form.querySelector("form").reportValidity())return;
+  const data=Object.fromEntries(new FormData(form.querySelector("form")).entries());
+  onSubmit(data);
+ };
+}
+
+/* Ajouter les nouvelles cartes sans supprimer les anciennes */
+function addCards(gridId,items,type){
+ const grid=$(gridId);
+ if(!grid)return;
+ items.forEach(item=>{
+  const card=document.createElement("article");
+  card.className="olmo-extra-card";
+  card.innerHTML=type==="service"?`
+   <div class="olmo-extra-icon">${item.i}</div>
+   <div class="olmo-extra-body">
+    <div class="olmo-extra-meta">${safe(item.c)}</div>
+    <h3>${safe(item.n)}</h3><p>${safe(item.d)}</p>
+    <button type="button">Demander ce service</button>
+   </div>`:`
+   <div class="olmo-extra-icon">${item.i}</div>
+   <div class="olmo-extra-body">
+    <div class="olmo-extra-meta">${safe(item.c)} · ${safe(item.t)}</div>
+    <h3>${safe(item.n)}</h3><p>${safe(item.d)}</p>
+    <p>📍 ${safe(item.l)}</p>
+    <button type="button">Postuler à cette offre</button>
+   </div>`;
+  card.querySelector("button").onclick=()=>type==="service"?serviceForm(item.n):jobForm(item);
+  grid.appendChild(card);
+ });
+}
+
+/* Demande complète de prestation */
+function serviceForm(name){
+ openForm("Demander : "+name,`
+ <form>
+  <label>Prestation</label><input name="service" value="${safe(name)}" readonly>
+  <label>Nom complet *</label><input name="nom" required maxlength="100" placeholder="Votre nom">
+  <label>Téléphone *</label><input name="telephone" required type="tel" maxlength="30" placeholder="Votre numéro">
+  <label>Ville / quartier *</label><input name="lieu" required maxlength="150" placeholder="Ex. Libreville, Akanda">
+  <label>Date souhaitée</label><input name="date" type="date">
+  <label>Décrivez votre besoin *</label><textarea name="details" required maxlength="1200" placeholder="Expliquez ce dont vous avez besoin"></textarea>
+ </form>`,data=>{
+  const records=read("olmoServiceRequests");
+  records.unshift({...data,statut:"En attente",dateCreation:new Date().toISOString()});
+  write("olmoServiceRequests",records);
+  $("olmoExtraModal").classList.remove("active");
+  notify("Demande enregistrée sur cet appareil. Consultez « Mes demandes » pour la retrouver.");
+  renderHistory();
+ });
+}
+
+/* Candidature avec coordonnées et CV facultatif */
+function jobForm(job){
+ openForm("Candidature : "+job.n,`
+ <form>
+  <label>Poste</label><input name="poste" value="${safe(job.n)}" readonly>
+  <label>Nom complet *</label><input name="nom" required maxlength="100" placeholder="Votre nom">
+  <label>Téléphone *</label><input name="telephone" type="tel" required maxlength="30" placeholder="Votre numéro">
+  <label>Adresse e-mail *</label><input name="email" type="email" required maxlength="150" placeholder="vous@exemple.com">
+  <label>Ville *</label><input name="ville" required maxlength="100" placeholder="Votre ville">
+  <label>CV (lien facultatif)</label><input name="cv" type="url" maxlength="500" placeholder="Lien vers votre CV en ligne">
+  <label>Motivation *</label><textarea name="motivation" required maxlength="1500" placeholder="Présentez brièvement votre profil et votre motivation"></textarea>
+ </form>`,data=>{
+  const records=read("olmoJobApplications");
+  records.unshift({...data,entreprise:"À confirmer",statut:"Candidature enregistrée localement",dateCreation:new Date().toISOString()});
+  write("olmoJobApplications",records);
+  $("olmoExtraModal").classList.remove("active");
+  notify("Candidature conservée sur cet appareil. Elle n'a pas encore été envoyée à un recruteur.");
+  renderHistory();
+ });
+}
+
+/* Remplacer les anciennes actions simplifiées */
+window.applyJob=function(jobName){
+ const job=olmoExtraJobs.find(j=>j.n===jobName)||{
+  n:jobName,c:"Emploi",t:"À préciser",l:"À préciser",
+  d:"Offre d'emploi publiée sur OLMO."
+ };
+ jobForm(job);
+};
+
+/* Historique local des demandes et candidatures */
+function renderHistory(){
+ const old=$("olmoExtraHistory");
+ if(!old)return;
+ const requests=read("olmoServiceRequests");
+ const apps=read("olmoJobApplications");
+ old.innerHTML=`
+ <h3>Mes demandes de services (${requests.length})</h3>
+ ${requests.length?requests.map(x=>`<div class="olmo-extra-record"><b>${safe(x.service)}</b> · ${safe(x.statut)}<br>${safe(x.lieu)} — ${safe(x.dateCreation?new Date(x.dateCreation).toLocaleDateString("fr-FR"):"")}</div>`).join(""):"<p>Aucune demande enregistrée sur cet appareil.</p>"}
+ <h3 style="margin-top:18px">Mes candidatures (${apps.length})</h3>
+ ${apps.length?apps.map(x=>`<div class="olmo-extra-record"><b>${safe(x.poste)}</b> · ${safe(x.statut)}<br>${safe(x.nom)} — ${safe(x.dateCreation?new Date(x.dateCreation).toLocaleDateString("fr-FR"):"")}</div>`).join(""):"<p>Aucune candidature enregistrée sur cet appareil.</p>"}`;
+}
+
+function addHistorySection(){
+ if($("olmoExtraTools"))return;
+ const jobs=$("jobsGrid");
+ const services=$("servicesGrid");
+ const anchor=jobs||services;
+ if(!anchor)return;
+ const tools=document.createElement("div");
+ tools.id="olmoExtraTools";
+ tools.innerHTML=`
+ <button type="button" id="olmoShowHistory" style="border:0;border-radius:10px;padding:12px 15px;background:#7138a5;color:white;font-weight:bold">📋 Mes demandes et candidatures</button>
+ <div id="olmoExtraHistory" style="display:none;width:100%"></div>`;
+ anchor.parentNode.insertBefore(tools,anchor);
+ $("olmoShowHistory").onclick=()=>{
+  const panel=$("olmoExtraHistory");
+  panel.style.display=panel.style.display==="none"?"block":"none";
+  renderHistory();
+ };
+}
+
+/* Ajouter les prestations et emplois au chargement */
+function initOlmoExtra(){
+ addCards("servicesGrid",olmoExtraServices,"service");
+ addCards("jobsGrid",olmoExtraJobs,"job");
+ addHistorySection();
+}
+
+if(document.readyState==="loading"){
+ document.addEventListener("DOMContentLoaded",initOlmoExtra);
+}else{
+ initOlmoExtra();
+}
+})();
+</script>
+<!-- ===== FIN OLMO CODE 1 ===== -->
+
 
 
