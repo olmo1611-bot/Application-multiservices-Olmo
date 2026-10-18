@@ -6935,6 +6935,457 @@ document.addEventListener("click", function(e) {
   });
 })();
 </script>
-<!-- FIN CONNEXION DES CANDIDATURES -->
+<!-- FIN CONNEXION DES CANDIDATURES --><!-- OLMO : NOUVELLE IDENTITE VISUELLE -->
+<script>
+(function () {
+  const style = document.createElement("style");
+  style.textContent = `
+    :root {
+      --primary: #111827;
+      --secondary: #7028d7;
+      --accent: #e91e63;
+      --light: #f8f7fc;
+      --border: #e9e3f1;
+      --text: #191426;
+      --muted: #777386;
+      --olmo-gradient: linear-gradient(
+        120deg, #7028d7, #e91e63 65%, #ff5722
+      );
+    }
+
+    body {
+      font-family: Inter, system-ui, Arial, sans-serif;
+      background: linear-gradient(180deg, #fff, #f7f5fb);
+      color: var(--text);
+    }
+
+    header {
+      background: rgba(255,255,255,.97);
+      border-bottom: 1px solid #e9e3f1;
+      box-shadow: 0 5px 24px rgba(35,20,55,.06);
+    }
+
+    .header-inner {
+      max-width: 1320px;
+      padding: 16px 24px;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      color: #111827;
+    }
+
+    .logo span {
+      background: var(--olmo-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .search-box input {
+      min-height: 48px;
+      border-radius: 16px;
+      border: 1px solid #e5d9f5;
+      background: #faf8fd;
+      padding: 13px 48px 13px 17px;
+    }
+
+    .search-box input:focus {
+      background: white;
+      border-color: #9c69e3;
+      box-shadow: 0 0 0 4px #7028d71c;
+    }
+
+    .search-btn,
+    .btn-primary {
+      background: var(--olmo-gradient);
+      color: white;
+    }
+
+    .search-btn {
+      border-radius: 12px;
+    }
+
+    .icon-btn {
+      border-radius: 14px;
+      border-color: #ebe4f4;
+      box-shadow: 0 3px 10px #24143c0b;
+      transition: .2s;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-2px);
+      border-color: #cdb4ed;
+    }
+
+    .main-nav {
+      max-width: 1320px;
+      gap: 9px;
+      padding-bottom: 14px;
+    }
+
+    .nav-btn {
+      padding: 10px 17px;
+      border-radius: 13px;
+      background: #f5f1fa;
+      color: #554568;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .nav-btn.active,
+    .nav-btn:hover {
+      background: var(--olmo-gradient);
+      color: white;
+      box-shadow: 0 6px 16px #7028d72c;
+    }
+
+    .container {
+      max-width: 1320px;
+      padding-top: 30px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(
+        120deg, #20102f, #542181 55%, #c12b83
+      );
+      border-radius: 28px;
+      padding: clamp(30px, 5vw, 62px);
+      box-shadow: 0 20px 48px #57207830;
+    }
+
+    .hero h1 {
+      font-size: clamp(30px, 4vw, 50px);
+      line-height: 1.12;
+      letter-spacing: -1.5px;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      color: #f4eafa;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+
+    .hero .btn {
+      border-radius: 13px;
+      padding: 13px 19px;
+    }
+
+    .hero .btn-primary {
+      background: white;
+      color: #7028d7;
+    }
+
+    .hero .btn-success {
+      background: linear-gradient(120deg, #ffad32, #ff604c);
+      color: white;
+    }
+
+    .section-title {
+      margin: 34px 0 20px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(21px, 2.5vw, 28px);
+      font-weight: 850;
+      letter-spacing: -.6px;
+    }
+
+    .grid {
+      gap: 20px;
+    }
+
+    .card,
+    .product-card,
+    .service-card,
+    .job-card {
+      border: 1px solid #eee8f5;
+      border-radius: 21px;
+      background: white;
+      box-shadow: 0 6px 22px #25153b08;
+      overflow: hidden;
+      transition: transform .22s, box-shadow .22s;
+    }
+
+    .card:hover,
+    .product-card:hover,
+    .service-card:hover,
+    .job-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 32px #32164e16;
+    }
+
+    .card-image {
+      height: 165px;
+      background: linear-gradient(
+        135deg, #f0e6ff, #fff0f6, #fff2e7
+      );
+    }
+
+    .card-body,
+    .product-info {
+      padding: 18px;
+    }
+
+    .card h3,
+    .product-card h3,
+    .service-card h3,
+    .job-card h3 {
+      color: #21172f;
+      font-size: 17px;
+    }
+
+    .card p,
+    .product-card p,
+    .service-card p,
+    .job-card p {
+      color: #777386;
+      line-height: 1.65;
+    }
+
+    .price {
+      color: #7028d7;
+      font-size: 20px;
+    }
+
+    .btn {
+      border-radius: 12px;
+      font-weight: 750;
+      transition: .2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+    }
+
+    .btn-primary {
+      box-shadow: 0 6px 15px #7028d724;
+    }
+
+    .btn-success {
+      background: linear-gradient(120deg, #7028d7, #b52c9a);
+      color: white;
+    }
+
+    .btn-light {
+      background: #f5f0fb;
+      color: #59436f;
+      border: 1px solid #e9e0f3;
+    }
+
+    .categories {
+      gap: 10px;
+    }
+
+    .category-btn {
+      border-radius: 30px;
+      border-color: #e7def2;
+      font-weight: 700;
+    }
+
+    .category-btn.active,
+    .category-btn:hover {
+      background: #f0e6ff;
+      border-color: #d6bdf5;
+      color: #7028d7;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      border: 1px solid #e7e0ef;
+      border-radius: 12px;
+      padding: 13px;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: #9c69e3;
+      box-shadow: 0 0 0 3px #7028d718;
+    }
+
+    .modal {
+      background: #160c28a8;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      border-radius: 23px;
+      box-shadow: 0 25px 75px #14091f40;
+      padding: 28px;
+    }
+
+    .modal-title {
+      font-weight: 850;
+      letter-spacing: -.5px;
+    }
+
+    .bottom-nav {
+      background: #ffffffF5;
+      border-top: 1px solid #e9e1f2;
+      box-shadow: 0 -6px 25px #25153b0d;
+    }
+
+    .bottom-nav button.active {
+      color: #7028d7;
+    }
+
+    .toast {
+      background: #241333;
+      border-radius: 13px;
+      box-shadow: 0 10px 30px #14091f35;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid #7028d755;
+      outline-offset: 2px;
+    }
+
+    @media (min-width: 1100px) {
+      .grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 800px) {
+      .header-inner {
+        padding: 13px 15px;
+        gap: 12px;
+      }
+
+      .main-nav {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      .container {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .hero {
+        border-radius: 22px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding-bottom: 75px;
+      }
+
+      .logo {
+        font-size: 27px;
+      }
+
+      .icon-btn {
+        width: 39px;
+        height: 39px;
+        min-width: 39px;
+        border-radius: 12px;
+      }
+
+      .container {
+        padding-top: 20px;
+      }
+
+      .hero {
+        padding: 29px 21px;
+        margin-bottom: 26px;
+      }
+
+      .hero h1 {
+        font-size: 31px;
+      }
+
+      .hero p {
+        font-size: 15px;
+      }
+
+      .hero .actions .btn {
+        width: 100%;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .card,
+      .product-card,
+      .service-card,
+      .job-card {
+        border-radius: 16px;
+      }
+
+      .card-image {
+        height: 110px;
+        font-size: 42px;
+      }
+
+      .card-body,
+      .product-info {
+        padding: 12px;
+      }
+
+      .card h3,
+      .product-card h3,
+      .service-card h3,
+      .job-card h3 {
+        font-size: 15px;
+      }
+
+      .card p,
+      .product-card p,
+      .service-card p,
+      .job-card p {
+        font-size: 13px;
+      }
+
+      .btn {
+        font-size: 13px;
+        padding: 10px 12px;
+      }
+
+      .modal {
+        padding: 12px;
+        align-items: flex-end;
+      }
+
+      .modal-content {
+        max-height: 88vh;
+        padding: 24px 18px;
+        border-radius: 23px 23px 15px 15px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 27px;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+})();
+</script>
+<!-- FIN REFONTE VISUELLE OLMO -->
 
 
