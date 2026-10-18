@@ -7618,7 +7618,284 @@ if(document.readyState==="loading"){
 }
 })();
 </script>
-<!-- ===== FIN OLMO CODE 1 ===== -->
+<!-- ===== FIN OLMO CODE 1 ===== --><!-- OLMO : AMELIORATION VISUELLE DE L'ACCUEIL -->
+<script>
+(function () {
+  const css = document.createElement("style");
+
+  css.textContent = `
+    .olmo-welcome-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 0 0 32px;
+    }
+
+    .olmo-welcome-item {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 19px;
+      background: white;
+      border: 1px solid #eee5f6;
+      border-radius: 18px;
+      box-shadow: 0 7px 22px #24143c08;
+    }
+
+    .olmo-welcome-icon {
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #f0e5ff, #fff0f6);
+      font-size: 23px;
+    }
+
+    .olmo-welcome-item strong {
+      display: block;
+      font-size: 14px;
+      color: #21172f;
+      margin-bottom: 3px;
+    }
+
+    .olmo-welcome-item span {
+      display: block;
+      font-size: 12px;
+      color: #777386;
+      line-height: 1.5;
+    }
+
+    .hero {
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 300px;
+      height: 300px;
+      right: -95px;
+      top: -140px;
+      border: 1px solid #ffffff35;
+      border-radius: 50%;
+      background: linear-gradient(
+        135deg, #ffffff20, #ffffff00
+      );
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 180px;
+      height: 180px;
+      right: 110px;
+      bottom: -135px;
+      border-radius: 50%;
+      background: #ff98002b;
+      pointer-events: none;
+    }
+
+    .hero h1 {
+      max-width: 720px;
+      position: relative;
+    }
+
+    .hero p {
+      max-width: 650px;
+    }
+
+    #productsGrid .product-card,
+    #productsGrid .card,
+    #servicesGrid .service-card,
+    #servicesGrid .card,
+    #jobsGrid .job-card,
+    #jobsGrid .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    #productsGrid .card-image,
+    #servicesGrid .card-image,
+    #jobsGrid .card-image {
+      overflow: hidden;
+      position: relative;
+    }
+
+    #productsGrid .card-image img,
+    #servicesGrid .card-image img,
+    #jobsGrid .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .35s ease;
+    }
+
+    #productsGrid .card:hover .card-image img,
+    #servicesGrid .card:hover .card-image img,
+    #jobsGrid .card:hover .card-image img {
+      transform: scale(1.045);
+    }
+
+    #productsGrid .product-info,
+    #servicesGrid .card-body,
+    #jobsGrid .card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #productsGrid .price {
+      margin-top: auto;
+      padding-top: 12px;
+      font-weight: 850;
+    }
+
+    #productsGrid .btn,
+    #servicesGrid .btn,
+    #jobsGrid .btn {
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    #productsGrid .favorite-btn {
+      position: absolute;
+      z-index: 2;
+      top: 10px;
+      right: 10px;
+      width: 38px;
+      height: 38px;
+      border: 1px solid #ffffffa8;
+      border-radius: 50%;
+      background: #ffffffed;
+      font-size: 21px;
+      cursor: pointer;
+    }
+
+    #productsGrid .favorite-btn:hover {
+      color: #e91e63;
+      transform: scale(1.06);
+    }
+
+    #productsGrid .card small {
+      color: #7028d7;
+      font-weight: 750;
+      margin-bottom: 5px;
+    }
+
+    #servicesGrid .card-image,
+    #jobsGrid .card-image {
+      display: grid;
+      place-items: center;
+      background: linear-gradient(
+        135deg, #f0e6ff, #fff0f6, #fff2e7
+      );
+      font-size: 46px;
+    }
+
+    .section-title h2 {
+      position: relative;
+    }
+
+    .section-title h2::after {
+      content: "";
+      display: block;
+      width: 48px;
+      height: 4px;
+      margin-top: 9px;
+      border-radius: 8px;
+      background: linear-gradient(
+        90deg, #7028d7, #e91e63, #ff9800
+      );
+    }
+
+    .category-btn {
+      transition: background .2s, color .2s, transform .2s;
+    }
+
+    .category-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 700px) {
+      .olmo-welcome-strip {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 25px;
+      }
+
+      .olmo-welcome-item {
+        padding: 14px;
+        border-radius: 15px;
+      }
+
+      .olmo-welcome-icon {
+        width: 42px;
+        height: 42px;
+      }
+
+      #productsGrid,
+      #servicesGrid,
+      #jobsGrid {
+        gap: 12px;
+      }
+
+      #productsGrid .favorite-btn {
+        top: 7px;
+        right: 7px;
+        width: 33px;
+        height: 33px;
+      }
+    }
+  `;
+
+  document.head.appendChild(css);
+
+  const hero = document.querySelector("#home .hero");
+
+  if (hero && !document.querySelector(".olmo-welcome-strip")) {
+    const strip = document.createElement("div");
+    strip.className = "olmo-welcome-strip";
+
+    strip.innerHTML = `
+      <div class="olmo-welcome-item">
+        <div class="olmo-welcome-icon">🛍️</div>
+        <div>
+          <strong>Commerce</strong>
+          <span>Découvrez des produits variés</span>
+        </div>
+      </div>
+
+      <div class="olmo-welcome-item">
+        <div class="olmo-welcome-icon">🛠️</div>
+        <div>
+          <strong>Services</strong>
+          <span>Trouvez le bon professionnel</span>
+        </div>
+      </div>
+
+      <div class="olmo-welcome-item">
+        <div class="olmo-welcome-icon">💼</div>
+        <div>
+          <strong>Emplois</strong>
+          <span>Explorez les opportunités</span>
+        </div>
+      </div>
+    `;
+
+    hero.insertAdjacentElement("afterend", strip);
+  }
+})();
+</script>
+<!-- FIN AMELIORATION ACCUEIL OLMO -->
 
 
 
