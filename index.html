@@ -7895,7 +7895,239 @@ if(document.readyState==="loading"){
   }
 })();
 </script>
-<!-- FIN AMELIORATION ACCUEIL OLMO -->
+<!-- FIN AMELIORATION ACCUEIL OLMO --><!-- OLMO : HARMONISATION SERVICES ET EMPLOIS -->
+<script>
+(function () {
+  const style = document.createElement("style");
+
+  style.textContent = `
+    /* Présentation cohérente des pages */
+    #services,
+    #jobs {
+      min-height: 60vh;
+      padding-bottom: 35px;
+    }
+
+    #services .section-title,
+    #jobs .section-title {
+      margin: 12px 0 22px;
+    }
+
+    #services .section-title h2,
+    #jobs .section-title h2 {
+      color: #21172f;
+      font-size: clamp(23px, 3vw, 30px);
+      font-weight: 850;
+      letter-spacing: -.6px;
+    }
+
+    /* Recherche harmonisée */
+    #services .search-box,
+    #jobs .search-box {
+      max-width: 100% !important;
+      margin: 0 0 24px !important;
+    }
+
+    #services .search-box input,
+    #jobs .search-box input {
+      width: 100%;
+      min-height: 49px;
+      border: 1px solid #e5d9f5;
+      border-radius: 15px;
+      background: white;
+      padding: 13px 16px;
+      box-shadow: 0 5px 18px #24143c08;
+    }
+
+    #services .search-box input:focus,
+    #jobs .search-box input:focus {
+      border-color: #9c69e3;
+      box-shadow: 0 0 0 4px #7028d718;
+      outline: none;
+    }
+
+    /* Grilles régulières */
+    #servicesGrid,
+    #jobsGrid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+      gap: 20px;
+    }
+
+    /* Cartes au même niveau visuel */
+    #servicesGrid .card,
+    #jobsGrid .card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      height: 100%;
+      overflow: hidden;
+      border: 1px solid #eee5f5;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 7px 22px #24143c09;
+      transition: transform .22s ease,
+                  box-shadow .22s ease,
+                  border-color .22s ease;
+    }
+
+    #servicesGrid .card:hover,
+    #jobsGrid .card:hover {
+      transform: translateY(-4px);
+      border-color: #d9c4f2;
+      box-shadow: 0 16px 32px #32164e14;
+    }
+
+    /* Bandeau illustré des cartes */
+    #servicesGrid .card-image,
+    #jobsGrid .card-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 125px;
+      height: 125px;
+      overflow: hidden;
+      background: linear-gradient(
+        135deg, #f0e6ff, #fff0f6, #fff2e7
+      );
+      font-size: 43px;
+    }
+
+    #servicesGrid .card-image img,
+    #jobsGrid .card-image img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Contenu aligné et espacé */
+    #servicesGrid .card-body,
+    #jobsGrid .card-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 18px;
+    }
+
+    #servicesGrid .card-body h3,
+    #jobsGrid .card-body h3 {
+      margin: 0 0 9px;
+      color: #21172f;
+      font-size: 17px;
+      line-height: 1.4;
+      font-weight: 800;
+    }
+
+    #servicesGrid .card-body p,
+    #jobsGrid .card-body p {
+      margin: 0 0 10px;
+      color: #777386;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    #servicesGrid .card-body button,
+    #jobsGrid .card-body button {
+      width: 100%;
+      min-height: 43px;
+      margin-top: auto;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(
+        120deg, #7028d7, #e91e63 70%, #ff5722
+      );
+      color: white;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    #servicesGrid .card-body button:hover,
+    #jobsGrid .card-body button:hover {
+      filter: brightness(1.06);
+    }
+
+    /* Supprime les grands espaces créés par les anciens <br> */
+    #servicesGrid .card-body br,
+    #jobsGrid .card-body br {
+      display: none;
+    }
+
+    #servicesGrid .card-body strong,
+    #jobsGrid .card-body strong {
+      color: #7028d7;
+    }
+
+    /* Tablettes */
+    @media (min-width: 701px) and (max-width: 1000px) {
+      #servicesGrid,
+      #jobsGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 15px;
+      }
+    }
+
+    /* Téléphones */
+    @media (max-width: 700px) {
+      #services,
+      #jobs {
+        padding-bottom: 25px;
+      }
+
+      #servicesGrid,
+      #jobsGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      #servicesGrid .card,
+      #jobsGrid .card {
+        border-radius: 16px;
+      }
+
+      #servicesGrid .card-image,
+      #jobsGrid .card-image {
+        min-height: 95px;
+        height: 95px;
+        font-size: 34px;
+      }
+
+      #servicesGrid .card-body,
+      #jobsGrid .card-body {
+        padding: 12px;
+      }
+
+      #servicesGrid .card-body h3,
+      #jobsGrid .card-body h3 {
+        font-size: 14px;
+      }
+
+      #servicesGrid .card-body p,
+      #jobsGrid .card-body p {
+        font-size: 12px;
+      }
+
+      #servicesGrid .card-body button,
+      #jobsGrid .card-body button {
+        font-size: 12px;
+        padding: 10px 7px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      #servicesGrid,
+      #jobsGrid {
+        grid-template-columns: 1fr;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+})();
+</script>
+<!-- FIN HARMONISATION SERVICES ET EMPLOIS -->
 
 
 
